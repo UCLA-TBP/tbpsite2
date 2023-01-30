@@ -1,0 +1,37 @@
+--ROUTES--
+1. PROFILE
+  - profile (combine w/ edit profile)
+  - member (distinguished active member winter 2023) <- not sure what this is?
+  - tutoring profile
+  - upload test (add view uploaded tests)
+
+2. HOME
+  - one page, navbar navigates to sections of the page (w/o redirection)
+
+3. EVENTS
+  - upcoming events + tbp calendar
+
+4. TUTORING
+  - schedule
+  - review sheets
+  - feedback (google form?)
+  - log hours (not currently functional ?)
+
+5. OFFICERS
+  - contact (headshots + contact info), add lazy loading
+  - faculty
+
+6. MEMBER SERVICES
+  - profile
+  - test bank
+  - login (use next param to remember return page! noice)
+
+7. ADMIN (clarify this stuff)
+  - admin panel
+  - candidates
+  - active members
+  - requirement
+  - all profiles
+  - tutoring
+  - downloads
+  - wiki
