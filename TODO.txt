@@ -1,7 +1,7 @@
 --ROUTES--
 1. PROFILE
   - profile (combine w/ edit profile)
-  - member (distinguished active member winter 2023) <- not sure what this is?
+  - profile_requirements (distinguished active member winter 2023) <- not sure what this is?
   - tutoring profile
   - upload test (add view uploaded tests)
 
