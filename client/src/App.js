@@ -17,6 +17,7 @@ import LogHours from './tutoring/LogHours';
 import Officers from './officers/Officers';
 import Faculty from './officers/Faculty';
 import TestBank from './member-services/TestBank';
+import Corporate from './member-services/Corporate';
 
 function App() {
   return (
@@ -41,7 +42,10 @@ function App() {
           <Route path='' element={<Officers />} />
           <Route path='faculty' element={<Faculty />} />
         </Route>
-        <Route path='testbank' element={<TestBank />} />
+        <Route path='member_services'>
+          <Route path='testbank' element={<TestBank />} />
+          <Route path='corporate' element={<Corporate />} />
+        </Route>
         {/* TODO: ADMIN STUFF */}
       </Routes>
     </Router>
