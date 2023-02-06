@@ -4,7 +4,7 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import { ThemeProvider } from '@emotion/react';
+import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material';
 import Navbar from './components/Navbar';
 import Home from './home/Home';
@@ -25,7 +25,22 @@ import Corporate from './member-services/Corporate';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#000000',
+      main: '#000',
+      contrastText: '#fff',
+    },
+    text: {
+      primary: '#fff',
+      secondary: '#BBB',
+    },
+  },
+  components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#000',
+          borderRadius: 0,
+        },
+      },
     },
   },
 });

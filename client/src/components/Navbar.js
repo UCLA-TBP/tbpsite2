@@ -1,18 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-// import styled from '@emotion/styled';
-import { alpha } from '@mui/material';
+import {
+  alpha,
+  AppBar,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import styled from '@emotion/styled';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 // const StyledAppBar = styled(AppBar)(({ theme }) => ({
 //   backgroundColor: theme.palette.primary.transparent,
 // }));
+const NavButton = styled(Button)(({ theme }) => ({
+  color: alpha(theme.palette.text.secondary, 0.6),
+  '&:hover': {
+    color: theme.palette.text.secondary,
+  },
+}));
 
 function Navbar() {
   const [scrollPos, setScrollPos] = useState(0);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
 
   const handleScroll = () => {
     const winScroll =
@@ -36,131 +55,74 @@ function Navbar() {
       position='fixed'
       sx={{
         backgroundColor: (theme) =>
-          alpha(theme.palette.primary.main, 0.8 * Math.min(1, scrollPos / 200)),
+          alpha(theme.palette.primary.main, 0.8 * Math.min(1, scrollPos / 500)),
         boxShadow: 0,
       }}
     >
       {/* <StyledAppBar position='sticky'> */}
-      <Container maxWidth='xl'>
-        <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Typography
-            variant='h6'
-            noWrap
-            component='a'
-            href='/'
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
+      <Grid
+        container
+        direction='row'
+        justifyContent='flex-end'
+        spacing={1.5}
+        sx={{ px: 3, py: 1.5 }}
+      >
+        <Grid item>
+          <Button
+            color='inherit'
+            variant='text'
+            size='large'
+            sx={{ '&:hover': { bgcolor: 'transparent' } }}
           >
-            LOGO
-          </Typography>
-
-          {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleOpenNavMenu}
-              color='inherit'
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-          <Typography
-            variant='h5'
-            noWrap
-            component='a'
-            href=''
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
-        </Toolbar>
-      </Container>
+            <img
+              className='navbar-logo'
+              src='/tbp-logo.png'
+              alt='tbp-logo'
+              height='30'
+            />
+            &nbsp; Tau Beta Pi | UCLA
+          </Button>
+        </Grid>
+        <Grid item>
+          <NavButton variant='text' size='large' onClick={handleClick}>
+            More <MoreVertIcon />
+          </NavButton>
+        </Grid>
+        <Grid item>
+          <NavButton variant='text' size='large' onClick={handleClick}>
+            ethantjackson <PersonOutlineIcon />
+          </NavButton>
+        </Grid>
+      </Grid>
       {/* </StyledAppBar> */}
+      <Menu
+        sx={{ mt: '54px' }}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={Boolean(anchorEl)}
+        onClose={() => {
+          setAnchorEl(null);
+        }}
+      >
+        <MenuItem
+          sx={{
+            mr: '15px',
+            bgcolor: (theme) => theme.palette.primary.main,
+          }}
+          onClick={() => {
+            setAnchorEl(null);
+          }}
+        >
+          Test
+        </MenuItem>
+      </Menu>
     </AppBar>
   );
 }
