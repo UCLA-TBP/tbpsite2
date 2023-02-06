@@ -1,13 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+// import styled from '@emotion/styled';
+import { alpha } from '@mui/material';
+
+// const StyledAppBar = styled(AppBar)(({ theme }) => ({
+//   backgroundColor: theme.palette.primary.transparent,
+// }));
 
 function Navbar() {
+  const [scrollPos, setScrollPos] = useState(0);
+
+  const handleScroll = () => {
+    const winScroll =
+      document.body.scrollTop || document.documentElement.scrollTop;
+    setScrollPos(winScroll);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log(scrollPos);
+  }, [scrollPos]);
+
   return (
-    <AppBar position='sticky' color='primary'>
+    <AppBar
+      position='fixed'
+      sx={{
+        backgroundColor: (theme) =>
+          alpha(theme.palette.primary.main, 0.8 * Math.min(1, scrollPos / 200)),
+        boxShadow: 0,
+      }}
+    >
+      {/* <StyledAppBar position='sticky'> */}
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
@@ -127,6 +160,7 @@ function Navbar() {
           </Box> */}
         </Toolbar>
       </Container>
+      {/* </StyledAppBar> */}
     </AppBar>
   );
 }
