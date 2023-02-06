@@ -4,6 +4,9 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
+import { ThemeProvider } from '@emotion/react';
+import { createTheme } from '@mui/material';
+import Navbar from './components/Navbar';
 import Home from './home/Home';
 import ProfileRequirements from './profile/ProfileRequirements';
 import Profile from './profile/Profile';
@@ -19,36 +22,47 @@ import Faculty from './officers/Faculty';
 import TestBank from './member-services/TestBank';
 import Corporate from './member-services/Corporate';
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#000000',
+    },
+  },
+});
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='' element={<Home />} />
-        <Route path='profile'>
-          <Route path='' element={<Profile />} />
-          <Route path='requirements' element={<ProfileRequirements />} />
-          <Route path='tutoring' element={<TutoringProfile />} />
-          <Route path='upload_test' element={<UploadTest />} />
-        </Route>
-        <Route path='events' element={<Events />} />
-        <Route path='tutoring'>
-          <Route path='' element={<Navigate to='schedule' replace />} />
-          <Route path='schedule' element={<TutoringSchedule />} />
-          <Route path='review_sheets' element={<ReviewSheets />} />
-          <Route path='feedback' element={<TutoringFeedback />} />
-          <Route path='log_hours' eleemnt={<LogHours />} />
-        </Route>
-        <Route path='officers'>
-          <Route path='' element={<Officers />} />
-          <Route path='faculty' element={<Faculty />} />
-        </Route>
-        <Route path='member_services'>
-          <Route path='testbank' element={<TestBank />} />
-          <Route path='corporate' element={<Corporate />} />
-        </Route>
-        {/* TODO: ADMIN STUFF */}
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Navbar />
+      <Router>
+        <Routes>
+          <Route path='' element={<Home />} />
+          <Route path='profile'>
+            <Route path='' element={<Profile />} />
+            <Route path='requirements' element={<ProfileRequirements />} />
+            <Route path='tutoring' element={<TutoringProfile />} />
+            <Route path='upload_test' element={<UploadTest />} />
+          </Route>
+          <Route path='events' element={<Events />} />
+          <Route path='tutoring'>
+            <Route path='' element={<Navigate to='schedule' replace />} />
+            <Route path='schedule' element={<TutoringSchedule />} />
+            <Route path='review_sheets' element={<ReviewSheets />} />
+            <Route path='feedback' element={<TutoringFeedback />} />
+            <Route path='log_hours' eleemnt={<LogHours />} />
+          </Route>
+          <Route path='officers'>
+            <Route path='' element={<Officers />} />
+            <Route path='faculty' element={<Faculty />} />
+          </Route>
+          <Route path='member_services'>
+            <Route path='testbank' element={<TestBank />} />
+            <Route path='corporate' element={<Corporate />} />
+          </Route>
+          {/* TODO: ADMIN STUFF */}
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 
