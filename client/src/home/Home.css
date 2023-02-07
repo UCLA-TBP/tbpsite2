@@ -1,9 +1,10 @@
 .bg {
-    background-image: url(https://tbp.seas.ucla.edu/static/img/background.gif);
-    height: 100vh;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    box-shadow: inset 0 5em 10em 0.25em #000;
-    color: white;
+  background-image: url(https://tbp.seas.ucla.edu/static/img/background.gif);
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset 0 5em 10em 0.25em #000;
+  color: white;
+  margin-bottom: 100rem;
 }
