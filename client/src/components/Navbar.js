@@ -2,35 +2,97 @@ import React, { useState, useEffect } from 'react';
 import {
   alpha,
   AppBar,
-  Box,
   Button,
   Container,
   Grid,
+  Link,
   Menu,
   MenuItem,
-  Toolbar,
-  Typography,
 } from '@mui/material';
 import styled from '@emotion/styled';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
-// const StyledAppBar = styled(AppBar)(({ theme }) => ({
-//   backgroundColor: theme.palette.primary.transparent,
-// }));
 const NavButton = styled(Button)(({ theme }) => ({
-  color: alpha(theme.palette.text.secondary, 0.6),
+  color: theme.palette.text.secondary,
   '&:hover': {
-    color: theme.palette.text.secondary,
+    color: alpha(theme.palette.text.secondary, 0.6),
   },
 }));
 
+const DropDownItemLink = ({ name, destination, handleDropDownClose }) => {
+  return (
+    <Link href={`/${destination}`} underline='none'>
+      <MenuItem
+        sx={{
+          color: (theme) => theme.palette.text.secondary,
+          '&:hover': {
+            color: (theme) => alpha(theme.palette.text.secondary, 0.6),
+          },
+          fontSize: '.9rem',
+        }}
+        onClick={handleDropDownClose}
+      >
+        {name}
+      </MenuItem>
+    </Link>
+  );
+};
+
+class DropDownItemData {
+  constructor(name, destination) {
+    this.name = name;
+    this.destination = destination;
+  }
+}
+
+const MoreDropDownEntries = [
+  new DropDownItemData('HOME'),
+  new DropDownItemData('Who We Are', '#who-we-are'),
+  new DropDownItemData('Becoming a Member', '#becoming-a-member'),
+  new DropDownItemData('Tutoring', '#tutoring'),
+  new DropDownItemData('Activities', '#activities'),
+  new DropDownItemData('Contact', '#contact'),
+  new DropDownItemData('EVENTS'),
+  new DropDownItemData('Events', 'events'),
+  new DropDownItemData('TUTORING QUICKLINKS'),
+  new DropDownItemData('Schedule', 'tutoring/schedule'),
+  new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
+  new DropDownItemData('Feedback', 'tutoring/feedback'),
+  new DropDownItemData('Log Hours', 'log_hours'),
+  new DropDownItemData('CONTACT QUICKLINKS'),
+  new DropDownItemData('Officers', 'officers'),
+  new DropDownItemData('Advisors and Faculty', 'officers/faculty'),
+];
+
+const UserDropDownEntries = [
+  new DropDownItemData('ADMIN'),
+  new DropDownItemData('Admin Panel', '#!'),
+  new DropDownItemData('Candidates', '#!'),
+  new DropDownItemData('Active members', '#!'),
+  new DropDownItemData('Requirement Attendance', 'profile/requirements'),
+  new DropDownItemData('All Profiles', '#!'),
+  new DropDownItemData('Tutoring', '#!'),
+  new DropDownItemData('Downloads', '#!'),
+  new DropDownItemData('Wiki', '#!'),
+  new DropDownItemData('MEMBER SERVICES'),
+  new DropDownItemData('Profile', 'profile'),
+  new DropDownItemData('Testbank', 'profile/upload_test'),
+  new DropDownItemData('Log Out', '#!'),
+];
+
 function Navbar() {
   const [scrollPos, setScrollPos] = useState(0);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [dropDownItems, setDropDownItems] = useState([]);
 
-  const handleClick = (e) => {
+  const handleDropDown = (e, items) => {
     setAnchorEl(e.currentTarget);
+    setDropDownItems(items);
+  };
+
+  const handleDropDownClose = () => {
+    setAnchorEl(null);
   };
 
   const handleScroll = () => {
@@ -40,15 +102,16 @@ function Navbar() {
   };
 
   useEffect(() => {
+    const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
+    if (targetId) {
+      const target = document.getElementById(targetId);
+      if (target) target.scrollIntoView();
+    }
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    console.log(scrollPos);
-  }, [scrollPos]);
 
   return (
     <AppBar
@@ -59,7 +122,6 @@ function Navbar() {
         boxShadow: 0,
       }}
     >
-      {/* <StyledAppBar position='sticky'> */}
       <Grid
         container
         direction='row'
@@ -73,30 +135,53 @@ function Navbar() {
             variant='text'
             size='large'
             sx={{ '&:hover': { bgcolor: 'transparent' } }}
+            onClick={() => {
+              window.location = '/#intro';
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
             <img
               className='navbar-logo'
               src='/tbp-logo.png'
               alt='tbp-logo'
-              height='30'
+              height='25'
             />
             &nbsp; Tau Beta Pi | UCLA
           </Button>
         </Grid>
         <Grid item>
-          <NavButton variant='text' size='large' onClick={handleClick}>
+          <NavButton
+            sx={{ cursor: 'default' }}
+            variant='text'
+            size='large'
+            onClick={(e) => {
+              handleDropDown(e, MoreDropDownEntries);
+            }}
+            onMouseEnter={(e) => {
+              handleDropDown(e, MoreDropDownEntries);
+            }}
+          >
             More <MoreVertIcon />
           </NavButton>
         </Grid>
         <Grid item>
-          <NavButton variant='text' size='large' onClick={handleClick}>
+          <NavButton
+            sx={{ cursor: 'default' }}
+            variant='text'
+            size='large'
+            onClick={(e) => {
+              handleDropDown(e, UserDropDownEntries);
+            }}
+            onMouseEnter={(e) => {
+              handleDropDown(e, UserDropDownEntries);
+            }}
+          >
             ethantjackson <PersonOutlineIcon />
           </NavButton>
         </Grid>
       </Grid>
-      {/* </StyledAppBar> */}
       <Menu
-        sx={{ mt: '54px' }}
+        // sx={{ mt: '54px' }}
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
@@ -107,21 +192,39 @@ function Navbar() {
           horizontal: 'right',
         }}
         open={Boolean(anchorEl)}
-        onClose={() => {
-          setAnchorEl(null);
-        }}
+        onClose={handleDropDownClose}
       >
-        <MenuItem
-          sx={{
-            mr: '15px',
-            bgcolor: (theme) => theme.palette.primary.main,
-          }}
-          onClick={() => {
-            setAnchorEl(null);
-          }}
+        <Container
+          disableGutters
+          sx={{ py: 1, pl: 1, pr: 3 }}
+          onMouseLeave={handleDropDownClose}
         >
-          Test
-        </MenuItem>
+          {dropDownItems.map((item, idx) =>
+            !item.destination ? (
+              <MenuItem
+                key={item.name}
+                disabled
+                sx={{
+                  '&.Mui-disabled': {
+                    color: (theme) => theme.palette.text.primary,
+                    opacity: 1,
+                  },
+                  mt: idx > 0 ? 2 : 0,
+                  fontSize: '.9rem',
+                }}
+              >
+                {item.name}
+              </MenuItem>
+            ) : (
+              <DropDownItemLink
+                key={item.name}
+                name={item.name}
+                destination={item.destination}
+                handleDropDownClose={handleDropDownClose}
+              />
+            )
+          )}
+        </Container>
       </Menu>
     </AppBar>
   );

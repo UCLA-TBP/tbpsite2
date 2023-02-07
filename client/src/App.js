@@ -21,6 +21,7 @@ import Officers from './officers/Officers';
 import Faculty from './officers/Faculty';
 import TestBank from './member-services/TestBank';
 import Corporate from './member-services/Corporate';
+import './App.css';
 
 const theme = createTheme({
   palette: {
@@ -30,7 +31,7 @@ const theme = createTheme({
     },
     text: {
       primary: '#fff',
-      secondary: '#BBB',
+      secondary: '#AAA',
     },
   },
   components: {
