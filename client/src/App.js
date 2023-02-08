@@ -4,7 +4,9 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-
+import { ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material';
+import Navbar from './components/Navbar';
 import Home from './home/Home';
 import ProfileRequirements from './profile/ProfileRequirements';
 import Profile from './profile/Profile';
@@ -19,10 +21,36 @@ import Officers from './officers/Officers';
 import Faculty from './officers/Faculty';
 import TestBank from './member-services/TestBank';
 import Corporate from './member-services/Corporate';
+import './App.css';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#000',
+      contrastText: '#fff',
+    },
+    text: {
+      primary: '#fff',
+      secondary: '#AAA',
+    },
+  },
+  components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#000',
+          borderRadius: 0,
+        },
+      },
+    },
+  },
+});
 
 function App() {
   return (
-    <Router>
+    <ThemeProvider theme={theme}>
+      <Navbar />
+      <Router>
         <Routes>
           <Route path='' element={<Home />} />
           <Route path='profile'>
@@ -50,6 +78,7 @@ function App() {
           {/* TODO: ADMIN STUFF */}
         </Routes>
       </Router>
+    </ThemeProvider>
   );
 }
 
