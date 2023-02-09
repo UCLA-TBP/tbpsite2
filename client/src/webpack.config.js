@@ -1,4 +1,10 @@
 const path = require("path");
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
+module.exports = {
+// Other rules like entry, output, devserver....,
+plugins: [
+    new NodePolyfillPlugin()
+]}
 
 module.exports = {
   entry: "./src/index.js",
@@ -8,12 +14,15 @@ module.exports = {
   },
   resolve: {
     fallback: {
+      "http": require.resolve("stream-http"),
       "https": require.resolve("https-browserify"),
       "fs": false,
       "child_process": false,
       "crypto": require.resolve("crypto-browserify"),
+      "zlib": require.resolve("react-zlib-js")
     }
   },
+  devtool: false,
   module: {
     rules: [
       {
@@ -22,6 +31,13 @@ module.exports = {
         use: {
           loader: "babel-loader"
         }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          "css-loader"
+        ]
       }
     ]
   }
