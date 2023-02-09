@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   alpha,
   AppBar,
@@ -85,21 +85,8 @@ function Navbar() {
   const [scrollPos, setScrollPos] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [dropDownItems, setDropDownItems] = useState([]);
-
-  const handleDropDown = (e, items) => {
-    setAnchorEl(e.currentTarget);
-    setDropDownItems(items);
-  };
-
-  const handleDropDownClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleScroll = () => {
-    const winScroll =
-      document.body.scrollTop || document.documentElement.scrollTop;
-    setScrollPos(winScroll);
-  };
+  const dropDownEntered = useRef(false);
+  const [dropDownTimer, setDropDownTimer] = useState(null);
 
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
@@ -108,10 +95,38 @@ function Navbar() {
       if (target) target.scrollIntoView();
     }
     window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const handleDropDown = (e, items) => {
+    setAnchorEl(e.currentTarget);
+    setDropDownItems(items);
+    if (dropDownTimer) clearTimeout(dropDownTimer);
+  };
+
+  const handleDropDownClose = () => {
+    setAnchorEl(null);
+    dropDownEntered.current = false;
+  };
+
+  const handleScroll = () => {
+    const winScroll =
+      document.body.scrollTop || document.documentElement.scrollTop;
+    setScrollPos(winScroll);
+  };
+
+  const startDropDownTimer = () => {
+    setDropDownTimer(
+      setTimeout(() => {
+        if (!dropDownEntered.current) {
+          handleDropDownClose();
+        }
+      }, 100)
+    );
+  };
 
   return (
     <AppBar
@@ -151,37 +166,33 @@ function Navbar() {
         </Grid>
         <Grid item>
           <NavButton
-            sx={{ cursor: 'default' }}
             variant='text'
             size='large'
-            onClick={(e) => {
-              handleDropDown(e, MoreDropDownEntries);
-            }}
+            onClick={handleDropDownClose}
             onMouseEnter={(e) => {
               handleDropDown(e, MoreDropDownEntries);
             }}
+            onMouseLeave={startDropDownTimer}
           >
             More <MoreVertIcon />
           </NavButton>
         </Grid>
         <Grid item>
           <NavButton
-            sx={{ cursor: 'default' }}
             variant='text'
             size='large'
-            onClick={(e) => {
-              handleDropDown(e, UserDropDownEntries);
-            }}
+            onClick={handleDropDownClose}
             onMouseEnter={(e) => {
               handleDropDown(e, UserDropDownEntries);
             }}
+            onMouseLeave={startDropDownTimer}
           >
             ethantjackson <PersonOutlineIcon />
           </NavButton>
         </Grid>
       </Grid>
       <Menu
-        // sx={{ mt: '54px' }}
+        sx={{ mt: '54px' }}
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
@@ -193,11 +204,15 @@ function Navbar() {
         }}
         open={Boolean(anchorEl)}
         onClose={handleDropDownClose}
+        disableEnforceFocus
       >
         <Container
           disableGutters
           sx={{ py: 1, pl: 1, pr: 3 }}
           onMouseLeave={handleDropDownClose}
+          onMouseEnter={() => {
+            dropDownEntered.current = true;
+          }}
         >
           {dropDownItems.map((item, idx) =>
             !item.destination ? (
