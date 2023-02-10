@@ -1,4 +1,4 @@
-.bg {
+.background {
   background-image: url(https://tbp.seas.ucla.edu/static/img/background.gif);
   height: 100vh;
   background-position: center;
@@ -7,4 +7,31 @@
   box-shadow: inset 0 5em 10em 0.25em #000;
   color: white;
   margin-bottom: 100rem;
+}
+
+@media only screen and (max-width: 640px) {
+  .background {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://tbp.seas.ucla.edu/static/img/background.gif);
+    box-shadow: inset 0 5em 10em 0.25em #000;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: 25%;
+  }
+}
+
+.landing-text {
+  position: absolute;
+  width: 80%;
+  color: white;
+}
+
+.landing-middle {
+  top: 40%;
+}
+
+.landing-title {
+  color: white;
+  font-weight: bold;
 }
