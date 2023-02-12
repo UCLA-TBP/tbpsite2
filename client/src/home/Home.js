@@ -7,14 +7,26 @@ function Home() {
     <>
       <div className='background'>
 
-      <Grid container spacing = {0} align = "right" justify = "right" direction = "column">
-          <h1 className='landing-title'>
-            The Honor Society for
-            <br></br>
-            <tg-highlight>All Engineers </tg-highlight>
-            at UCLA
-          </h1>
-      </Grid>
+        <Grid
+        container
+        spacing={0}
+        direction="row"
+        alignItems="center"
+        justifyContent="right"
+        style={{ minHeight: '100vh' }}
+        >
+            <Grid item
+            padding={10}
+            >
+              <h1 className='landing-title'>
+                The Honor Society for
+                <br></br>
+                <tg-highlight>All Engineers </tg-highlight>
+                at UCLA
+              </h1>
+            </Grid>
+ 
+        </Grid> 
 
       </div>
 

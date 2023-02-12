@@ -34,4 +34,9 @@
 .landing-title {
   color: white;
   font-weight: bold;
+  font-size: 375%;
+}
+
+tg-highlight {
+  color: #eec807;
 }
