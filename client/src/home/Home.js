@@ -2,6 +2,11 @@ import React from 'react';
 import './Home.css';
 import { Grid, Button } from '@mui/material';
 import { createTheme, ThemeProvider} from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
 
 const theme = createTheme({
   palette: {
@@ -190,6 +195,87 @@ function Home() {
                   width="100%" height="600px" 
                   frameborder="0">
           </iframe>
+
+          <ThemeProvider theme={theme}>
+            <Grid
+            container
+            spacing={5}
+            direction='row'
+            alignItems='center'
+            justifyContent='center'
+            >
+              
+              <Grid item>
+                <Card sx={{ maxWidth: 500 }}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image="https://tbp.seas.ucla.edu/static/img/career_guidance.jpg"
+                    />
+                    <CardContent className='card-background'>
+                      <h2 className='card-title'>Career Guidance</h2>
+                      <p className='card-text'>With so many accomplished members, TBP is dedicated to assisting the next generation of engineers reach their professional goals. Every year, we host Internship Insider Night featuring a panel of students sharing their summer internship experience and job hunting advice. We also helped plan the 2018 Dean’s Student Showcase, an exclusive networking event for honor society and Dean’s diversity group members.</p>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+
+              <Grid item>
+                <Card sx={{ maxWidth: 500 }}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image="https://tbp.seas.ucla.edu/static/img/academic_guidance1.jpg"
+                    />
+                    <CardContent className='card-background'>
+                      <h2 className='card-title'>Academic Outreach</h2>
+                      {/* I know these line breaks are so ugly, but it was an easy way to make all cards the same size :/ */}
+                      <p className='card-text'>In addition to TBP’s drop-in tutoring program, we also host larger review sessions for Math and Physics courses in preparation for midterms and finals. 
+                        <br></br> <br></br> <br></br> <br></br>
+                      </p>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+
+              <Grid item>
+                <Card sx={{ maxWidth: 500 }}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image="https://tbp.seas.ucla.edu/static/img/emcc.png"
+                    />
+                    <CardContent className='card-background'>
+                      <h2 className='card-title'>EMCC</h2>
+                      <p className='card-text'>Engineering Minds Cultivating Creativity (EMCC) is a weekly science program catered to students at Nora Sterry Elementary School. The main goal of this program is to cultivate a love of math and science in young schoolchildren, preparing them for careers in STEM fields. We have centered the EMCC curriculum on higher level math and science concepts paired with hands-on projects.</p>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+
+              <Grid item>
+                <Card sx={{ maxWidth: 500 }}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image="https://tbp.seas.ucla.edu/static/img/competition1.jpg"
+                    />
+                    <CardContent className='card-background'>
+                      <h2 className='card-title'>Competitions</h2>
+                      <p className='card-text'>Every year, TBP hosts competitions that exercise on-the-fly thinking and creativity. Our biggest event is our annual Rube Goldberg Competition in the winter, which challenges teams to construct a machine out of seemingly random collection of materials to perform a simple task in the most complicated way possible. We also host other events throughout the year like the Cardboard Boat Race.</p>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+
+            </Grid>
+          </ThemeProvider>
+
+
 
         </div>
         <hr></hr>
