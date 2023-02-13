@@ -1,0 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.MuiBackdrop-root {
+  pointer-events: none !important;
+}

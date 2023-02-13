@@ -1,0 +1,263 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  alpha,
+  AppBar,
+  Button,
+  Container,
+  Grid,
+  Link,
+  Menu,
+  MenuItem,
+} from '@mui/material';
+import styled from '@emotion/styled';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+
+const NavButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  '&:hover': {
+    color: alpha(theme.palette.text.secondary, 0.6),
+  },
+}));
+
+const DropDownItemLink = ({ name, destination, handleDropDownClose }) => {
+  return (
+    <Link href={`/${destination}`} underline='none'>
+      <MenuItem
+        sx={{
+          color: (theme) => theme.palette.text.secondary,
+          '&:hover': {
+            color: (theme) => alpha(theme.palette.text.secondary, 0.6),
+          },
+          fontSize: '.9rem',
+        }}
+        onClick={handleDropDownClose}
+      >
+        {name}
+      </MenuItem>
+    </Link>
+  );
+};
+
+class DropDownItemData {
+  constructor(name, destination) {
+    this.name = name;
+    this.destination = destination;
+  }
+}
+
+const MoreDropDownEntries = [
+  new DropDownItemData('HOME'),
+  new DropDownItemData('Who We Are', '#who-we-are'),
+  new DropDownItemData('Becoming a Member', '#becoming-a-member'),
+  new DropDownItemData('Tutoring', '#tutoring'),
+  new DropDownItemData('Activities', '#activities'),
+  new DropDownItemData('Contact', '#contact'),
+  new DropDownItemData('EVENTS'),
+  new DropDownItemData('Events', 'events'),
+  new DropDownItemData('TUTORING QUICKLINKS'),
+  new DropDownItemData('Schedule', 'tutoring/schedule'),
+  new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
+  new DropDownItemData('Feedback', 'tutoring/feedback'),
+  new DropDownItemData('Log Hours', 'log_hours'),
+  new DropDownItemData('CONTACT QUICKLINKS'),
+  new DropDownItemData('Officers', 'officers'),
+  new DropDownItemData('Advisors and Faculty', 'officers/faculty'),
+];
+
+const UserDropDownEntries = [
+  new DropDownItemData('ADMIN'),
+  new DropDownItemData('Admin Panel', '#!'),
+  new DropDownItemData('Candidates', '#!'),
+  new DropDownItemData('Active members', '#!'),
+  new DropDownItemData('Requirement Attendance', 'profile/requirements'),
+  new DropDownItemData('All Profiles', '#!'),
+  new DropDownItemData('Tutoring', '#!'),
+  new DropDownItemData('Downloads', '#!'),
+  new DropDownItemData('Wiki', '#!'),
+  new DropDownItemData('MEMBER SERVICES'),
+  new DropDownItemData('Profile', 'profile'),
+  new DropDownItemData('Testbank', 'profile/upload_test'),
+  new DropDownItemData('Log Out', '#!'),
+];
+
+function Navbar() {
+  const [scrollPos, setScrollPos] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [dropDownItems, setDropDownItems] = useState([]);
+  const dropDownEntered = useRef(false);
+  const [dropDownTimer, setDropDownTimer] = useState(null);
+  const [dropDownOpened, setDropDownOpened] = useState(false);
+
+  useEffect(() => {
+    const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
+    if (targetId) {
+      const target = document.getElementById(targetId);
+      if (target) target.scrollIntoView();
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleDropDown = (e, items) => {
+    setAnchorEl(e.currentTarget);
+    setDropDownItems(items);
+    setDropDownOpened(true);
+    if (dropDownTimer) clearTimeout(dropDownTimer);
+  };
+
+  const handleDropDownClose = () => {
+    setAnchorEl(null);
+    setDropDownOpened(false);
+    dropDownEntered.current = false;
+  };
+
+  const handleScroll = () => {
+    const winScroll =
+      document.body.scrollTop || document.documentElement.scrollTop;
+    setScrollPos(winScroll);
+  };
+
+  const startDropDownTimer = () => {
+    setDropDownTimer(
+      setTimeout(() => {
+        if (!dropDownEntered.current) {
+          handleDropDownClose();
+        }
+      }, 100)
+    );
+  };
+
+  return (
+    <AppBar
+      position='fixed'
+      sx={{
+        backgroundColor: (theme) =>
+          alpha(theme.palette.primary.main, 0.8 * Math.min(1, scrollPos / 500)),
+        boxShadow: 0,
+      }}
+    >
+      <Grid
+        container
+        direction='row'
+        justifyContent='flex-end'
+        spacing={1.5}
+        sx={{ px: 3, py: 1.5 }}
+      >
+        <Grid item>
+          <Button
+            color='inherit'
+            variant='text'
+            size='large'
+            sx={{ '&:hover': { bgcolor: 'transparent' } }}
+            onClick={() => {
+              window.location = '/#intro';
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            <img
+              className='navbar-logo'
+              src='/tbp-logo.png'
+              alt='tbp-logo'
+              height='25'
+            />
+            &nbsp; Tau Beta Pi | UCLA
+          </Button>
+        </Grid>
+        <Grid item>
+          <NavButton
+            variant='text'
+            size='large'
+            onClick={
+              dropDownOpened
+                ? handleDropDownClose
+                : (e) => {
+                    handleDropDown(e, MoreDropDownEntries);
+                  }
+            }
+            onMouseEnter={(e) => {
+              handleDropDown(e, MoreDropDownEntries);
+            }}
+            onMouseLeave={startDropDownTimer}
+          >
+            More <MoreVertIcon />
+          </NavButton>
+        </Grid>
+        <Grid item>
+          <NavButton
+            variant='text'
+            size='large'
+            onClick={
+              dropDownOpened
+                ? handleDropDownClose
+                : (e) => {
+                    handleDropDown(e, UserDropDownEntries);
+                  }
+            }
+            onMouseEnter={(e) => {
+              handleDropDown(e, UserDropDownEntries);
+            }}
+            onMouseLeave={startDropDownTimer}
+          >
+            ethantjackson <PersonOutlineIcon />
+          </NavButton>
+        </Grid>
+      </Grid>
+      <Menu
+        sx={{ mt: '54px' }}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={Boolean(anchorEl)}
+        onClose={handleDropDownClose}
+        disableEnforceFocus
+      >
+        <Container
+          disableGutters
+          sx={{ py: 1, pl: 1, pr: 3 }}
+          onMouseLeave={handleDropDownClose}
+          onMouseEnter={() => {
+            dropDownEntered.current = true;
+          }}
+        >
+          {dropDownItems.map((item, idx) =>
+            !item.destination ? (
+              <MenuItem
+                key={item.name}
+                disabled
+                sx={{
+                  '&.Mui-disabled': {
+                    color: (theme) => theme.palette.text.primary,
+                    opacity: 1,
+                  },
+                  mt: idx > 0 ? 2 : 0,
+                  fontSize: '.9rem',
+                }}
+              >
+                {item.name}
+              </MenuItem>
+            ) : (
+              <DropDownItemLink
+                key={item.name}
+                name={item.name}
+                destination={item.destination}
+                handleDropDownClose={handleDropDownClose}
+              />
+            )
+          )}
+        </Container>
+      </Menu>
+    </AppBar>
+  );
+}
+
+export default Navbar;
