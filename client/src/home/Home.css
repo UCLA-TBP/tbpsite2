@@ -57,7 +57,6 @@ tg-highlight {
 
 .section-secondary {
   background: #222;
-  height: 100vh;
 }
 
 .header {
@@ -70,11 +69,15 @@ tg-highlight {
   text-transform: none;
 }
 
+#who-we-are-text {
+  font-size: 1.5rem;
+}
+
 .paragraph {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-weight: 400;
   -webkit-text-size-adjust: 100%;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   line-height: 1.5;
   color: #bdbdbd;
 }
@@ -87,4 +90,8 @@ tg-highlight {
   padding-top: 60px;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.no-underline {
+  text-decoration: none;
 }
