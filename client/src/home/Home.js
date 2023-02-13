@@ -4,8 +4,8 @@ import { Grid } from '@mui/material';
 
 function Home() {
   return (
-    <>
-      <div className='background'>
+    <body>
+    <div className='background'>
 
         <Grid
         container
@@ -35,14 +35,40 @@ function Home() {
         </section>
 
       </div>
-
-      <div>
-        <div id='intro' style={{ position: 'absolute', top: '100vh' }}>
-          WHO WE ARE
+      
+      <div className='section-secondary'>
+        <div id='intro' className='section-container'>
+          <h1 className='header'>
+            Who We Are
+          </h1>
+          <p className='paragraph'>
+            Tau Beta Pi is the national honor society representing the entire engineering profession, and the California Epsilon chapter has served the UCLA community since 1952. By recognizing professional achievement, as well as service, Tau Beta Pi strives to uphold its creed of “Integrity and Excellence in Engineering.”
+          </p>
         </div>
+        <hr></hr>
+
+        <div>
+          BECOMING A MEMBER
+        </div>
+        <hr></hr>
+
+        <div>
+          TUTORING
+        </div>
+        <hr></hr>
+
+        <div>
+          ACTIVITIES
+        </div>
+        <hr></hr>
+
+        <div>
+          CONTACTS AND OTHER LINKS
+        </div>
+
       </div>
       
-    </>
+    </body>
   );
 }
 
