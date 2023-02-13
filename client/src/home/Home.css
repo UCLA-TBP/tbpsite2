@@ -34,9 +34,24 @@
 .landing-title {
   color: white;
   font-weight: bold;
-  font-size: 375%;
+  font-size: 350%;
 }
 
 tg-highlight {
   color: #eec807;
+}
+
+.scroll-down a {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  z-index: 2;
+  display: inline-block;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  color: #fff;
+  font: normal 400 20px/1 'Josefin Sans', sans-serif;
+  letter-spacing: .1em;
+  text-decoration: none;
+  transition: opacity .3s;
 }

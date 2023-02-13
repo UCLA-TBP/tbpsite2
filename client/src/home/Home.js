@@ -26,13 +26,22 @@ function Home() {
               </h1>
             </Grid>
  
-        </Grid> 
+        </Grid>
+
+        <section className='scroll-down'>
+          <a href="/#intro">
+            ADD ICON HERE
+          </a>
+        </section>
 
       </div>
 
-      <div id='who-we-are' style={{ position: 'absolute', top: '100vh' }}>
-        WHO WE ARE
+      <div>
+        <div id='intro' style={{ position: 'absolute', top: '100vh' }}>
+          WHO WE ARE
+        </div>
       </div>
+      
     </>
   );
 }
