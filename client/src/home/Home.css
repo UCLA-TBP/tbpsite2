@@ -95,3 +95,16 @@ tg-highlight {
 .no-underline {
   text-decoration: none;
 }
+
+iframe {
+  overflow-clip-margin: content-box !important;
+  overflow: clip !important;
+}
+
+#email-link {
+  color: white;
+}
+
+#last-section {
+  padding-bottom: 100px;
+}
