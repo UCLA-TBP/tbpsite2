@@ -31,16 +31,6 @@
   top: 40%;
 }
 
-.landing-title {
-  color: white;
-  font-weight: bold;
-  font-size: 350%;
-}
-
-tg-highlight {
-  color: #eec807;
-}
-
 .scroll-down a {
   position: absolute;
   bottom: 20px;
@@ -54,10 +44,6 @@ tg-highlight {
   letter-spacing: 0.1em;
   text-decoration: none;
   transition: opacity 0.3s;
-}
-
-.section-secondary {
-  background: #222;
 }
 
 .header {
@@ -76,27 +62,14 @@ tg-highlight {
   font-size: 1.5rem;
 }
 
-.paragraph {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  -webkit-text-size-adjust: 100%;
-  font-size: 1.2rem;
-  line-height: 1.5;
-  color: #bdbdbd;
-}
-
 .section-container {
   box-sizing: content-box;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 60px;
+  padding: 60px;
   padding-left: 15px;
   padding-right: 15px;
-}
-
-.no-underline {
-  text-decoration: none;
 }
 
 iframe {
