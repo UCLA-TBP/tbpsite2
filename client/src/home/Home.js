@@ -99,6 +99,7 @@ function Home() {
                 href='https://docs.google.com/document/d/17oQJGGIGzcz9VtFnot_9rObTi4uyO117aAPtr_z0jjk/edit'
                 color='secondary'
                 variant='outlined'
+                size='large'
               >
                 Candidate Packet
               </Button>
@@ -111,6 +112,7 @@ function Home() {
                 color='secondary'
                 variant='outlined'
                 href='/requirements/'
+                size='large'
               >
                 Induction Requirements
               </Button>
@@ -122,6 +124,7 @@ function Home() {
                 href='https://docs.google.com/presentation/d/1QIRI2plBd81QsNovjsXyeII12dIHrJie0B3EFORbUjA/edit#slide=id.p'
                 color='secondary'
                 variant='outlined'
+                size='large'
               >
                 Orientation Presentation
               </Button>
@@ -132,6 +135,7 @@ function Home() {
                 href='https://tbp.seas.ucla.edu/media/files/Officer-Positions.pdf'
                 color='secondary'
                 variant='outlined'
+                size='large'
               >
                 Officer Positions
               </Button>
@@ -164,7 +168,12 @@ function Home() {
             justifyContent='center'
           >
             <Grid item>
-              <Button href='/schedule/' color='secondary' variant='outlined'>
+              <Button
+                size='large'
+                href='/schedule/'
+                color='secondary'
+                variant='outlined'
+              >
                 SCHEDULE
               </Button>
             </Grid>
@@ -174,6 +183,7 @@ function Home() {
                 href='/reviewsheets/'
                 color='secondary'
                 variant='outlined'
+                size='large'
               >
                 REVIEW SHEETS
               </Button>
@@ -184,6 +194,7 @@ function Home() {
                 href='/tutoring/feedback/'
                 color='secondary'
                 variant='outlined'
+                size='large'
               >
                 FEEDBACK
               </Button>
@@ -194,6 +205,7 @@ function Home() {
                 href='/tutoring/log_hours/'
                 color='secondary'
                 variant='outlined'
+                size='large'
               >
                 LOG HOURS
               </Button>
@@ -212,7 +224,7 @@ function Home() {
             src='https://calendar.google.com/calendar/embed?src=lv5b95c37926e08bbs8jj20n38%40group.calendar.google.com&ctz=America%2FLos_Angeles'
             width='100%'
             height='600px'
-            frameborder='0'
+            frameBorder='0'
           ></iframe>
 
           <Grid
