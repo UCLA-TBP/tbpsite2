@@ -42,7 +42,7 @@ function Home() {
           <Typography variant='h2' mb={'20px'}>
             Who We Are
           </Typography>
-          <Typography variant='p' id='who-we-are-text'>
+          <Typography variant='p' mb={'20px'} id='who-we-are-text'>
             Tau Beta Pi is the national honor society representing the entire
             engineering profession, and the California Epsilon chapter has
             served the UCLA community since 1952. By recognizing professional
@@ -57,12 +57,12 @@ function Home() {
           <Typography variant='h2' mb={'20px'}>
             Becoming a Member
           </Typography>
-          <Typography variant='p'>
+          <Typography variant='p' mb={'20px'}>
             Invitations for membership may be extended to undergraduate
             engineering majors who are in the top:
           </Typography>
           <div>placeholder</div>
-          <Typography variant='p'>
+          <Typography variant='p' mb={'20px'}>
             Candidates must also have completed at least 28 units from UCLA to
             be invited in the Fall or Spring. Junior and senior class
             designation are based on units completed per the&nbsp;
@@ -72,13 +72,13 @@ function Home() {
             . For Fall invitations, grades and units obtained up until the end
             of Summer Session A - 6 Weeks will be considered.
           </Typography>
-          <Typography variant='p'>
+          <Typography variant='p' mb={'20px'}>
             Once eligible and candidacy is confirmed, initiates must demonstrate
             their commitment to TBP’s values. This is done through weekly
             volunteering, service, and several TBP traditions like polishing the
             Bent outside Boelter Hall.
           </Typography>
-          <Typography variant='p'>
+          <Typography variant='p' mb={'20px'}>
             After officially initiating, members have the option to continue
             their involvement by either joining the officer board or becoming a
             distinguished active member. Both receive discounts on TBP
@@ -150,12 +150,12 @@ function Home() {
           <Typography variant='h2' mb={'20px'}>
             Tutoring
           </Typography>
-          <Typography variant='p'>
+          <Typography variant='p' mb={'20px'}>
             We offer free drop-in tutoring in all STEM courses at our office
             (Boelter 6266). Feel free to stop by for homework help or pre-exam
             practice. Please check the schedule below for course availability.
           </Typography>
-          <Typography variant='p'>
+          <Typography variant='p' mb={'20px'}>
             Hours: Mon-Fri, 10 am - 4 pm, Weeks 3 - 9
           </Typography>
 
@@ -339,9 +339,11 @@ function Home() {
             Contacts and Other Links
           </Typography>
 
-          <Typography variant='p'>Location: 6266 Boelter Hall</Typography>
+          <Typography variant='p' mb={'20px'}>
+            Location: 6266 Boelter Hall
+          </Typography>
 
-          <Typography variant='p'>
+          <Typography variant='p' mb={'20px'}>
             Email:&nbsp;
             <a
               id='email-link'

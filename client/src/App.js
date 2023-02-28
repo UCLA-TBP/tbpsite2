@@ -68,6 +68,7 @@ const theme = createTheme({
       fontWeight: 400,
       fontSize: '1.2rem',
       lineHeight: 1.5,
+      display: 'block',
     },
     h1: {
       color: 'white',
