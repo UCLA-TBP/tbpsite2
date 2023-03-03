@@ -10,7 +10,8 @@
 
 @media only screen and (max-width: 640px) {
   .background {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://tbp.seas.ucla.edu/static/img/background.gif);
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url(https://tbp.seas.ucla.edu/static/img/background.gif);
     box-shadow: inset 0 5em 10em 0.25em #000;
     height: 100vh;
     background-position: center;
@@ -30,16 +31,6 @@
   top: 40%;
 }
 
-.landing-title {
-  color: white;
-  font-weight: bold;
-  font-size: 350%;
-}
-
-tg-highlight {
-  color: #eec807;
-}
-
 .scroll-down a {
   position: absolute;
   bottom: 20px;
@@ -50,33 +41,25 @@ tg-highlight {
   transform: translate(0, -50%);
   color: #fff;
   font: normal 400 20px/1 'Josefin Sans', sans-serif;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
   text-decoration: none;
-  transition: opacity .3s;
-}
-
-.section-secondary {
-  background: #222;
-  height: 100vh;
+  transition: opacity 0.3s;
 }
 
 .header {
   margin: 0 0 20px 0;
   font-size: 2.7rem;
   line-height: 1.2;
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   font-weight: 400;
-  color: #FFF;
+  color: #fff;
   text-transform: none;
 }
 
-.paragraph {
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-weight: 400;
-  -webkit-text-size-adjust: 100%;
+#who-we-are-text {
   font-size: 1.5rem;
-  line-height: 1.5;
-  color: #bdbdbd;
 }
 
 .section-container {
@@ -84,7 +67,41 @@ tg-highlight {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 60px;
+  padding: 60px;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+iframe {
+  overflow-clip-margin: content-box !important;
+  overflow: clip !important;
+  padding-bottom: 50px;
+}
+
+#email-link {
+  color: white;
+}
+
+.last-section {
+  padding-bottom: 100px;
+}
+
+.card-background {
+  background: #2d2d2d;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.4;
+  color: white;
+}
+
+.card-text {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  -webkit-text-size-adjust: 100%;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  color: #bdbdbd;
 }
