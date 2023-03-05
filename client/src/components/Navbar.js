@@ -87,6 +87,7 @@ function Navbar() {
   const [dropDownItems, setDropDownItems] = useState([]);
   const dropDownEntered = useRef(false);
   const [dropDownTimer, setDropDownTimer] = useState(null);
+  const [dropDownOpened, setDropDownOpened] = useState(false);
 
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
@@ -104,11 +105,13 @@ function Navbar() {
   const handleDropDown = (e, items) => {
     setAnchorEl(e.currentTarget);
     setDropDownItems(items);
+    setDropDownOpened(true);
     if (dropDownTimer) clearTimeout(dropDownTimer);
   };
 
   const handleDropDownClose = () => {
     setAnchorEl(null);
+    setDropDownOpened(false);
     dropDownEntered.current = false;
   };
 
@@ -168,7 +171,13 @@ function Navbar() {
           <NavButton
             variant='text'
             size='large'
-            onClick={handleDropDownClose}
+            onClick={
+              dropDownOpened
+                ? handleDropDownClose
+                : (e) => {
+                    handleDropDown(e, MoreDropDownEntries);
+                  }
+            }
             onMouseEnter={(e) => {
               handleDropDown(e, MoreDropDownEntries);
             }}
@@ -181,7 +190,13 @@ function Navbar() {
           <NavButton
             variant='text'
             size='large'
-            onClick={handleDropDownClose}
+            onClick={
+              dropDownOpened
+                ? handleDropDownClose
+                : (e) => {
+                    handleDropDown(e, UserDropDownEntries);
+                  }
+            }
             onMouseEnter={(e) => {
               handleDropDown(e, UserDropDownEntries);
             }}
