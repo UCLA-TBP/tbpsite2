@@ -1,12 +1,15 @@
 import React from 'react';
 import './Home.css';
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Divider, Chip } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import Icon from '@mui/material/Icon';
 import { CardActionArea } from '@mui/material';
 import EventsCalendar from '../components/EventsCalendar';
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+import ArrowCircleDown from '@mui/icons-material/ArrowCircleDown';
 
 function Home() {
   return (
@@ -31,7 +34,7 @@ function Home() {
         </Grid>
 
         <section className='scroll-down'>
-          <a href='/#who-we-are'>ADD ICON HERE</a>
+          <a href='/#who-we-are'><ArrowCircleDownIcon></ArrowCircleDownIcon></a>
         </section>
       </div>
 
@@ -48,7 +51,10 @@ function Home() {
             creed of “Integrity and Excellence in Engineering.”
           </Typography>
         </div>
-        <hr></hr>
+        
+        <Divider>
+          <Chip variant="outlined" label="" />
+        </Divider>
 
         <div className='section-container' id='becoming-a-member'>
           <Typography variant='h2' mb={'20px'}>
@@ -140,7 +146,9 @@ function Home() {
           </Grid>
         </div>
 
-        <hr></hr>
+        <Divider>
+          <Chip variant="outlined" label="" />
+        </Divider>
 
         <div className='section-container' id='tutoring'>
           {/* <h1 className='header'>Tutoring</h1> */}
@@ -209,7 +217,10 @@ function Home() {
             </Grid>
           </Grid>
         </div>
-        <hr></hr>
+        
+        <Divider>
+          <Chip variant="outlined" label="" />
+        </Divider>
 
         <div className='section-container' id='activities'>
           {/* <h1 className='header'>Activities</h1> */}
@@ -323,7 +334,10 @@ function Home() {
             </Grid>
           </Grid>
         </div>
-        <hr></hr>
+        
+        <Divider>
+          <Chip variant="outlined" label="" />
+        </Divider>
 
         <div id='contact' className='section-container last-section'>
           {/* <h1 className='header'>Contacts and Other Links</h1> */}
