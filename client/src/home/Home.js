@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import EventsCalendar from '../components/EventsCalendar';
 
 function Home() {
   return (
@@ -17,17 +18,15 @@ function Home() {
           direction='row'
           alignItems='center'
           justifyContent='right'
-          style={{ minHeight: '100vh' }}
+          style={{ minHeight: '100vh', textAlign: 'right' }}
         >
-          <Grid item pr={'10%'}>
-            {/* <h1 className='landing-title'> */}
+          <Grid item pr={{ sm: '10%', xl: '20%' }}>
             <Typography variant='h1'>
               The Honor Society for
               <br></br>
               <Typography variant='highlight'>All Engineers </Typography>
               at UCLA
             </Typography>
-            {/* </h1> */}
           </Grid>
         </Grid>
 
@@ -38,7 +37,6 @@ function Home() {
 
       <div className='section-secondary'>
         <div id='who-we-are' className='section-container'>
-          {/* <h1 className='header'>Who We Are</h1> */}
           <Typography variant='h2' mb={'20px'}>
             Who We Are
           </Typography>
@@ -53,7 +51,6 @@ function Home() {
         <hr></hr>
 
         <div className='section-container' id='becoming-a-member'>
-          {/* <h1 className='header'>Becoming a Member</h1> */}
           <Typography variant='h2' mb={'20px'}>
             Becoming a Member
           </Typography>
@@ -220,12 +217,7 @@ function Home() {
             Activities
           </Typography>
 
-          <iframe
-            src='https://calendar.google.com/calendar/embed?src=lv5b95c37926e08bbs8jj20n38%40group.calendar.google.com&ctz=America%2FLos_Angeles'
-            width='100%'
-            height='600px'
-            frameBorder='0'
-          ></iframe>
+          <EventsCalendar />
 
           <Grid
             container
