@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Home.css';
-import { Grid, Button, Divider, Chip } from '@mui/material';
+import { Grid, Button, Divider, Chip, Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -8,14 +8,73 @@ import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import { CardActionArea } from '@mui/material';
 import EventsCalendar from '../components/EventsCalendar';
-import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowCircleDown from '@mui/icons-material/ArrowCircleDown';
+import styled from '@emotion/styled';
+import update from 'react-addons-update';
+
+const FloatingContainer = styled(Container)(({ theme }) => ({
+  backgroundColor: theme.palette.custom.main,
+  borderRadius: '12px',
+  marginBottom: '100px',
+}));
+
+const sectionIds = [
+  'who-we-are',
+  'becoming-a-member',
+  'tutoring',
+  'activities',
+  'contact',
+];
 
 function Home() {
+  const [scrollPos, setScrollPos] = useState(0);
+  const sectionMap = useRef({});
+  const [sectionScales, setSectionScales] = useState({});
+
+  const handleScroll = () => {
+    const winScroll =
+      document.body.scrollTop || document.documentElement.scrollTop;
+    setScrollPos(winScroll);
+
+    const newScales = {};
+    Object.entries(sectionMap.current).forEach((entry) => {
+      const id = entry[0];
+      const ele = entry[1].getBoundingClientRect();
+      const centerDist = Math.abs(
+        window.innerHeight / 2 - ele.height / 2 - ele.top
+      );
+      const scale = Math.max(
+        0,
+        1.1 - 1.1 * (centerDist / (4 * window.innerHeight))
+      );
+      newScales[id] = scale;
+      // const newScales = update(sectionScales, {
+      //   [id]: { $set: scale },
+      // });
+      // setSectionScales(newScales);
+    });
+    setSectionScales(newScales);
+  };
+
+  useEffect(() => {
+    sectionIds.forEach((id) => {
+      sectionMap.current[id] = document.getElementById(id);
+    });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <div className='background'>
-        <Grid
+        {/* <Grid
           container
           spacing={0}
           direction='row'
@@ -30,16 +89,52 @@ function Home() {
               <Typography variant='highlight'>All Engineers </Typography>
               at UCLA
             </Typography>
-          </Grid>
-        </Grid>
+          </Grid> */}
+        {/* </Grid> */}
 
-        <section className='scroll-down'>
-          <a href='/#who-we-are'><ArrowCircleDownIcon></ArrowCircleDownIcon></a>
+        <Container
+          disableGutters
+          maxWidth='100%'
+          sx={{
+            position: 'sticky',
+            top: `${40 - scrollPos / 100}%`,
+            textAlign: 'right',
+            paddingRight: { sm: '10vw', xl: '20vw' },
+            opacity: Math.max(0, 1.4 - scrollPos / 400),
+          }}
+        >
+          <Typography variant='h1'>
+            The Honor Society for
+            <br></br>
+            <Typography variant='highlight'>All Engineers </Typography>
+            at UCLA
+          </Typography>
+        </Container>
+        <section
+          className='scroll-down'
+          style={{
+            position: 'sticky',
+            top: `${90 - scrollPos / 25}%`,
+            opacity: Math.max(0, 1.4 - scrollPos / 100),
+          }}
+        >
+          {/* <a href='/#who-we-are'>
+            <KeyboardArrowDownIcon />
+          </a>
+           */}
+          <div className='arrow arrow-first' />
+          <div className='arrow arrow-second' />
         </section>
       </div>
 
       <div className='section-secondary'>
-        <div id='who-we-are' className='section-container'>
+        <FloatingContainer
+          id='who-we-are'
+          className='section-container'
+          sx={{
+            transform: `scale(${sectionScales['who-we-are']})`,
+          }}
+        >
           <Typography variant='h2' mb={'20px'}>
             Who We Are
           </Typography>
@@ -50,13 +145,17 @@ function Home() {
             achievement, as well as service, Tau Beta Pi strives to uphold its
             creed of “Integrity and Excellence in Engineering.”
           </Typography>
-        </div>
-        
-        <Divider>
-          <Chip variant="outlined" label="" />
-        </Divider>
+        </FloatingContainer>
 
-        <div className='section-container' id='becoming-a-member'>
+        {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
+
+        <FloatingContainer
+          className='section-container'
+          id='becoming-a-member'
+          sx={{
+            transform: `scale(${sectionScales['becoming-a-member']})`,
+          }}
+        >
           <Typography variant='h2' mb={'20px'}>
             Becoming a Member
           </Typography>
@@ -144,13 +243,17 @@ function Home() {
               </Button>
             </Grid>
           </Grid>
-        </div>
+        </FloatingContainer>
 
-        <Divider>
-          <Chip variant="outlined" label="" />
-        </Divider>
+        {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
 
-        <div className='section-container' id='tutoring'>
+        <FloatingContainer
+          className='section-container'
+          id='tutoring'
+          sx={{
+            transform: `scale(${sectionScales['tutoring']})`,
+          }}
+        >
           {/* <h1 className='header'>Tutoring</h1> */}
           <Typography variant='h2' mb={'20px'}>
             Tutoring
@@ -216,13 +319,17 @@ function Home() {
               </Button>
             </Grid>
           </Grid>
-        </div>
-        
-        <Divider>
-          <Chip variant="outlined" label="" />
-        </Divider>
+        </FloatingContainer>
 
-        <div className='section-container' id='activities'>
+        {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
+
+        <FloatingContainer
+          className='section-container'
+          id='activities'
+          sx={{
+            transform: `scale(${sectionScales['activities']})`,
+          }}
+        >
           {/* <h1 className='header'>Activities</h1> */}
           <Typography variant='h2' mb={'20px'}>
             Activities
@@ -333,13 +440,17 @@ function Home() {
               </Card>
             </Grid>
           </Grid>
-        </div>
-        
-        <Divider>
-          <Chip variant="outlined" label="" />
-        </Divider>
+        </FloatingContainer>
 
-        <div id='contact' className='section-container last-section'>
+        {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
+
+        <FloatingContainer
+          id='contact'
+          className='section-container last-section'
+          sx={{
+            transform: `scale(${sectionScales['contact']})`,
+          }}
+        >
           {/* <h1 className='header'>Contacts and Other Links</h1> */}
           <Typography variant='h2' mb={'20px'}>
             Contacts and Other Links
@@ -426,7 +537,7 @@ function Home() {
               </Button>
             </Grid>
           </Grid>
-        </div>
+        </FloatingContainer>
       </div>
     </>
   );
