@@ -184,8 +184,8 @@ function Home() {
             After officially initiating, members have the option to continue
             their involvement by either joining the officer board or becoming a
             distinguished active member. Both receive discounts on TBP
-            graduation regalia. Please follow links below for more details on
-            induction, requirements, and officership.
+            graduation regalia. Please visit the links below for more details on
+            induction and requirements.
           </Typography>
 
           <Grid
@@ -198,54 +198,36 @@ function Home() {
           >
             <Grid item>
               <Button
-                href='https://docs.google.com/document/d/17oQJGGIGzcz9VtFnot_9rObTi4uyO117aAPtr_z0jjk/edit'
                 color='secondary'
                 variant='outlined'
+                href='/candidates/'
                 size='large'
               >
                 Candidate Packet
               </Button>
             </Grid>
-
-            {/* The following href link should take you to the requirements page, not sure if this is setup yet */}
             <Grid item>
-              {/* <a href='/requirements/' className='no-underline'> */}
               <Button
                 color='secondary'
                 variant='outlined'
-                href='/requirements/'
-                size='large'
-              >
-                Induction Requirements
-              </Button>
-              {/* </a> */}
-            </Grid>
-
-            <Grid item>
-              <Button
-                href='https://docs.google.com/presentation/d/1QIRI2plBd81QsNovjsXyeII12dIHrJie0B3EFORbUjA/edit#slide=id.p'
-                color='secondary'
-                variant='outlined'
+                href='/candidates/'
                 size='large'
               >
                 Orientation Presentation
               </Button>
             </Grid>
-
             <Grid item>
               <Button
-                href='https://tbp.seas.ucla.edu/media/files/Officer-Positions.pdf'
                 color='secondary'
                 variant='outlined'
+                href='/candidates/'
                 size='large'
               >
-                Officer Positions
+                Candidate Homepage
               </Button>
             </Grid>
           </Grid>
         </FloatingContainer>
-
-        {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
 
         <FloatingContainer
           className='section-container'
@@ -322,7 +304,8 @@ function Home() {
         </FloatingContainer>
 
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
-
+      
+        
         <FloatingContainer
           className='section-container'
           id='activities'
@@ -337,7 +320,7 @@ function Home() {
 
           <EventsCalendar />
 
-          <Grid
+          {/*<Grid
             container
             spacing={5}
             pt={4}
@@ -379,9 +362,9 @@ function Home() {
                     image='https://tbp.seas.ucla.edu/static/img/academic_guidance1.jpg'
                   />
                   <CardContent className='card-background'>
-                    <h2 className='card-title'>Academic Outreach</h2>
+        <h2 className='card-title'>Academic Outreach</h2>*/}
                     {/* I know these line breaks are so ugly, but it was an easy way to make all cards the same size :/ */}
-                    <p className='card-text'>
+                    {/*<p className='card-text'>
                       In addition to TBP’s drop-in tutoring program, we also
                       host larger review sessions for Math and Physics courses
                       in preparation for midterms and finals.
@@ -439,7 +422,7 @@ function Home() {
                 </CardActionArea>
               </Card>
             </Grid>
-          </Grid>
+      </Grid>*/}
         </FloatingContainer>
 
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}

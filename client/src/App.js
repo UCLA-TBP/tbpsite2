@@ -21,6 +21,8 @@ import Officers from './officers/Officers';
 import Faculty from './officers/Faculty';
 import TestBank from './member-services/TestBank';
 import Corporate from './member-services/Corporate';
+import Candidates from './candidates/Candidates';
+import Requirements from './candidates/MCCheck';
 import './App.css';
 
 const navTheme = createTheme({
@@ -146,6 +148,8 @@ function App() {
             <Route path='member_services'>
               <Route path='testbank' element={<TestBank />} />
               <Route path='corporate' element={<Corporate />} />
+            </Route>
+            <Route path='candidates' element={<Candidates />}>
             </Route>
             {/* TODO: ADMIN STUFF */}
           </Routes>
