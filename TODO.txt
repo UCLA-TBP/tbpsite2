@@ -1,3 +1,9 @@
+--SERVER--
+- setup TBP webmaster mongo cluster and google dev console
+- replace corresponding mongo/google ids in .env
+- make schema for resume & test bank, add reference fields in User schema
+
+
 --ROUTES--
 1. PROFILE
   - profile (combine w/ edit profile)
