@@ -1,5 +1,9 @@
 .background {
-  background-image: url(https://tbp.seas.ucla.edu/static/img/background.gif);
+  /* background-image: url(https://tbp.seas.ucla.edu/static/img/background.gif); */
+  background-image: url('../../public/temp_background.png');
+  position: sticky;
+  z-index: -1;
+  top: 0;
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
@@ -10,8 +14,10 @@
 
 @media only screen and (max-width: 640px) {
   .background {
+    /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://tbp.seas.ucla.edu/static/img/background.gif); */
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url(https://tbp.seas.ucla.edu/static/img/background.gif);
+      url('../../public/temp_background.png');
+    position: sticky;
     box-shadow: inset 0 5em 10em 0.25em #000;
     height: 100vh;
     background-position: center;
@@ -19,6 +25,10 @@
     background-size: cover;
     background-position-x: 25%;
   }
+}
+
+.section-secondary {
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .landing-text {
@@ -36,14 +46,64 @@
   bottom: 20px;
   left: 50%;
   z-index: 2;
-  display: inline-block;
-  -webkit-transform: translate(0, -50%);
-  transform: translate(0, -50%);
+  /* display: inline-block; */
+  /* -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%); */
   color: #fff;
-  font: normal 400 20px/1 'Josefin Sans', sans-serif;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  transition: opacity 0.3s;
+  transform: scale(2);
+  /* font: normal 400 20px/1 'Josefin Sans', sans-serif; */
+  /* letter-spacing: 0.1em; */
+  /* text-decoration: none; */
+  /* transition: opacity 0.3s; */
+}
+.arrow {
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: 50% 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+.arrow-first {
+  animation: arrow-movement 3s ease-in-out infinite;
+}
+.arrow-second {
+  animation: arrow-movement 3s 1.5s ease-in-out infinite;
+}
+
+.arrow:before,
+.arrow:after {
+  background: #ccc;
+  content: '';
+  display: block;
+  height: 3.5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+}
+
+.arrow:before {
+  transform: rotate(30deg) translateX(-39%);
+  transform-origin: top left;
+}
+
+.arrow:after {
+  transform: rotate(-30deg) translateX(39%);
+  transform-origin: top right;
+}
+
+@keyframes arrow-movement {
+  0% {
+    opacity: 0;
+    top: -50px;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .header {
