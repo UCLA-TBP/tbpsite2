@@ -28,6 +28,8 @@ const sectionIds = [
   'contact',
 ];
 
+const maxScale = 1.1;
+
 function Home() {
   const [scrollPos, setScrollPos] = useState(0);
   const sectionMap = useRef({});
@@ -47,7 +49,7 @@ function Home() {
       );
       const scale = Math.max(
         0,
-        1.1 - 1.1 * (centerDist / (4 * window.innerHeight))
+        maxScale - maxScale * (centerDist / (4 * window.innerHeight))
       );
       newScales[id] = scale;
       // const newScales = update(sectionScales, {

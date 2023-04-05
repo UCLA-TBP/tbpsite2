@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const findOrCreate = require('mongoose-findorcreate');
 
 const UserSchema = new mongoose.Schema({
-  username: {
+  email: {
     type: String,
     trim: true,
     index: { unique: true },
@@ -31,11 +31,29 @@ const UserSchema = new mongoose.Schema({
       'Login credentials or Google ID is required',
     ],
   },
+  position: {
+    type: String,
+    enum: ['candidate', 'member', 'officer'],
+    required: true,
+    default: 'candidate',
+  },
+  name: {
+    first: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+    last: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+  },
   // add resume, submitted tests field, other profile information (name, etc.)
 });
 
 function hasLoginOrGoogleId() {
-  return (this.username && this.password) || this.googleId;
+  return (this.email && this.password) || this.googleId;
 }
 
 UserSchema.plugin(findOrCreate);

@@ -133,7 +133,7 @@ function App() {
               <Route path='upload_test' element={<UploadTest />} />
             </Route>
             <Route path='events' element={<Events />} />
-            <Route path='tutoring'>
+            {/* <Route path='tutoring'>
               <Route path='' element={<Navigate to='schedule' replace />} />
               <Route path='schedule' element={<TutoringSchedule />} />
               <Route path='review_sheets' element={<ReviewSheets />} />
@@ -147,7 +147,7 @@ function App() {
             <Route path='member_services'>
               <Route path='testbank' element={<TestBank />} />
               <Route path='corporate' element={<Corporate />} />
-            </Route>
+            </Route> */}
             {/* TODO: ADMIN STUFF */}
             <Route path='admin'>
               <Route path='candidate_tracker' element={<CandidateTracker />} />

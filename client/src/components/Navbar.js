@@ -20,7 +20,12 @@ const NavButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const DropDownItemLink = ({ name, destination, handleDropDownClose }) => {
+const DropDownItemLink = ({
+  name,
+  destination,
+  handleDropDownClose,
+  centerOnElement,
+}) => {
   return (
     <Link href={`/${destination}`} underline='none'>
       <MenuItem
@@ -31,7 +36,10 @@ const DropDownItemLink = ({ name, destination, handleDropDownClose }) => {
           },
           fontSize: '.9rem',
         }}
-        onClick={handleDropDownClose}
+        onClick={() => {
+          // handleDropDownClose();
+          // if (destination[0] === '#') centerOnElement(destination.slice(1));
+        }}
       >
         {name}
       </MenuItem>
@@ -56,30 +64,32 @@ const MoreDropDownEntries = [
   new DropDownItemData('Contact', '#contact'),
   new DropDownItemData('EVENTS'),
   new DropDownItemData('Events', 'events'),
-  new DropDownItemData('TUTORING QUICKLINKS'),
-  new DropDownItemData('Schedule', 'tutoring/schedule'),
-  new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
-  new DropDownItemData('Feedback', 'tutoring/feedback'),
-  new DropDownItemData('Log Hours', 'log_hours'),
-  new DropDownItemData('CONTACT QUICKLINKS'),
-  new DropDownItemData('Officers', 'officers'),
-  new DropDownItemData('Advisors and Faculty', 'officers/faculty'),
+  // new DropDownItemData('TUTORING QUICKLINKS'),
+  // new DropDownItemData('Schedule', 'tutoring/schedule'),
+  // new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
+  // new DropDownItemData('Feedback', 'tutoring/feedback'),
+  // new DropDownItemData('Log Hours', 'log_hours'),
+  // new DropDownItemData('CONTACT QUICKLINKS'),
+  // new DropDownItemData('Officers', 'officers'),
+  // new DropDownItemData('Advisors and Faculty', 'officers/faculty'),
 ];
 
+// TODO: change available links based on user position
 const UserDropDownEntries = [
-  new DropDownItemData('ADMIN'),
-  new DropDownItemData('Admin Panel', '#!'),
-  new DropDownItemData('Candidates', '#!'),
-  new DropDownItemData('Active members', '#!'),
-  new DropDownItemData('Requirement Attendance', 'profile/requirements'),
-  new DropDownItemData('All Profiles', '#!'),
-  new DropDownItemData('Tutoring', '#!'),
-  new DropDownItemData('Downloads', '#!'),
-  new DropDownItemData('Wiki', '#!'),
-  new DropDownItemData('MEMBER SERVICES'),
-  new DropDownItemData('Profile', 'profile'),
-  new DropDownItemData('Testbank', 'profile/upload_test'),
-  new DropDownItemData('Log Out', '#!'),
+  new DropDownItemData('OFFICER'),
+  new DropDownItemData('Candidate Tracker', 'admin/candidate_tracker'),
+  // new DropDownItemData('Admin Panel', '#!'),
+  // new DropDownItemData('Candidates', '#!'),
+  // new DropDownItemData('Active members', '#!'),
+  // new DropDownItemData('Requirement Attendance', 'profile/requirements'),
+  // new DropDownItemData('All Profiles', '#!'),
+  // new DropDownItemData('Tutoring', '#!'),
+  // new DropDownItemData('Downloads', '#!'),
+  // new DropDownItemData('Wiki', '#!'),
+  // new DropDownItemData('MEMBER SERVICES'),
+  // new DropDownItemData('Profile', 'profile'),
+  // new DropDownItemData('Testbank', 'profile/upload_test'),
+  // new DropDownItemData('Log Out', '#!'),
 ];
 
 function Navbar() {
@@ -92,6 +102,18 @@ function Navbar() {
 
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
+    centerOnElement(targetId);
+  }, [window.location.href]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const centerOnElement = (targetId) => {
     if (targetId) {
       const target = document.getElementById(targetId);
       if (target)
@@ -101,12 +123,7 @@ function Navbar() {
           inline: 'center',
         });
     }
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [window.location.href]);
+  };
 
   const handleDropDown = (e, items) => {
     setAnchorEl(e.currentTarget);
@@ -257,6 +274,7 @@ function Navbar() {
                 name={item.name}
                 destination={item.destination}
                 handleDropDownClose={handleDropDownClose}
+                centerOnElement={centerOnElement}
               />
             )
           )}
