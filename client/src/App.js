@@ -22,6 +22,7 @@ import Faculty from './officers/Faculty';
 import TestBank from './member-services/TestBank';
 import Corporate from './member-services/Corporate';
 import './App.css';
+import CandidateTracker from './admin/CandidateTracker';
 
 const navTheme = createTheme({
   palette: {
@@ -148,6 +149,9 @@ function App() {
               <Route path='corporate' element={<Corporate />} />
             </Route>
             {/* TODO: ADMIN STUFF */}
+            <Route path='admin'>
+              <Route path='candidate_tracker' element={<CandidateTracker />} />
+            </Route>
           </Routes>
         </Router>
       </ThemeProvider>

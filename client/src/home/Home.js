@@ -23,6 +23,7 @@ const sectionIds = [
   'who-we-are',
   'becoming-a-member',
   'tutoring',
+  'event-calendar',
   'activities',
   'contact',
 ];
@@ -325,18 +326,29 @@ function Home() {
 
         <FloatingContainer
           className='section-container'
+          id='event-calendar'
+          sx={{
+            transform: `scale(${sectionScales['event-calendar']})`,
+          }}
+        >
+          {/* <h1 className='header'>Activities</h1> */}
+          <Typography variant='h2' mb={'20px'}>
+            Event Calendar
+          </Typography>
+
+          <EventsCalendar />
+        </FloatingContainer>
+
+        <FloatingContainer
+          className='section-container'
           id='activities'
           sx={{
             transform: `scale(${sectionScales['activities']})`,
           }}
         >
-          {/* <h1 className='header'>Activities</h1> */}
           <Typography variant='h2' mb={'20px'}>
             Activities
           </Typography>
-
-          <EventsCalendar />
-
           <Grid
             container
             spacing={5}

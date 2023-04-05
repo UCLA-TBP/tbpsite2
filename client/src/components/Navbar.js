@@ -51,6 +51,7 @@ const MoreDropDownEntries = [
   new DropDownItemData('Who We Are', '#who-we-are'),
   new DropDownItemData('Becoming a Member', '#becoming-a-member'),
   new DropDownItemData('Tutoring', '#tutoring'),
+  new DropDownItemData('Event Calendar', '#event-calendar'),
   new DropDownItemData('Activities', '#activities'),
   new DropDownItemData('Contact', '#contact'),
   new DropDownItemData('EVENTS'),
@@ -93,14 +94,19 @@ function Navbar() {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
     if (targetId) {
       const target = document.getElementById(targetId);
-      if (target) target.scrollIntoView();
+      if (target)
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center',
+        });
     }
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [window.location.href]);
 
   const handleDropDown = (e, items) => {
     setAnchorEl(e.currentTarget);
