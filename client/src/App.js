@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Navigate,
@@ -6,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material';
+import axios from 'axios';
 import Navbar from './components/Navbar';
 import Home from './home/Home';
 import ProfileRequirements from './profile/ProfileRequirements';
@@ -22,6 +24,7 @@ import Faculty from './officers/Faculty';
 import TestBank from './member-services/TestBank';
 import Corporate from './member-services/Corporate';
 import './App.css';
+import CandidateTracker from './admin/CandidateTracker';
 
 const navTheme = createTheme({
   palette: {
@@ -29,7 +32,11 @@ const navTheme = createTheme({
       main: '#000',
       contrastText: '#fff',
     },
+    secondary: {
+      main: '#eec807',
+    },
     text: {
+      main: '#fff',
       primary: '#fff',
       secondary: '#AAA',
     },
@@ -116,10 +123,22 @@ const theme = createTheme({
 });
 
 function App() {
+  const [authenticatedUser, setAuthenticatedUser] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get('/user/authenticated-user')
+      .then((res) => setAuthenticatedUser(res.data.user))
+      .catch((err) => setAuthenticatedUser(null));
+  }, []);
+
   return (
     <>
       <ThemeProvider theme={navTheme}>
-        <Navbar />
+        <Navbar
+          authenticatedUser={authenticatedUser}
+          setAuthenticatedUser={setAuthenticatedUser}
+        />
       </ThemeProvider>
       <ThemeProvider theme={theme}>
         <Router>
@@ -132,7 +151,7 @@ function App() {
               <Route path='upload_test' element={<UploadTest />} />
             </Route>
             <Route path='events' element={<Events />} />
-            <Route path='tutoring'>
+            {/* <Route path='tutoring'>
               <Route path='' element={<Navigate to='schedule' replace />} />
               <Route path='schedule' element={<TutoringSchedule />} />
               <Route path='review_sheets' element={<ReviewSheets />} />
@@ -146,8 +165,11 @@ function App() {
             <Route path='member_services'>
               <Route path='testbank' element={<TestBank />} />
               <Route path='corporate' element={<Corporate />} />
-            </Route>
+            </Route> */}
             {/* TODO: ADMIN STUFF */}
+            <Route path='admin'>
+              <Route path='candidate_tracker' element={<CandidateTracker />} />
+            </Route>
           </Routes>
         </Router>
       </ThemeProvider>

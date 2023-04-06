@@ -23,9 +23,12 @@ const sectionIds = [
   'who-we-are',
   'becoming-a-member',
   'tutoring',
+  'event-calendar',
   'activities',
   'contact',
 ];
+
+const maxScale = 1.1;
 
 function Home() {
   const [scrollPos, setScrollPos] = useState(0);
@@ -46,7 +49,7 @@ function Home() {
       );
       const scale = Math.max(
         0,
-        1.1 - 1.1 * (centerDist / (4 * window.innerHeight))
+        maxScale - maxScale * (centerDist / (4 * window.innerHeight))
       );
       newScales[id] = scale;
       // const newScales = update(sectionScales, {
@@ -133,6 +136,7 @@ function Home() {
           className='section-container'
           sx={{
             transform: `scale(${sectionScales['who-we-are']})`,
+            // opacity: `${sectionScales['who-we-are']}`,
           }}
         >
           <Typography variant='h2' mb={'20px'}>
@@ -325,18 +329,29 @@ function Home() {
 
         <FloatingContainer
           className='section-container'
+          id='event-calendar'
+          sx={{
+            transform: `scale(${sectionScales['event-calendar']})`,
+          }}
+        >
+          {/* <h1 className='header'>Activities</h1> */}
+          <Typography variant='h2' mb={'20px'}>
+            Event Calendar
+          </Typography>
+
+          <EventsCalendar />
+        </FloatingContainer>
+
+        <FloatingContainer
+          className='section-container'
           id='activities'
           sx={{
             transform: `scale(${sectionScales['activities']})`,
           }}
         >
-          {/* <h1 className='header'>Activities</h1> */}
           <Typography variant='h2' mb={'20px'}>
             Activities
           </Typography>
-
-          <EventsCalendar />
-
           <Grid
             container
             spacing={5}

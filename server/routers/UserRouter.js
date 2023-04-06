@@ -35,34 +35,38 @@ userRouter.get(
 );
 
 userRouter.post('/register', (req, res) => {
-  const { email, name, password } = req.body;
-  User.findOne({ email }, (err, user) => {
-    if (err)
+  const { email, password, name } = req.body;
+  User.findOne({ email })
+    .then((user) => {
+      if (user)
+        res.status(400).json({
+          message: { msgBody: 'Email is already in use', msgError: true },
+        });
+      else {
+        const newUser = User({ email, password, name });
+        newUser
+          .save()
+          .then((savedUser) => {
+            res.status(201).json({
+              message: {
+                msgBody: 'Account successfully created',
+                msgError: false,
+              },
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json({
+              message: { msgBody: 'Error saving user', msgError: true },
+            });
+          });
+      }
+    })
+    .catch((err) => {
       res.status(500).json({
-        message: { msgBody: 'Server error has occured', msgError: true },
+        message: { msgBody: 'Cannot register user', msgError: true },
       });
-    else if (user)
-      res.status(400).json({
-        message: { msgBody: 'Email is already in use', msgError: true },
-      });
-    else {
-      const newUser = User({ email, username, password });
-      newUser.save((err) => {
-        if (err) {
-          console.log(err);
-          res.status(500).json({
-            message: { msgBody: 'Error saving user', msgError: true },
-          });
-        } else
-          res.status(201).json({
-            message: {
-              msgBody: 'Account successfully created',
-              msgError: false,
-            },
-          });
-      });
-    }
-  });
+    });
 });
 
 userRouter.post(
@@ -70,12 +74,11 @@ userRouter.post(
   passport.authenticate('local', { session: false }),
   (req, res) => {
     if (req.isAuthenticated()) {
-      const { _id, username } = req.user; // also extract other pertinent info (name, etc.)
-      const token = signToken(_id);
+      const token = signToken(req.user._id);
       res.cookie('access_token', token, { httpOnly: true, sameSite: true });
       res.status(200).json({
         isAuthenticated: true,
-        user: { _id, username },
+        user: req.user,
       });
     }
   }
@@ -83,7 +86,7 @@ userRouter.post(
 
 userRouter.post(
   '/logout',
-  passport.authenticate('jwt', { session: false }),
+  // passport.authenticate('jwt', { session: false }),
   (req, res) => {
     res.clearCookie('access_token');
     res.json({ user: null, success: true }); // clear user appropriately
@@ -95,21 +98,20 @@ userRouter.get(
   '/authenticated-user',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const { _id, username } = req.user; // also extract other pertinent info (name, etc.)
-    res.status(200).json({ isAuthenticated: true, user: { _id, username } });
+    res.status(200).json({ isAuthenticated: true, user: req.user });
   }
 );
 
 // get user by id
 userRouter.get('/get-user/:id', (req, res) => {
-  User.findById(req.params.id).exec((err, user) => {
-    if (err) {
+  User.findById(req.params.id)
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
       console.log(err);
       res.status(500).send('Could not retrieve user by id from database');
-    }
-    const { _id, username } = user;
-    res.send({ _id: _id, username: username });
-  });
+    });
 });
 
 module.exports = userRouter;
