@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Navigate,
@@ -6,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material';
+import axios from 'axios';
 import Navbar from './components/Navbar';
 import Home from './home/Home';
 import ProfileRequirements from './profile/ProfileRequirements';
@@ -30,7 +32,11 @@ const navTheme = createTheme({
       main: '#000',
       contrastText: '#fff',
     },
+    secondary: {
+      main: '#eec807',
+    },
     text: {
+      main: '#fff',
       primary: '#fff',
       secondary: '#AAA',
     },
@@ -117,10 +123,22 @@ const theme = createTheme({
 });
 
 function App() {
+  const [authenticatedUser, setAuthenticatedUser] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get('/user/authenticated-user')
+      .then((res) => setAuthenticatedUser(res.data.user))
+      .catch((err) => setAuthenticatedUser(null));
+  }, []);
+
   return (
     <>
       <ThemeProvider theme={navTheme}>
-        <Navbar />
+        <Navbar
+          authenticatedUser={authenticatedUser}
+          setAuthenticatedUser={setAuthenticatedUser}
+        />
       </ThemeProvider>
       <ThemeProvider theme={theme}>
         <Router>

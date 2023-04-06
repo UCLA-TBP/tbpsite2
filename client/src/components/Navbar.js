@@ -12,6 +12,8 @@ import {
 import styled from '@emotion/styled';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import LoginForm from './LoginForm';
+import LogoutButton from './LogoutButton';
 
 const NavButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -75,7 +77,7 @@ const MoreDropDownEntries = [
 ];
 
 // TODO: change available links based on user position
-const UserDropDownEntries = [
+const OfficerDropDownEntries = [
   new DropDownItemData('OFFICER'),
   new DropDownItemData('Candidate Tracker', 'admin/candidate_tracker'),
   // new DropDownItemData('Admin Panel', '#!'),
@@ -92,18 +94,55 @@ const UserDropDownEntries = [
   // new DropDownItemData('Log Out', '#!'),
 ];
 
-function Navbar() {
+const MemberDropDownEntries = [new DropDownItemData('MEMBER SERVICES')];
+
+const CandidateDropDownEntries = [new DropDownItemData('CANDIDATE SERVICES')];
+
+const UniversalDropDownEntries = [new DropDownItemData('logout')];
+
+function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   const [scrollPos, setScrollPos] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [dropDownItems, setDropDownItems] = useState([]);
   const dropDownEntered = useRef(false);
   const [dropDownTimer, setDropDownTimer] = useState(null);
   const [dropDownOpened, setDropDownOpened] = useState(false);
+  const [userDropDownEntries, setUserDropDownEntries] = useState([]);
 
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
     centerOnElement(targetId);
   }, [window.location.href]);
+
+  useEffect(() => {
+    const userPosition = authenticatedUser?.position;
+    switch (userPosition) {
+      case 'officer':
+        setUserDropDownEntries([
+          ...OfficerDropDownEntries,
+          ...MemberDropDownEntries,
+          ...CandidateDropDownEntries,
+          ...UniversalDropDownEntries,
+        ]);
+        break;
+      case 'member':
+        setUserDropDownEntries([
+          ...MemberDropDownEntries,
+          ...CandidateDropDownEntries,
+          ...UniversalDropDownEntries,
+        ]);
+        break;
+      case 'candidate':
+        setUserDropDownEntries([
+          ...CandidateDropDownEntries,
+          ...UniversalDropDownEntries,
+        ]);
+        break;
+      default:
+        setUserDropDownEntries([]);
+        break;
+    }
+  }, [authenticatedUser]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -209,25 +248,47 @@ function Navbar() {
             More <MoreVertIcon />
           </NavButton>
         </Grid>
-        <Grid item>
-          <NavButton
-            variant='text'
-            size='large'
-            onClick={
-              dropDownOpened
-                ? handleDropDownClose
-                : (e) => {
-                    handleDropDown(e, UserDropDownEntries);
-                  }
-            }
-            onMouseEnter={(e) => {
-              handleDropDown(e, UserDropDownEntries);
-            }}
-            onMouseLeave={startDropDownTimer}
-          >
-            ethantjackson <PersonOutlineIcon />
-          </NavButton>
-        </Grid>
+        {authenticatedUser ? (
+          <Grid item>
+            <NavButton
+              variant='text'
+              size='large'
+              onClick={
+                dropDownOpened
+                  ? handleDropDownClose
+                  : (e) => {
+                      handleDropDown(e, userDropDownEntries);
+                    }
+              }
+              onMouseEnter={(e) => {
+                handleDropDown(e, userDropDownEntries);
+              }}
+              onMouseLeave={startDropDownTimer}
+            >
+              {authenticatedUser.name.first} <PersonOutlineIcon />
+            </NavButton>
+          </Grid>
+        ) : (
+          <Grid item>
+            <NavButton
+              variant='text'
+              size='large'
+              onClick={
+                dropDownOpened
+                  ? handleDropDownClose
+                  : (e) => {
+                      handleDropDown(e, [new DropDownItemData('login')]);
+                    }
+              }
+              onMouseEnter={(e) => {
+                handleDropDown(e, [new DropDownItemData('login')]);
+              }}
+              onMouseLeave={startDropDownTimer}
+            >
+              log in <PersonOutlineIcon />
+            </NavButton>
+          </Grid>
+        )}
       </Grid>
       <Menu
         sx={{ mt: '54px' }}
@@ -252,8 +313,38 @@ function Navbar() {
             dropDownEntered.current = true;
           }}
         >
-          {dropDownItems.map((item, idx) =>
-            !item.destination ? (
+          {dropDownItems.map((item, idx) => {
+            if (item.destination)
+              return (
+                <DropDownItemLink
+                  key={item.name}
+                  name={item.name}
+                  destination={item.destination}
+                  handleDropDownClose={handleDropDownClose}
+                  centerOnElement={centerOnElement}
+                />
+              );
+            if (item.name === 'login')
+              return (
+                <LoginForm
+                  key={item.name}
+                  loginCallback={(res) => {
+                    setAuthenticatedUser(res.data.user);
+                    handleDropDownClose();
+                  }}
+                />
+              );
+            if (item.name === 'logout')
+              return (
+                <LogoutButton
+                  key={item.name}
+                  logoutCallback={() => {
+                    setAuthenticatedUser(null);
+                    handleDropDownClose();
+                  }}
+                />
+              );
+            return (
               <MenuItem
                 key={item.name}
                 disabled
@@ -268,16 +359,8 @@ function Navbar() {
               >
                 {item.name}
               </MenuItem>
-            ) : (
-              <DropDownItemLink
-                key={item.name}
-                name={item.name}
-                destination={item.destination}
-                handleDropDownClose={handleDropDownClose}
-                centerOnElement={centerOnElement}
-              />
-            )
-          )}
+            );
+          })}
         </Container>
       </Menu>
     </AppBar>

@@ -104,14 +104,14 @@ userRouter.get(
 
 // get user by id
 userRouter.get('/get-user/:id', (req, res) => {
-  User.findById(req.params.id).exec((err, user) => {
-    if (err) {
+  User.findById(req.params.id)
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
       console.log(err);
       res.status(500).send('Could not retrieve user by id from database');
-    }
-    const { _id, email } = user;
-    res.send({ _id: _id, email: email });
-  });
+    });
 });
 
 module.exports = userRouter;

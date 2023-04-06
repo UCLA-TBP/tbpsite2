@@ -136,6 +136,7 @@ function Home() {
           className='section-container'
           sx={{
             transform: `scale(${sectionScales['who-we-are']})`,
+            // opacity: `${sectionScales['who-we-are']}`,
           }}
         >
           <Typography variant='h2' mb={'20px'}>
