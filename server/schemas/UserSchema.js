@@ -49,6 +49,29 @@ const UserSchema = new mongoose.Schema({
       required: true,
     },
   },
+  major:{
+    type: String, 
+    trim: true,
+    required: true,
+  },
+  graduation_year:{
+    type: String,  
+    trim: true, 
+    required: true,
+  },
+  initiation_quarter:{
+    quarter:{
+      type: String, 
+      enum: ['Fall', 'Spring'], 
+      trim: true,
+      required: true, 
+    },
+    year:{
+      type: String, 
+      trim: true,
+      required: true, 
+    },
+  }
   // add resume, submitted tests field, other profile information (name, etc.)
 });
 
