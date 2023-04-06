@@ -61,6 +61,7 @@ const LoginForm = ({ loginCallback }) => {
         size='small'
         fullWidth
         margin='dense'
+        autoComplete='off'
         onKeyDown={(e) => {
           e.stopPropagation();
         }}
@@ -74,6 +75,8 @@ const LoginForm = ({ loginCallback }) => {
         size='small'
         fullWidth
         margin='normal'
+        autoComplete='off'
+        type={'password'}
         onKeyDown={(e) => {
           e.stopPropagation();
         }}

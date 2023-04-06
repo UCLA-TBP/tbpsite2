@@ -49,6 +49,60 @@ const UserSchema = new mongoose.Schema({
       required: true,
     },
   },
+  requirements: {
+    tutoring: {
+      type: Boolean,
+      default: false,
+    },
+    testBank: {
+      type: Boolean,
+      default: false,
+    },
+    corporate: {
+      type: Boolean,
+      default: false,
+    },
+    candidateQuiz: {
+      type: Boolean,
+      default: false,
+    },
+    bentPolishing: {
+      type: Boolean,
+      default: false,
+    },
+    initiation: {
+      type: Boolean,
+      default: false,
+    },
+    membershipFee: {
+      type: Boolean,
+      default: false,
+    },
+    newMemberForm: {
+      type: Boolean,
+      default: false,
+    },
+    generalSocial: {
+      type: Boolean,
+      default: false,
+    },
+    coffeeChat: {
+      type: Boolean,
+      default: false,
+    },
+    academicOutreach: {
+      type: Boolean,
+      default: false,
+    },
+    socialMediaPost: {
+      type: Boolean,
+      default: false,
+    },
+    chalking: {
+      type: Boolean,
+      default: false,
+    },
+  },
   // add resume, submitted tests field, other profile information (name, etc.)
 });
 

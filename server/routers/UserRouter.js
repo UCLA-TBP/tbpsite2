@@ -35,7 +35,7 @@ userRouter.get(
 );
 
 userRouter.post('/register', (req, res) => {
-  const { email, password, name } = req.body;
+  const { email } = req.body;
   User.findOne({ email })
     .then((user) => {
       if (user)
@@ -43,7 +43,7 @@ userRouter.post('/register', (req, res) => {
           message: { msgBody: 'Email is already in use', msgError: true },
         });
       else {
-        const newUser = User({ email, password, name });
+        const newUser = User(req.body);
         newUser
           .save()
           .then((savedUser) => {
@@ -113,5 +113,39 @@ userRouter.get('/get-user/:id', (req, res) => {
       res.status(500).send('Could not retrieve user by id from database');
     });
 });
+
+userRouter.get('/get-candidates', (req, res) => {
+  User.find({ position: 'candidate' })
+    .then((candidates) => {
+      res.send(candidates);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not retrieve candidates');
+    });
+});
+
+userRouter.get('/get-all-users', (req, res) => {
+  User.find()
+    .then((users) => res.send(users))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not retrieve users');
+    });
+});
+
+userRouter.put(
+  '/update-user/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    console.log(req.body);
+    User.findByIdAndUpdate(req.params.id, { $set: req.body })
+      .then((user) => res.send(user))
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send('Could not update user');
+      });
+  }
+);
 
 module.exports = userRouter;
