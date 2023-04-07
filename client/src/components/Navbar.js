@@ -112,6 +112,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
     centerOnElement(targetId);
+    // eslint-disable-next-line
   }, [window.location.href]);
 
   useEffect(() => {
