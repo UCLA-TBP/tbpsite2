@@ -341,9 +341,9 @@ function Home() {
             opacity: `${sectionOpacities['activities']}`,
           }}
         >
-          {/* <Typography variant='h2' mb={'20px'}>
+          <Typography variant='h2' mb={'20px'}>
             Activities
-          </Typography> */}
+          </Typography>
           <Grid
             container
             spacing={5}
