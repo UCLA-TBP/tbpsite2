@@ -15,8 +15,14 @@ import update from 'react-addons-update';
 
 const FloatingContainer = styled(Container)(({ theme }) => ({
   backgroundColor: theme.palette.custom.main,
-  borderRadius: '12px',
-  marginBottom: '100px',
+  [theme.breakpoints.up('xs')]: {
+    marginBottom: '20px',
+    borderRadius: '0',
+  },
+  [theme.breakpoints.up('sm')]: {
+    marginBottom: '100px',
+    borderRadius: '12px',
+  },
 }));
 
 const sectionIds = [
