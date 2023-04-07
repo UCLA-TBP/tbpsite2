@@ -172,9 +172,8 @@ function Home() {
           </Typography>
           <Typography variant='p' mb={'20px'}>
             Invitations for membership may be extended to undergraduate
-            engineering majors who are in the top:
+            engineering majors who are in the top 1/5 of Senior Class or 1/8 of Junior Class.
           </Typography>
-          <div>placeholder</div>
           <Typography variant='p' mb={'20px'}>
             Candidates must also have completed at least 28 units from UCLA to
             be invited in the Fall or Spring. Junior and senior class
@@ -272,7 +271,7 @@ function Home() {
             <Grid item>
               <Button
                 size='large'
-                href='/schedule/'
+                href='tutoring/schedule/'
                 color='secondary'
                 variant='outlined'
               >
@@ -280,16 +279,16 @@ function Home() {
               </Button>
             </Grid>
 
-            <Grid item>
+            {/* <Grid item>
               <Button
-                href='/reviewsheets/'
+                href='tutoring/reviewsheets/'
                 color='secondary'
                 variant='outlined'
                 size='large'
               >
                 REVIEW SHEETS
               </Button>
-            </Grid>
+            </Grid> */}
 
             <Grid item>
               <Button
@@ -302,7 +301,7 @@ function Home() {
               </Button>
             </Grid>
 
-            <Grid item>
+            {/* <Grid item>
               <Button
                 href='/tutoring/log_hours/'
                 color='secondary'
@@ -311,7 +310,7 @@ function Home() {
               >
                 LOG HOURS
               </Button>
-            </Grid>
+            </Grid> */}
           </Grid>
         </FloatingContainer>
 
@@ -342,10 +341,10 @@ function Home() {
             opacity: `${sectionOpacities['activities']}`,
           }}
         >
-          <Typography variant='h2' mb={'20px'}>
+          {/* <Typography variant='h2' mb={'20px'}>
             Activities
-          </Typography>
-          {/*<Grid
+          </Typography> */}
+          <Grid
             container
             spacing={5}
             pt={4}
@@ -359,19 +358,17 @@ function Home() {
                   <CardMedia
                     component='img'
                     height='200'
-                    image='https://tbp.seas.ucla.edu/static/img/career_guidance.jpg'
+                    image={`${process.env.PUBLIC_URL}/home/careerguidance.png`}
                   />
                   <CardContent className='card-background'>
                     <h2 className='card-title'>Career Guidance</h2>
                     <p className='card-text'>
                       With so many accomplished members, TBP is dedicated to
                       assisting the next generation of engineers reach their
-                      professional goals. Every year, we host Internship Insider
-                      Night featuring a panel of students sharing their summer
-                      internship experience and job hunting advice. We also
-                      helped plan the 2018 Dean’s Student Showcase, an exclusive
-                      networking event for honor society and Dean’s diversity
-                      group members.
+                      professional goals. We host career fairs and offer 
+                      information sessions to help connect members to employers 
+                      as well as resume workshops and support to prepare for graduate school.
+                      <br></br> <br></br> 
                     </p>
                   </CardContent>
                 </CardActionArea>
@@ -384,12 +381,12 @@ function Home() {
                   <CardMedia
                     component='img'
                     height='200'
-                    image='https://tbp.seas.ucla.edu/static/img/academic_guidance1.jpg'
+                    image={`${process.env.PUBLIC_URL}/home/ao.jpeg`}
                   />
                   <CardContent className='card-background'>
-        <h2 className='card-title'>Academic Outreach</h2>*/}
+        <h2 className='card-title'>Academic Outreach</h2>
                     {/* I know these line breaks are so ugly, but it was an easy way to make all cards the same size :/ */}
-                    {/*<p className='card-text'>
+                    <p className='card-text'>
                       In addition to TBP’s drop-in tutoring program, we also
                       host larger review sessions for Math and Physics courses
                       in preparation for midterms and finals.
@@ -406,7 +403,7 @@ function Home() {
                   <CardMedia
                     component='img'
                     height='200'
-                    image='https://tbp.seas.ucla.edu/static/img/emcc.png'
+                    image= {`${process.env.PUBLIC_URL}/home/emcc.png`}
                   />
                   <CardContent className='card-background'>
                     <h2 className='card-title'>EMCC</h2>
@@ -430,7 +427,7 @@ function Home() {
                   <CardMedia
                     component='img'
                     height='200'
-                    image='https://tbp.seas.ucla.edu/static/img/competition1.jpg'
+                    image={`${process.env.PUBLIC_URL}/home/competition.png`}
                   />
                   <CardContent className='card-background'>
                     <h2 className='card-title'>Competitions</h2>
@@ -447,7 +444,7 @@ function Home() {
                 </CardActionArea>
               </Card>
             </Grid>
-      </Grid>*/}
+      </Grid>
         </FloatingContainer>
 
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
@@ -494,17 +491,17 @@ function Home() {
               </Button>
             </Grid>
 
-            <Grid item>
+            {/* <Grid item>
               <Button href='/faculty/' color='secondary' variant='outlined'>
                 ADVISORS AND FACULTY
               </Button>
-            </Grid>
+            </Grid> */}
 
-            <Grid item>
+            {/* <Grid item>
               <Button href='/donate/' color='secondary' variant='outlined'>
                 DONATE
               </Button>
-            </Grid>
+            </Grid> */}
 
             <Grid item>
               <Button

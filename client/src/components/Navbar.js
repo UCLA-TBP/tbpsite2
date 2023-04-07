@@ -66,13 +66,13 @@ const MoreDropDownEntries = [
   new DropDownItemData('Contact', '#contact'),
   new DropDownItemData('EVENTS'),
   new DropDownItemData('Events', 'events'),
-  // new DropDownItemData('TUTORING QUICKLINKS'),
-  // new DropDownItemData('Schedule', 'tutoring/schedule'),
+  new DropDownItemData('TUTORING QUICKLINKS'),
+  new DropDownItemData('Schedule', 'tutoring/schedule'),
   // new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
   // new DropDownItemData('Feedback', 'tutoring/feedback'),
   // new DropDownItemData('Log Hours', 'log_hours'),
-  // new DropDownItemData('CONTACT QUICKLINKS'),
-  // new DropDownItemData('Officers', 'officers'),
+  new DropDownItemData('CONTACT QUICKLINKS'),
+  new DropDownItemData('Officers', 'officers'),
   // new DropDownItemData('Advisors and Faculty', 'officers/faculty'),
 ];
 

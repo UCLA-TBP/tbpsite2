@@ -9,7 +9,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
 
-
 function createData(position, email) {
   return { position, email};
  }
@@ -31,7 +30,7 @@ const rows = [
 
 function Officers() {
   return (
-    <Container style={{ background: '#7f6000', paddingBottom: 20}} >
+    <Container /*style={{ background: '#a66900', paddingBottom: 20}}*/ >
       <Typography variant='h2' mt = {10}>
         Officers
       </Typography>
