@@ -24,7 +24,6 @@ import RouteProtection from './permissions/RouteProtection';
 import { positions } from './permissions/PermissionsUtils';
 
 import Candidates from './candidates/Candidates';
-import Requirements from './candidates/MCCheck';
 import './App.css';
 
 const navTheme = createTheme({
@@ -205,6 +204,19 @@ function App() {
               <Route path='testbank' element={<TestBank />} />
               <Route path='corporate' element={<Corporate />} />
             </Route> */}
+            <Route path='candidates'>
+              <Route
+                path='requirements'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.candidate]}
+                  />
+                }
+              >
+                <Route path='' element={<Candidates authenticatedUser={authenticatedUser}/>} />
+              </Route>
+            </Route>
             {/* TODO: ADMIN STUFF */}
             <Route path='admin'>
               <Route

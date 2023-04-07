@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, Button, Container } from '@mui/material';
+import React, {useEffect}from 'react';
+import { Grid, Container } from '@mui/material';
 import { Typography } from '@mui/material';
-import MCCheck from './MCCheck.js';
-import RouteProtection from './../permissions/RouteProtection';
-import { positions } from './../permissions/PermissionsUtils';
-import axios from 'axios';
+import _ from 'lodash';
 
-function Candidates() {
-  const [authenticatedUser, setAuthenticatedUser] = useState(null);
+function Candidates({authenticatedUser}) {  
+  useEffect(() => {console.log(authenticatedUser)},[]);
 
-  useEffect(() => {
-    axios
-      .get('/user/authenticated-user')
-      .then((res) => setAuthenticatedUser(res.data.user))
-      .catch((err) => setAuthenticatedUser(null));
-  }, []);
-  
   return (
-      authenticatedUser={authenticatedUser},
-      setAuthenticatedUser={setAuthenticatedUser},
-      
-      <div>
+    <div>
       <Container>
         <Typography variant='h2' mt={10}>
           Candidate homepage
@@ -29,27 +16,35 @@ function Candidates() {
           Indicate your tutoring availability <a href='https://forms.gle/x8UW4tPCG9d8CfcU7'>here</a>.
         </Typography>
       </Container>
-
       <Container>
-        <br></br>
-        <MCCheck requirement = {'New Member Form'} />
-        <MCCheck requirement = {'Membership Fee'} />
-        <MCCheck requirement = {'General Social'} />
-        <MCCheck requirement = {'AO'} />
-        <MCCheck requirement = {'Tutoring'} />
-        {/*show hours somehow*/}
-        <MCCheck requirement = {'Test Bank'} />
-        {/*show uploaded tests*/}
-        <MCCheck requirement = {'Social Media Post'} />
-        <MCCheck requirement = {'Resume/Corporate'} />
-        <MCCheck requirement = {'Candidate Quiz'} />
-        <MCCheck requirement = {'Bent Polishing'} />
-        <MCCheck requirement = {'Mentor/Mentee Coffee Chat'} />
-        <MCCheck requirement = {'Chalking'} />
-        <MCCheck requirement = {'Initiation'} />
-
-        {/*TODO: figure out how to differentiate admin/candidate access*/}
-
+      {Object.entries(authenticatedUser?.requirements).map(
+      ([requirement, status]) => {
+        return (
+          <Grid container key={requirement}>
+            <Grid item xs={5} md={2}>
+              <Typography
+                variant='p'
+                color='primary'
+                sm={3}
+                sx={{
+                  fontSize: '1rem',
+                  width: '15rem',
+                }}
+              >
+                {_.startCase(requirement)}
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <input
+                id={requirement}
+                type='checkbox'
+                checked={status}
+              />
+            </Grid>
+          </Grid>
+        );
+      }
+      )}
       </Container>
     </div>
   );

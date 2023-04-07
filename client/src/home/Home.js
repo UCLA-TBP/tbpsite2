@@ -230,7 +230,7 @@ function Home() {
               <Button
                 color='secondary'
                 variant='outlined'
-                href='/candidates/'
+                href='/candidates/requirements'
                 size='large'
               >
                 Candidate Homepage
