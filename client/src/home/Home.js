@@ -51,8 +51,9 @@ function Home() {
         centerDist = Math.min(Math.abs(topDist), Math.abs(botDist));
       }
       const opacity = Math.max(
-        0.5,
-        maxOpacity - maxOpacity * (centerDist / (window.innerHeight / 2))
+        0,
+        maxOpacity -
+          Math.pow(0.5 * window.innerHeight, -2) * Math.pow(centerDist, 2)
       );
       newOpacities[id] = opacity;
       // const newScales = update(sectionScales, {
