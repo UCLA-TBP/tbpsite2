@@ -12,6 +12,8 @@ import {
 import styled from '@emotion/styled';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import LoginForm from './LoginForm';
+import LogoutButton from './LogoutButton';
 
 const NavButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.secondary,
@@ -20,7 +22,12 @@ const NavButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const DropDownItemLink = ({ name, destination, handleDropDownClose }) => {
+const DropDownItemLink = ({
+  name,
+  destination,
+  handleDropDownClose,
+  centerOnElement,
+}) => {
   return (
     <Link href={`/${destination}`} underline='none'>
       <MenuItem
@@ -31,7 +38,10 @@ const DropDownItemLink = ({ name, destination, handleDropDownClose }) => {
           },
           fontSize: '.9rem',
         }}
-        onClick={handleDropDownClose}
+        onClick={() => {
+          // handleDropDownClose();
+          // if (destination[0] === '#') centerOnElement(destination.slice(1));
+        }}
       >
         {name}
       </MenuItem>
@@ -51,56 +61,109 @@ const MoreDropDownEntries = [
   new DropDownItemData('Who We Are', '#who-we-are'),
   new DropDownItemData('Becoming a Member', '#becoming-a-member'),
   new DropDownItemData('Tutoring', '#tutoring'),
+  new DropDownItemData('Event Calendar', '#event-calendar'),
   new DropDownItemData('Activities', '#activities'),
   new DropDownItemData('Contact', '#contact'),
   new DropDownItemData('EVENTS'),
   new DropDownItemData('Events', 'events'),
-  new DropDownItemData('TUTORING QUICKLINKS'),
-  new DropDownItemData('Schedule', 'tutoring/schedule'),
-  new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
-  new DropDownItemData('Feedback', 'tutoring/feedback'),
-  new DropDownItemData('Log Hours', 'log_hours'),
-  new DropDownItemData('CONTACT QUICKLINKS'),
-  new DropDownItemData('Officers', 'officers'),
-  new DropDownItemData('Advisors and Faculty', 'officers/faculty'),
+  // new DropDownItemData('TUTORING QUICKLINKS'),
+  // new DropDownItemData('Schedule', 'tutoring/schedule'),
+  // new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
+  // new DropDownItemData('Feedback', 'tutoring/feedback'),
+  // new DropDownItemData('Log Hours', 'log_hours'),
+  // new DropDownItemData('CONTACT QUICKLINKS'),
+  // new DropDownItemData('Officers', 'officers'),
+  // new DropDownItemData('Advisors and Faculty', 'officers/faculty'),
 ];
 
-const UserDropDownEntries = [
-  new DropDownItemData('ADMIN'),
-  new DropDownItemData('Admin Panel', '#!'),
-  new DropDownItemData('Candidates', '#!'),
-  new DropDownItemData('Active members', '#!'),
-  new DropDownItemData('Requirement Attendance', 'profile/requirements'),
-  new DropDownItemData('All Profiles', '#!'),
-  new DropDownItemData('Tutoring', '#!'),
-  new DropDownItemData('Downloads', '#!'),
-  new DropDownItemData('Wiki', '#!'),
-  new DropDownItemData('MEMBER SERVICES'),
-  new DropDownItemData('Profile', 'profile'),
-  new DropDownItemData('Testbank', 'profile/upload_test'),
-  new DropDownItemData('Log Out', '#!'),
+// TODO: change available links based on user position
+const OfficerDropDownEntries = [
+  new DropDownItemData('OFFICER'),
+  new DropDownItemData('Candidate Tracker', 'admin/candidate_tracker'),
+  // new DropDownItemData('Admin Panel', '#!'),
+  // new DropDownItemData('Candidates', '#!'),
+  // new DropDownItemData('Active members', '#!'),
+  // new DropDownItemData('Requirement Attendance', 'profile/requirements'),
+  // new DropDownItemData('All Profiles', '#!'),
+  // new DropDownItemData('Tutoring', '#!'),
+  // new DropDownItemData('Downloads', '#!'),
+  // new DropDownItemData('Wiki', '#!'),
+  // new DropDownItemData('MEMBER SERVICES'),
+  // new DropDownItemData('Profile', 'profile'),
+  // new DropDownItemData('Testbank', 'profile/upload_test'),
+  // new DropDownItemData('Log Out', '#!'),
 ];
 
-function Navbar() {
+const MemberDropDownEntries = [new DropDownItemData('MEMBER SERVICES')];
+
+const CandidateDropDownEntries = [new DropDownItemData('CANDIDATE SERVICES')];
+
+const UniversalDropDownEntries = [new DropDownItemData('logout')];
+
+function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   const [scrollPos, setScrollPos] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [dropDownItems, setDropDownItems] = useState([]);
   const dropDownEntered = useRef(false);
   const [dropDownTimer, setDropDownTimer] = useState(null);
   const [dropDownOpened, setDropDownOpened] = useState(false);
+  const [userDropDownEntries, setUserDropDownEntries] = useState([]);
 
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
-    if (targetId) {
-      const target = document.getElementById(targetId);
-      if (target) target.scrollIntoView();
+    centerOnElement(targetId);
+    // eslint-disable-next-line
+  }, [window.location.href]);
+
+  useEffect(() => {
+    const userPosition = authenticatedUser?.position;
+    switch (userPosition) {
+      case 'officer':
+        setUserDropDownEntries([
+          ...OfficerDropDownEntries,
+          ...MemberDropDownEntries,
+          ...CandidateDropDownEntries,
+          ...UniversalDropDownEntries,
+        ]);
+        break;
+      case 'member':
+        setUserDropDownEntries([
+          ...MemberDropDownEntries,
+          ...CandidateDropDownEntries,
+          ...UniversalDropDownEntries,
+        ]);
+        break;
+      case 'candidate':
+        setUserDropDownEntries([
+          ...CandidateDropDownEntries,
+          ...UniversalDropDownEntries,
+        ]);
+        break;
+      default:
+        setUserDropDownEntries([]);
+        break;
     }
+  }, [authenticatedUser]);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const centerOnElement = (targetId) => {
+    if (targetId) {
+      const target = document.getElementById(targetId);
+      if (target)
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center',
+        });
+    }
+  };
 
   const handleDropDown = (e, items) => {
     setAnchorEl(e.currentTarget);
@@ -186,25 +249,47 @@ function Navbar() {
             More <MoreVertIcon />
           </NavButton>
         </Grid>
-        <Grid item>
-          <NavButton
-            variant='text'
-            size='large'
-            onClick={
-              dropDownOpened
-                ? handleDropDownClose
-                : (e) => {
-                    handleDropDown(e, UserDropDownEntries);
-                  }
-            }
-            onMouseEnter={(e) => {
-              handleDropDown(e, UserDropDownEntries);
-            }}
-            onMouseLeave={startDropDownTimer}
-          >
-            ethantjackson <PersonOutlineIcon />
-          </NavButton>
-        </Grid>
+        {authenticatedUser ? (
+          <Grid item>
+            <NavButton
+              variant='text'
+              size='large'
+              onClick={
+                dropDownOpened
+                  ? handleDropDownClose
+                  : (e) => {
+                      handleDropDown(e, userDropDownEntries);
+                    }
+              }
+              onMouseEnter={(e) => {
+                handleDropDown(e, userDropDownEntries);
+              }}
+              onMouseLeave={startDropDownTimer}
+            >
+              {authenticatedUser.name.first} <PersonOutlineIcon />
+            </NavButton>
+          </Grid>
+        ) : (
+          <Grid item>
+            <NavButton
+              variant='text'
+              size='large'
+              onClick={
+                dropDownOpened
+                  ? handleDropDownClose
+                  : (e) => {
+                      handleDropDown(e, [new DropDownItemData('login')]);
+                    }
+              }
+              onMouseEnter={(e) => {
+                handleDropDown(e, [new DropDownItemData('login')]);
+              }}
+              onMouseLeave={startDropDownTimer}
+            >
+              log in <PersonOutlineIcon />
+            </NavButton>
+          </Grid>
+        )}
       </Grid>
       <Menu
         sx={{ mt: '54px' }}
@@ -229,8 +314,38 @@ function Navbar() {
             dropDownEntered.current = true;
           }}
         >
-          {dropDownItems.map((item, idx) =>
-            !item.destination ? (
+          {dropDownItems.map((item, idx) => {
+            if (item.destination)
+              return (
+                <DropDownItemLink
+                  key={item.name}
+                  name={item.name}
+                  destination={item.destination}
+                  handleDropDownClose={handleDropDownClose}
+                  centerOnElement={centerOnElement}
+                />
+              );
+            if (item.name === 'login')
+              return (
+                <LoginForm
+                  key={item.name}
+                  loginCallback={(res) => {
+                    setAuthenticatedUser(res.data.user);
+                    handleDropDownClose();
+                  }}
+                />
+              );
+            if (item.name === 'logout')
+              return (
+                <LogoutButton
+                  key={item.name}
+                  logoutCallback={() => {
+                    setAuthenticatedUser(null);
+                    handleDropDownClose();
+                  }}
+                />
+              );
+            return (
               <MenuItem
                 key={item.name}
                 disabled
@@ -245,15 +360,8 @@ function Navbar() {
               >
                 {item.name}
               </MenuItem>
-            ) : (
-              <DropDownItemLink
-                key={item.name}
-                name={item.name}
-                destination={item.destination}
-                handleDropDownClose={handleDropDownClose}
-              />
-            )
-          )}
+            );
+          })}
         </Container>
       </Menu>
     </AppBar>

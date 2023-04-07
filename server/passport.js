@@ -20,11 +20,14 @@ passport.use(
       passReqToCallback: true,
     },
     (req, payload, done) => {
-      User.findById({ _id: payload.sub }, (err, user) => {
-        if (err) return done(err, false);
-        if (user) return done(null, user, req.body);
-        else return done(null, false);
-      });
+      User.findById({ _id: payload.sub })
+        .then((user) => {
+          if (user) return done(null, user, req.body);
+          else return done(null, false);
+        })
+        .catch((err) => {
+          return done(err, false);
+        });
     }
   )
 );
@@ -52,13 +55,16 @@ passport.use(
 
 passport.use(
   new LocalStrategy(
-    { usernameField: 'username', passwordField: 'password' },
-    (username, password, done) => {
-      User.findOne({ username }, (err, user) => {
-        if (err) return done(err, false);
-        if (!user) return done(null, false);
-        user.comparePassword(password, done);
-      });
+    { usernameField: 'email', passwordField: 'password' },
+    (email, password, done) => {
+      User.findOne({ email })
+        .then((user) => {
+          if (!user) return done(null, false);
+          user.comparePassword(password, done);
+        })
+        .catch((err) => {
+          return done(err, false);
+        });
     }
   )
 );

@@ -1,60 +1,69 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Home.css';
-import { Grid, Button, Divider, Chip, Container } from '@mui/material';
+import { Grid, Button, Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import Icon from '@mui/material/Icon';
 import { CardActionArea } from '@mui/material';
 import EventsCalendar from '../components/EventsCalendar';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ArrowCircleDown from '@mui/icons-material/ArrowCircleDown';
 import styled from '@emotion/styled';
-import update from 'react-addons-update';
 
 const FloatingContainer = styled(Container)(({ theme }) => ({
   backgroundColor: theme.palette.custom.main,
-  borderRadius: '12px',
-  marginBottom: '100px',
+  [theme.breakpoints.up('xs')]: {
+    marginBottom: '20px',
+    borderRadius: '0',
+  },
+  [theme.breakpoints.up('sm')]: {
+    marginBottom: '100px',
+    borderRadius: '12px',
+  },
 }));
 
 const sectionIds = [
   'who-we-are',
   'becoming-a-member',
   'tutoring',
+  'event-calendar',
   'activities',
   'contact',
 ];
 
+const maxOpacity = 1;
+
 function Home() {
   const [scrollPos, setScrollPos] = useState(0);
   const sectionMap = useRef({});
-  const [sectionScales, setSectionScales] = useState({});
+  const [sectionOpacities, setSectionOpacities] = useState({});
 
   const handleScroll = () => {
     const winScroll =
       document.body.scrollTop || document.documentElement.scrollTop;
     setScrollPos(winScroll);
 
-    const newScales = {};
+    const newOpacities = {};
     Object.entries(sectionMap.current).forEach((entry) => {
       const id = entry[0];
       const ele = entry[1].getBoundingClientRect();
-      const centerDist = Math.abs(
-        window.innerHeight / 2 - ele.height / 2 - ele.top
-      );
-      const scale = Math.max(
+      const topDist = window.innerHeight / 2 - ele.top;
+      const botDist = window.innerHeight / 2 - ele.bottom;
+      var centerDist = 0;
+      if (Math.sign(topDist) === Math.sign(botDist)) {
+        centerDist = Math.min(Math.abs(topDist), Math.abs(botDist));
+      }
+      const opacity = Math.max(
         0,
-        1.1 - 1.1 * (centerDist / (4 * window.innerHeight))
+        maxOpacity -
+          Math.pow(0.5 * window.innerHeight, -2) * Math.pow(centerDist, 2)
       );
-      newScales[id] = scale;
+      newOpacities[id] = opacity;
       // const newScales = update(sectionScales, {
       //   [id]: { $set: scale },
       // });
       // setSectionScales(newScales);
     });
-    setSectionScales(newScales);
+    setSectionOpacities(newOpacities);
   };
 
   useEffect(() => {
@@ -132,7 +141,8 @@ function Home() {
           id='who-we-are'
           className='section-container'
           sx={{
-            transform: `scale(${sectionScales['who-we-are']})`,
+            // transform: `scale(${sectionScales['who-we-are']})`,
+            opacity: `${sectionOpacities['who-we-are']}`,
           }}
         >
           <Typography variant='h2' mb={'20px'}>
@@ -153,7 +163,8 @@ function Home() {
           className='section-container'
           id='becoming-a-member'
           sx={{
-            transform: `scale(${sectionScales['becoming-a-member']})`,
+            // transform: `scale(${sectionScales['becoming-a-member']})`,
+            opacity: `${sectionOpacities['becoming-a-member']}`,
           }}
         >
           <Typography variant='h2' mb={'20px'}>
@@ -233,7 +244,8 @@ function Home() {
           className='section-container'
           id='tutoring'
           sx={{
-            transform: `scale(${sectionScales['tutoring']})`,
+            // transform: `scale(${sectionScales['tutoring']})`,
+            opacity: `${sectionOpacities['tutoring']}`,
           }}
         >
           {/* <h1 className='header'>Tutoring</h1> */}
@@ -308,18 +320,31 @@ function Home() {
         
         <FloatingContainer
           className='section-container'
-          id='activities'
+          id='event-calendar'
           sx={{
-            transform: `scale(${sectionScales['activities']})`,
+            // transform: `scale(${sectionScales['event-calendar']})`,
+            opacity: `${sectionOpacities['event-calendar']}`,
           }}
         >
           {/* <h1 className='header'>Activities</h1> */}
           <Typography variant='h2' mb={'20px'}>
-            Activities
+            Event Calendar
           </Typography>
 
           <EventsCalendar />
+        </FloatingContainer>
 
+        <FloatingContainer
+          className='section-container'
+          id='activities'
+          sx={{
+            // transform: `scale(${sectionScales['activities']})`,
+            opacity: `${sectionOpacities['activities']}`,
+          }}
+        >
+          <Typography variant='h2' mb={'20px'}>
+            Activities
+          </Typography>
           {/*<Grid
             container
             spacing={5}
@@ -431,7 +456,8 @@ function Home() {
           id='contact'
           className='section-container last-section'
           sx={{
-            transform: `scale(${sectionScales['contact']})`,
+            // transform: `scale(${sectionScales['contact']})`,
+            opacity: `${sectionOpacities['contact']}`,
           }}
         >
           {/* <h1 className='header'>Contacts and Other Links</h1> */}

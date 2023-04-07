@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const findOrCreate = require('mongoose-findorcreate');
 
 const UserSchema = new mongoose.Schema({
-  username: {
+  email: {
     type: String,
     trim: true,
     index: { unique: true },
@@ -31,11 +31,83 @@ const UserSchema = new mongoose.Schema({
       'Login credentials or Google ID is required',
     ],
   },
+  position: {
+    type: String,
+    enum: ['candidate', 'member', 'officer'],
+    required: true,
+    default: 'candidate',
+  },
+  name: {
+    first: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+    last: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+  },
+  requirements: {
+    tutoring: {
+      type: Boolean,
+      default: false,
+    },
+    testBank: {
+      type: Boolean,
+      default: false,
+    },
+    corporate: {
+      type: Boolean,
+      default: false,
+    },
+    candidateQuiz: {
+      type: Boolean,
+      default: false,
+    },
+    bentPolishing: {
+      type: Boolean,
+      default: false,
+    },
+    initiation: {
+      type: Boolean,
+      default: false,
+    },
+    membershipFee: {
+      type: Boolean,
+      default: false,
+    },
+    newMemberForm: {
+      type: Boolean,
+      default: false,
+    },
+    generalSocial: {
+      type: Boolean,
+      default: false,
+    },
+    coffeeChat: {
+      type: Boolean,
+      default: false,
+    },
+    academicOutreach: {
+      type: Boolean,
+      default: false,
+    },
+    socialMediaPost: {
+      type: Boolean,
+      default: false,
+    },
+    chalking: {
+      type: Boolean,
+      default: false,
+    },
+  },
   // add resume, submitted tests field, other profile information (name, etc.)
 });
 
 function hasLoginOrGoogleId() {
-  return (this.username && this.password) || this.googleId;
+  return (this.email && this.password) || this.googleId;
 }
 
 UserSchema.plugin(findOrCreate);
