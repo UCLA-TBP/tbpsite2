@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material';
 import axios from 'axios';
@@ -15,14 +10,14 @@ import Profile from './profile/Profile';
 import TutoringProfile from './profile/TutoringProfile';
 import UploadTest from './profile/UploadTest';
 import Events from './events/Events';
-import TutoringSchedule from './tutoring/TutoringSchedule';
-import ReviewSheets from './tutoring/ReviewSheets';
-import TutoringFeedback from './tutoring/TutoringFeedback';
-import LogHours from './tutoring/LogHours';
-import Officers from './officers/Officers';
-import Faculty from './officers/Faculty';
-import TestBank from './member-services/TestBank';
-import Corporate from './member-services/Corporate';
+// import TutoringSchedule from './tutoring/TutoringSchedule';
+// import ReviewSheets from './tutoring/ReviewSheets';
+// import TutoringFeedback from './tutoring/TutoringFeedback';
+// import LogHours from './tutoring/LogHours';
+// import Officers from './officers/Officers';
+// import Faculty from './officers/Faculty';
+// import TestBank from './member-services/TestBank';
+// import Corporate from './member-services/Corporate';
 import CandidateTracker from './admin/CandidateTracker';
 
 import RouteProtection from './permissions/RouteProtection';
@@ -169,7 +164,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('/user/authenticated-user')
+      .get('/api/user/authenticated-user')
       .then((res) => setAuthenticatedUser(res.data.user))
       .catch((err) => setAuthenticatedUser(null));
   }, []);

@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Home.css';
-import { Grid, Button, Divider, Chip, Container } from '@mui/material';
+import { Grid, Button, Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import Icon from '@mui/material/Icon';
 import { CardActionArea } from '@mui/material';
 import EventsCalendar from '../components/EventsCalendar';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ArrowCircleDown from '@mui/icons-material/ArrowCircleDown';
 import styled from '@emotion/styled';
-import update from 'react-addons-update';
 
 const FloatingContainer = styled(Container)(({ theme }) => ({
   backgroundColor: theme.palette.custom.main,
