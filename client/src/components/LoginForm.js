@@ -36,7 +36,7 @@ const LoginForm = ({ loginCallback }) => {
 
   const handleLogin = () => {
     axios
-      .post('/user/login', {
+      .post('/api/user/login', {
         email: email,
         password: password,
       })

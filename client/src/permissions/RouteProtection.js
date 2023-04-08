@@ -7,7 +7,7 @@ const RouteProtection = ({ authenticatedUser, allowedPositions }) => {
 
   useEffect(() => {
     axios
-      .get('/user/authenticated-user')
+      .get('/api/user/authenticated-user')
       .then((res) => {
         setRetrievedUser(res.data.user);
       })

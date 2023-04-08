@@ -25,7 +25,7 @@ const CandidateTracker = () => {
 
   useEffect(() => {
     axios
-      .get('/user/get-all-users')
+      .get('/api/user/get-all-users')
       .then((res) => {
         setCandidates(res.data);
       })
@@ -36,10 +36,10 @@ const CandidateTracker = () => {
 
   const handleSave = (e) => {
     axios
-      .put('/user/update-user/' + selectedCandidate._id, selectedCandidate)
+      .put('/api/user/update-user/' + selectedCandidate._id, selectedCandidate)
       .then((res) => {
         axios
-          .get('/user/get-all-users')
+          .get('/api/user/get-all-users')
           .then((res) => {
             setCandidates(res.data);
             setSnackbarMessage('Save successful!');

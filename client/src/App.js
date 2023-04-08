@@ -164,7 +164,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('/user/authenticated-user')
+      .get('/api/user/authenticated-user')
       .then((res) => setAuthenticatedUser(res.data.user))
       .catch((err) => setAuthenticatedUser(null));
   }, []);

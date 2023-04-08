@@ -5,7 +5,7 @@ import axios from 'axios';
 const LogoutButton = ({ logoutCallback }) => {
   const handleLogout = () => {
     axios
-      .post('/user/logout')
+      .post('/api/user/logout')
       .then((res) => logoutCallback())
       .catch((err) => console.log(err));
   };
