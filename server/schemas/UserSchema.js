@@ -125,7 +125,9 @@ UserSchema.methods.comparePassword = function (password, callback) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
     if (err) return callback(err);
     else {
-      if (!isMatch) return callback(null, isMatch);
+      if (!isMatch) {
+        return callback(null, isMatch);
+      }
       return callback(null, this);
     }
   });

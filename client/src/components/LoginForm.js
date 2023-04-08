@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 
 const LoginField = styled(TextField)(({ theme }) => ({
@@ -33,6 +33,7 @@ const LoginField = styled(TextField)(({ theme }) => ({
 const LoginForm = ({ loginCallback }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showError, setShowError] = useState(false);
 
   const handleLogin = () => {
     axios
@@ -42,9 +43,11 @@ const LoginForm = ({ loginCallback }) => {
       })
       .then((res) => {
         loginCallback(res);
+        setShowError(false);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
+        setShowError(true);
       });
   };
 
@@ -84,6 +87,11 @@ const LoginForm = ({ loginCallback }) => {
           setPassword(e.target.value);
         }}
       />
+      {showError && (
+        <Typography variant='p' sx={{ color: 'red', fontStyle: 'italic' }}>
+          Incorrect email or password
+        </Typography>
+      )}
       <Button
         color='secondary'
         variant='contained'
