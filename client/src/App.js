@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material';
 import axios from 'axios';
@@ -15,16 +10,20 @@ import Profile from './profile/Profile';
 import TutoringProfile from './profile/TutoringProfile';
 import UploadTest from './profile/UploadTest';
 import Events from './events/Events';
-import TutoringSchedule from './tutoring/TutoringSchedule';
-import ReviewSheets from './tutoring/ReviewSheets';
-import TutoringFeedback from './tutoring/TutoringFeedback';
-import LogHours from './tutoring/LogHours';
-import Officers from './officers/Officers';
-import Faculty from './officers/Faculty';
-import TestBank from './member-services/TestBank';
-import Corporate from './member-services/Corporate';
-import './App.css';
+// import TutoringSchedule from './tutoring/TutoringSchedule';
+// import ReviewSheets from './tutoring/ReviewSheets';
+// import TutoringFeedback from './tutoring/TutoringFeedback';
+// import LogHours from './tutoring/LogHours';
+// import Officers from './officers/Officers';
+// import Faculty from './officers/Faculty';
+// import TestBank from './member-services/TestBank';
+// import Corporate from './member-services/Corporate';
 import CandidateTracker from './admin/CandidateTracker';
+
+import RouteProtection from './permissions/RouteProtection';
+import { positions } from './permissions/PermissionsUtils';
+
+import './App.css';
 
 const navTheme = createTheme({
   palette: {
@@ -116,6 +115,44 @@ const theme = createTheme({
       ].join(','),
       fontWeight: 400,
     },
+    h3: {
+      fontSize: '1.6rem',
+      lineHeight: 1.2,
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        "'Segoe UI'",
+        'Roboto',
+        "'Helvetica Neue'",
+        'Arial',
+        "'Noto Sans'",
+        'sans-serif',
+        "'Apple Color Emoji'",
+        "'Segoe UI Emoji'",
+        "'Segoe UI Symbol'",
+        "'Noto Color Emoji'",
+      ].join(','),
+      fontWeight: 400,
+    },
+    h4: {
+      fontSize: '1.3rem',
+      lineHeight: 1.1,
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        "'Segoe UI'",
+        'Roboto',
+        "'Helvetica Neue'",
+        'Arial',
+        "'Noto Sans'",
+        'sans-serif',
+        "'Apple Color Emoji'",
+        "'Segoe UI Emoji'",
+        "'Segoe UI Symbol'",
+        "'Noto Color Emoji'",
+      ].join(','),
+      fontWeight: 400,
+    },
     highlight: {
       color: '#eec807',
     },
@@ -127,7 +164,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('/user/authenticated-user')
+      .get('/api/user/authenticated-user')
       .then((res) => setAuthenticatedUser(res.data.user))
       .catch((err) => setAuthenticatedUser(null));
   }, []);
@@ -168,7 +205,17 @@ function App() {
             </Route> */}
             {/* TODO: ADMIN STUFF */}
             <Route path='admin'>
-              <Route path='candidate_tracker' element={<CandidateTracker />} />
+              <Route
+                path='candidate_tracker'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.officer]}
+                  />
+                }
+              >
+                <Route path='' element={<CandidateTracker />} />
+              </Route>
             </Route>
           </Routes>
         </Router>
