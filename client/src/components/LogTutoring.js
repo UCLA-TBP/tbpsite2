@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-const LogTutoring = () => {
+function LogTutoring ({authenticatedUser}) {
 
     const [weekOption, setWeekOption] = useState("");
     function handleWeekOptionChange(event) {
@@ -16,25 +17,39 @@ const LogTutoring = () => {
     function handleSecretPhraseChange(event) {
         setSecretPhrase(event.target.value);
     }
-
+    
     function handleSubmit() {
-        
+        const update = {
+            $push: {
+                tutoringLog: {
+                    week: weekOption,
+                    hours: numHours,
+                    secretPhrase: secretPhrase
+                }
+            }
+        };
+        axios.put('/user/update-user/' + authenticatedUser._id, update)
+            .then(response => {
+            console.log(response.data);
+            })
+            .catch(error => {
+            console.error(error);
+            });
     }
-
 
     return (
         <div>
             <div>
                 <label htmlFor="dropdown">Which week are you logging?</label>
                 <select id="dropdown" value={weekOption} onChange={handleWeekOptionChange}>
-                    <option value="week1">Week 2</option>
-                    <option value="week1">Week 3</option>
-                    <option value="week1">Week 4</option>
-                    <option value="week1">Week 5</option>
-                    <option value="week1">Week 6</option>
-                    <option value="week1">Week 7</option>
-                    <option value="week1">Week 8</option>
-                    <option value="week1">Week 9</option>
+                    <option value="Week 2">Week 2</option>
+                    <option value="Week 3">Week 3</option>
+                    <option value="Week 4">Week 4</option>
+                    <option value="Week 5">Week 5</option>
+                    <option value="Week 6">Week 6</option>
+                    <option value="Week 7">Week 7</option>
+                    <option value="Week 8">Week 8</option>
+                    <option value="Week 9">Week 9</option>
                 </select>
                 <p>Your choice: {weekOption} </p>
             </div>
