@@ -143,9 +143,13 @@ userRouter.put(
   '/update-user/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     User.findByIdAndUpdate(req.params.id, { $set: req.body })
-      .then((user) => res.send(user))
+      .then((user) => {
+          //console.log(user)
+          res.status(200)
+          res.send("successfully updated user")}
+        )
       .catch((err) => {
         console.log(err);
         res.status(500).send('Could not update user');

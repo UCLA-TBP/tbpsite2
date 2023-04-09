@@ -126,6 +126,18 @@ const UserSchema = new mongoose.Schema({
       default: false,
     },
   },
+  tutoringLog: {
+    
+    type: [{
+      week: { type: Number},
+      hours: { type: Number},
+      secretPhrase: { type: String},
+    }],
+
+    default: []
+  }
+
+  // add resume, submitted tests field, other profile information (name, etc.)
 });
 
 function hasLoginOrGoogleId() {
@@ -147,7 +159,9 @@ UserSchema.methods.comparePassword = function (password, callback) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
     if (err) return callback(err);
     else {
-      if (!isMatch) return callback(null, isMatch);
+      if (!isMatch) {
+        return callback(null, isMatch);
+      }
       return callback(null, this);
     }
   });
