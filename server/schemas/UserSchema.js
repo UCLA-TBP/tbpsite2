@@ -126,7 +126,6 @@ const UserSchema = new mongoose.Schema({
       default: false,
     },
   },
-  // add resume, submitted tests field, other profile information (name, etc.)
 });
 
 function hasLoginOrGoogleId() {

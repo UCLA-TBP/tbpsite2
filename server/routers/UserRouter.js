@@ -81,6 +81,11 @@ userRouter.post(
         user: req.user,
       });
     }
+    else {
+      res.status(400).json({
+        message: {msgBody: 'Unable to sign in', msgError: true},
+      }); 
+    }
   }
 );
 
