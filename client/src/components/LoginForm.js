@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField} from '@mui/material';
 import axios from 'axios';
 
 const LoginField = styled(TextField)(({ theme }) => ({
@@ -91,6 +91,14 @@ const LoginForm = ({ loginCallback }) => {
         onClick={handleLogin}
       >
         Log In
+      </Button>
+      <Button
+        variant='text'
+        color='secondary'
+        sx = {{mx: 'auto', width: '100%', mt: '10px' }}
+        //onClick={}
+      >
+        Sign up 
       </Button>
     </Box>
   );
