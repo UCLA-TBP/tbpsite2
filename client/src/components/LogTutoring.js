@@ -77,7 +77,6 @@ function LogTutoring ({candidate, setCandidate}) {
                         onChange={handleWeekOptionChange}
                         style={{color: 'white'}}
                     >
-                        <MenuItem value={2}>Week 2</MenuItem>
                         <MenuItem value={3}>Week 3</MenuItem>
                         <MenuItem value={4}>Week 4</MenuItem>
                         <MenuItem value={5}>Week 5</MenuItem>
@@ -100,6 +99,14 @@ function LogTutoring ({candidate, setCandidate}) {
                     InputLabelProps={{
                         
                     }}
+                    sx={{
+                        '& .MuiInputLabel-root': {
+                          color: 'gold',
+                        },
+                        '& input': {
+                            color: 'white',
+                          },
+                    }}
                 />
             </div>
 
@@ -110,9 +117,16 @@ function LogTutoring ({candidate, setCandidate}) {
                     size="small"
                     defaultValue=""
                     onChange={handleSecretPhraseChange}
-                    style={{ paddingBottom: '10px' }}
+                    style={{paddingBottom: '10px' }}
                     InputProps={{
-                        
+                    }}
+                    sx={{
+                        '& .MuiInputLabel-root': {
+                          color: 'gold',
+                        },
+                        '& input': {
+                            color: 'white',
+                          },
                     }}
                 />
             </div>

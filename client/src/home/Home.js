@@ -226,16 +226,6 @@ function Home() {
                 Orientation Presentation
               </Button>
             </Grid>
-            <Grid item>
-              <Button
-                color='secondary'
-                variant='outlined'
-                href='/candidates/requirements'
-                size='large'
-              >
-                Candidate Homepage
-              </Button>
-            </Grid>
           </Grid>
         </FloatingContainer>
 

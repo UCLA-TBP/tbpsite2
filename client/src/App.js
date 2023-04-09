@@ -24,7 +24,6 @@ import CandidateTracker from './admin/CandidateTracker';
 import RouteProtection from './permissions/RouteProtection';
 import { positions } from './permissions/PermissionsUtils';
 
-import Candidates from './candidates/Candidates';
 import './App.css';
 import FeatureInProgress from './FeatureInProgress';
 
@@ -216,7 +215,6 @@ function App() {
                   />
                 }
               >
-                <Route path='' element={<Candidates authenticatedUser={authenticatedUser}/>} />
               </Route>
             </Route>
             {/* TODO: ADMIN STUFF */}

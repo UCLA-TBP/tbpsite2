@@ -20,7 +20,7 @@ const rows = [
   createData('Corporate', <a href="mailto:uclatbp.corporate@gmail.com">uclatbp.corporate@gmail.com</a>),
   createData('EMCC (Education outreach)', <a href="mailto:uclatbp.educoutreach@gmail.com">uclatbp.educoutreach@gmail.com</a>),
   createData('MC (Member coordinator)', <a href="mailto:uclatbp.mc@gmail.com">uclatbp.mc@gmail.com</a>),
-  createData('Publicity', <a href="mailto:uclatbp.publicity@gmail.com">uclatbp.publicitysurer@gmail.com</a>),
+  createData('Publicity', <a href="mailto:uclatbp.publicity@gmail.com">uclatbp.publicity@gmail.com</a>),
   createData('Secretary', <a href="mailto:uclatbp.secretary@gmail.com">uclatbp.secretary@gmail.com</a>),
   createData('Social', <a href="mailto:uclatbp.social@gmail.com">uclatbp.social@gmail.com</a>),
   createData('Treasurer', <a href="mailto:uclatbp.treasurer@gmail.com">uclatbp.treasurer@gmail.com</a>),
@@ -30,7 +30,7 @@ const rows = [
 
 function Officers() {
   return (
-    <Container /*style={{ background: '#a66900', paddingBottom: 20}}*/ >
+    <Container sx={{ paddingBottom: '100px'}} >
       <Typography variant='h2' mt = {10}>
         Officers
       </Typography>
@@ -39,7 +39,7 @@ function Officers() {
           For any questions or comments, feel free to email us at <a href="mailto:ucla.tbp@gmail.com">ucla.tbp@gmail.com</a>.
         </Typography>
         <Typography variant='p'>
-          Having issues with the site? Send an email to the webmasters at <a href="mailto:uclatbp.webmaster@gmail.com">uclatbp.webmaster@gmail.com</a>.
+          Having issues with the site? Send an email to the webmasters at <a  href="mailto:uclatbp.webmaster@gmail.com">uclatbp.webmaster@gmail.com</a>.
         </Typography>
         <Typography variant='p'>
           You can also stop by the Tau Beta Pi tutoring room on the 6th floor of Boelter (Room 6266) if you want to say hi!
@@ -58,12 +58,12 @@ function Officers() {
           <TableRow>
             <TableCell>
               <Typography variant = 'highlight' style={{fontSize: '150%'}}>
-                Position
+                <b>Position</b>
               </Typography>
             </TableCell>
             <TableCell align="left">
               <Typography variant = 'highlight' style={{fontSize: '150%'}}>
-                Email
+                <b>Email</b>
               </Typography>
             </TableCell>
           </TableRow>
