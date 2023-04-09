@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
   createFilterOptions,
+  Item
 } from '@mui/material';
 import { positions } from '../permissions/PermissionsUtils';
 import axios from 'axios';
@@ -128,6 +129,26 @@ const CandidateTracker = () => {
                 );
               }
             )}
+
+          <Typography variant='h4' color='secondary' mt={3} mb={1}>
+            Tutoring Hours
+          </Typography>
+
+          {selectedCandidate.tutoringLog && selectedCandidate.tutoringLog.map((entry, index) => (
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+              <Grid style={{ color: 'white' }} item xs={2}>
+                Week: {entry.week}
+              </Grid>
+              <Grid style={{ color: 'white' }} item xs={2}>
+                Hours: {entry.hours}
+              </Grid>
+              <Grid style={{ color: 'white' }} item xs={3}>
+                Secret Phrase: {entry.secretPhrase}
+              </Grid>
+            </Grid>
+          ))}
+          
+          
 
           <Typography variant='h4' color='secondary' mt={3} mb={1}>
             Membership Status
