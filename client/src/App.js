@@ -18,6 +18,7 @@ import Officers from './officers/Officers';
 // import Faculty from './officers/Faculty';
 // import TestBank from './member-services/TestBank';
 // import Corporate from './member-services/Corporate';
+import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
 
 import RouteProtection from './permissions/RouteProtection';
@@ -25,6 +26,7 @@ import { positions } from './permissions/PermissionsUtils';
 
 import Candidates from './candidates/Candidates';
 import './App.css';
+import FeatureInProgress from './FeatureInProgress';
 
 const navTheme = createTheme({
   palette: {
@@ -165,7 +167,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get('/user/authenticated-user')
+      .get('/api/user/authenticated-user')
       .then((res) => setAuthenticatedUser(res.data.user))
       .catch((err) => setAuthenticatedUser(null));
   }, []);
@@ -218,6 +220,22 @@ function App() {
               </Route>
             </Route>
             {/* TODO: ADMIN STUFF */}
+            <Route path='candidates'>
+              <Route
+                path='induction-progress'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.candidate]}
+                  />
+                }
+              >
+                <Route
+                  path=''
+                  element={<InductionProgress candidate={authenticatedUser} setCandidate={setAuthenticatedUser} />}
+                />
+              </Route>
+            </Route>
             <Route path='admin'>
               <Route
                 path='candidate_tracker'
@@ -231,6 +249,7 @@ function App() {
                 <Route path='' element={<CandidateTracker />} />
               </Route>
             </Route>
+            <Route path='in-progress' element={<FeatureInProgress />} />
           </Routes>
         </Router>
       </ThemeProvider>

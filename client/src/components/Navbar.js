@@ -94,9 +94,15 @@ const OfficerDropDownEntries = [
   // new DropDownItemData('Log Out', '#!'),
 ];
 
-const MemberDropDownEntries = [new DropDownItemData('MEMBER SERVICES')];
+const MemberDropDownEntries = [
+  new DropDownItemData('MEMBER SERVICES'),
+  new DropDownItemData('Testbank', 'in-progress'),
+];
 
-const CandidateDropDownEntries = [new DropDownItemData('CANDIDATE SERVICES')];
+const CandidateDropDownEntries = [
+  new DropDownItemData('CANDIDATE SERVICES'),
+  new DropDownItemData('Induction Progress', 'candidates/induction-progress'),
+];
 
 const UniversalDropDownEntries = [new DropDownItemData('logout')];
 
@@ -122,14 +128,14 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         setUserDropDownEntries([
           ...OfficerDropDownEntries,
           ...MemberDropDownEntries,
-          ...CandidateDropDownEntries,
+          // ...CandidateDropDownEntries,
           ...UniversalDropDownEntries,
         ]);
         break;
       case 'member':
         setUserDropDownEntries([
           ...MemberDropDownEntries,
-          ...CandidateDropDownEntries,
+          // ...CandidateDropDownEntries,
           ...UniversalDropDownEntries,
         ]);
         break;
