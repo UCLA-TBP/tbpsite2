@@ -96,7 +96,7 @@ const LoginForm = ({ loginCallback }) => {
         variant='text'
         color='secondary'
         sx = {{mx: 'auto', width: '100%', mt: '10px' }}
-        //onClick={}
+        //onClick={handleOpen}
       >
         Sign up 
       </Button>

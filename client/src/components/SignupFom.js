@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, MenuItem, TextField } from '@mui/material';
 import axios from 'axios';
 import LoginField from './LoginForm'; 
 
 const SignupForm = ({ loginCallback }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [name, setName] = useState(''); 
+    const [first_name, setFirstName] = useState(''); 
+    const [last_name, setLastName] = useState(''); 
     const [major, setMajor] = useState(''); 
     const [graduation_year, setGraduationYear] = useState(''); 
-    const [initiationQuater, setInitiationQuarter] = useState(''); 
-
+    const [initiation_quarter, setInitiationQuarter] = useState(''); 
+    const [initiation_year, setInitiationYear] = useState(''); 
   
-    const handleLogin = () => {
+    const handleSignup = () => {
       axios
-        .post('/api/user/login', {
+        .post('/api/user/register', {
           email: email,
           password: password,
+          first_name: first_name, 
+          last_name: last_name, 
+          major: major,
+          graduation_year: graduation_year,
+          initiation_quarter: initiation_quarter, 
+          initiation_year: initiation_year,
         })
         .then((res) => {
           loginCallback(res);
@@ -63,21 +70,99 @@ const SignupForm = ({ loginCallback }) => {
             setPassword(e.target.value);
           }}
         />
-        <Button
-          color='secondary'
-          variant='contained'
-          sx={{ width: '100%', mt: '10px' }}
-          onClick={handleLogin}
-        >
-          Log In
-        </Button>
+        <LoginField
+          label='First Name'
+          variant='outlined'
+          size='small'
+          halfWidth
+          margin='normal'
+          autoComplete='off'
+          onKeyDown={(e) => {
+            e.stopPropagation();
+        }}
+        onChange={(e) => {
+            setFirstName(e.target.value);
+        }}
+        />
+        <LoginField
+          label='Last Name'
+          variant='outlined'
+          size='small'
+          halfWidth
+          margin='normal'
+          autoComplete='off'
+          onKeyDown={(e) => {
+            e.stopPropagation();
+        }}
+        onChange={(e) => {
+            setLastName(e.target.value);
+        }}
+        />
+        <Select
+          value='major'
+          label='Major'
+          onChange={(e) => {
+            setMajor(e.target.value);
+        }}
+        >   
+            <MenuItem>Aerospace Engineering</MenuItem>
+            <MenuItem>Bioengineering</MenuItem>
+            <MenuItem>Chemical Engineering</MenuItem>
+            <MenuItem>Civil Engineering</MenuItem>
+            <MenuItem>Computer Engineering</MenuItem>
+            <MenuItem>Computer Science</MenuItem>
+            <MenuItem>Computer Science and Engineering</MenuItem>
+            <MenuItem>Electrical Engineering</MenuItem>
+            <MenuItem>Materials Engineering</MenuItem>
+            <MenuItem>Mechanical Engineering</MenuItem>
+            <MenuItem>Undelcared Engineering</MenuItem>
+        </Select>
+        <LoginField
+          label='Graduation Year'
+          variant='outlined'
+          size='small'
+          halfWidth
+          margin='normal'
+          autoComplete='off'
+          onKeyDown={(e) => {
+            e.stopPropagation();
+        }}
+        onChange={(e) => {
+            setGraduationYear(e.target.value);
+        }}
+        />
+        <Grid>
+          <Select
+            value='initiation_quarter'
+            label='Initiation Quarter'
+            onChange={(e) => {
+                setInitiationQuarter(e.target.value);
+            }}
+          >
+            <MenuItem>Fall</MenuItem>
+            <MenuItem>Spring</MenuItem>
+          </Select>
+          <LoginField
+            label='Initiation Quarter'
+            variant='outlined'
+            size='small'
+            halfWidth
+            margin='normal'
+            autoComplete='off'
+            onKeyDown={(e) => {
+              e.stopPropagation();
+            }}
+            onChange={(e) => {
+              setInitiationYear(e.target.value);
+             }}
+        />
+        </Grid>
         <Button
           variant='text'
           color='secondary'
           sx = {{mx: 'auto', width: '100%', mt: '10px' }}
-          //onClick={}
         >
-          Sign up 
+          Submit
         </Button>
       </Box>
     );
