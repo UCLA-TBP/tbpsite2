@@ -218,7 +218,7 @@ function App() {
               >
                 <Route
                   path=''
-                  element={<InductionProgress candidate={authenticatedUser} />}
+                  element={<InductionProgress candidate={authenticatedUser} setCandidate={setAuthenticatedUser} />}
                 />
               </Route>
             </Route>

@@ -4,6 +4,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import React, { useState } from 'react';
+import LogTutoring from '../components/LogTutoring';
 
 const Check = styled(CheckIcon)(({ theme }) => ({
   position: 'relative',
@@ -49,7 +50,7 @@ const ProgressIndicator = ({ requirementMet }) => {
   );
 };
 
-const InductionProgress = ({ candidate }) => {
+const InductionProgress = ({ candidate, setCandidate }) => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
@@ -93,12 +94,14 @@ const InductionProgress = ({ candidate }) => {
           Tutoring
         </Typography>
         {/* TODO: dillon */}
-        <Button
+        
+        {/*<Button
           variant='contained'
           onClick={(e) => updateRequirement('tutoring', true)}
         >
           Test update requirement
-        </Button>
+        </Button>*/}
+        <LogTutoring candidate={candidate} setCandidate={setCandidate}></LogTutoring>
         <ProgressIndicator requirementMet={candidate.requirements?.tutoring} />
       </Box>
 
