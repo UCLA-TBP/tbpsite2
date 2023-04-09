@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './LogTutoring.css';
-import { Button, FormControl, InputLabel, Select, MenuItem, TextField} from '@mui/material';
+import { Button, FormControl, InputLabel, Select, MenuItem, TextField, Snackbar} from '@mui/material';
 
 function LogTutoring ({candidate, setCandidate}) {
+
+    const [showSnackbar, setShowSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+
+    const handleSnackbarClose = (event, reason) => {
+        setShowSnackbar(false);
+    };
 
     const [weekOption, setWeekOption] = useState(2);
     function handleWeekOptionChange(event) {
@@ -43,13 +50,13 @@ function LogTutoring ({candidate, setCandidate}) {
 
                 setCandidate(updatedCandidate)
                 console.log(updatedCandidate)
-                //setSnackbarMessage('Induction requirement updated!');
-                //setShowSnackbar(true);
+                setSnackbarMessage('Log submitted!');
+                setShowSnackbar(true);
             })
             .catch((err) => {
               console.log(err);
-              //setSnackbarMessage('Save error!');
-              //setShowSnackbar(true);
+              setSnackbarMessage('Submission error!');
+              setShowSnackbar(true);
             });
 
         setNumHours(0);
@@ -91,7 +98,7 @@ function LogTutoring ({candidate, setCandidate}) {
                     onChange={handleNumHoursChange}
                     style={{ paddingBottom: '10px' }}
                     InputLabelProps={{
-                        shrink: true,
+                        
                     }}
                 />
             </div>
@@ -105,7 +112,7 @@ function LogTutoring ({candidate, setCandidate}) {
                     onChange={handleSecretPhraseChange}
                     style={{ paddingBottom: '10px' }}
                     InputProps={{
-                        shrink: true,
+                        
                     }}
                 />
             </div>
@@ -115,6 +122,19 @@ function LogTutoring ({candidate, setCandidate}) {
                     onClick={handleSubmit}>Submit
             </Button>
 
+            <Snackbar
+                open={showSnackbar}
+                autoHideDuration={4000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                onClose={handleSnackbarClose}
+                message={snackbarMessage}
+                sx={{
+                '& .MuiSnackbarContent-root': {
+                    color: 'black', //your custom color here
+                    backgroundColor: (theme) => theme.palette.secondary.main, //your custom color here
+                },
+                }}
+            />
         </div>
         
     );
