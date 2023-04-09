@@ -100,16 +100,20 @@ const InductionProgress = ({ candidate, setCandidate }) => {
           onClick={(e) => updateRequirement('tutoring', true)}
         >
           Test update requirement
-        </Button>*/}
+      </Button>*/}
         <LogTutoring candidate={candidate} setCandidate={setCandidate}></LogTutoring>
         <ProgressIndicator requirementMet={candidate.requirements?.tutoring} />
       </Box>
 
       <Box mt={5}>
         <Typography variant='h3' color='primary'>
-          Test Bank
+          Submit Test
         </Typography>
         {/* TODO: dillon */}
+        <form encType="multipart/form-data">
+          <input type="file" name="pdf" accept="application/pdf" />
+          <button type="submit">Upload</button>
+        </form>
         <ProgressIndicator requirementMet={candidate.requirements?.testBank} />
       </Box>
 
