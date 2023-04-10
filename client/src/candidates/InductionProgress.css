@@ -1,0 +1,12 @@
+.test {
+  background-image: url('../../public/temp_background.png');
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

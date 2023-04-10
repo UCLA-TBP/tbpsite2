@@ -103,6 +103,17 @@ const UserSchema = new mongoose.Schema({
       default: false,
     },
   },
+  tutoringLog: {
+    
+    type: [{
+      week: { type: Number},
+      hours: { type: Number},
+      secretPhrase: { type: String},
+    }],
+
+    default: []
+  }
+
   // add resume, submitted tests field, other profile information (name, etc.)
 });
 

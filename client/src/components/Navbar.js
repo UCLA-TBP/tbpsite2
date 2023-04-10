@@ -66,13 +66,13 @@ const MoreDropDownEntries = [
   new DropDownItemData('Contact', '#contact'),
   new DropDownItemData('EVENTS'),
   new DropDownItemData('Events', 'events'),
-  // new DropDownItemData('TUTORING QUICKLINKS'),
-  // new DropDownItemData('Schedule', 'tutoring/schedule'),
+  new DropDownItemData('TUTORING QUICKLINKS'),
+  new DropDownItemData('Schedule', 'tutoring/schedule'),
   // new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
   // new DropDownItemData('Feedback', 'tutoring/feedback'),
   // new DropDownItemData('Log Hours', 'log_hours'),
-  // new DropDownItemData('CONTACT QUICKLINKS'),
-  // new DropDownItemData('Officers', 'officers'),
+  new DropDownItemData('CONTACT QUICKLINKS'),
+  new DropDownItemData('Officers', 'officers'),
   // new DropDownItemData('Advisors and Faculty', 'officers/faculty'),
 ];
 
@@ -94,9 +94,15 @@ const OfficerDropDownEntries = [
   // new DropDownItemData('Log Out', '#!'),
 ];
 
-const MemberDropDownEntries = [new DropDownItemData('MEMBER SERVICES')];
+const MemberDropDownEntries = [
+  new DropDownItemData('MEMBER SERVICES'),
+  new DropDownItemData('Testbank', 'in-progress'),
+];
 
-const CandidateDropDownEntries = [new DropDownItemData('CANDIDATE SERVICES')];
+const CandidateDropDownEntries = [
+  new DropDownItemData('CANDIDATE SERVICES'),
+  new DropDownItemData('Induction Progress', 'candidates/induction-progress'),
+];
 
 const UniversalDropDownEntries = [new DropDownItemData('logout')];
 
@@ -109,9 +115,12 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   const [dropDownOpened, setDropDownOpened] = useState(false);
   const [userDropDownEntries, setUserDropDownEntries] = useState([]);
 
+  const [doScrollFade, setDoScrollFade] = useState(false);
+
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
     centerOnElement(targetId);
+    setDoScrollFade(window.location.pathname === '/');
     // eslint-disable-next-line
   }, [window.location.href]);
 
@@ -122,14 +131,14 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         setUserDropDownEntries([
           ...OfficerDropDownEntries,
           ...MemberDropDownEntries,
-          ...CandidateDropDownEntries,
+          // ...CandidateDropDownEntries,
           ...UniversalDropDownEntries,
         ]);
         break;
       case 'member':
         setUserDropDownEntries([
           ...MemberDropDownEntries,
-          ...CandidateDropDownEntries,
+          // ...CandidateDropDownEntries,
           ...UniversalDropDownEntries,
         ]);
         break;
@@ -199,7 +208,12 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
       position='fixed'
       sx={{
         backgroundColor: (theme) =>
-          alpha(theme.palette.primary.main, 0.8 * Math.min(1, scrollPos / 500)),
+          doScrollFade
+            ? alpha(
+                theme.palette.primary.main,
+                0.8 * Math.min(1, scrollPos / 500)
+              )
+            : theme.palette.primary.main,
         boxShadow: 0,
       }}
     >
