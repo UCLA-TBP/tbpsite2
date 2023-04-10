@@ -23,6 +23,19 @@ const CandidateTracker = () => {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [PDFs, setPDFs] = useState([]);
+
+  function logPDFs() {
+      axios
+      .get('/api/pdf/get-all-PDFs')
+      .then((res) => {
+        setPDFs(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      console.log(PDFs);
+  }
 
   useEffect(() => {
     axios
@@ -129,6 +142,7 @@ const CandidateTracker = () => {
                 );
               }
             )}
+          <button onClick={logPDFs}>click me</button>
 
           <Typography variant='h4' color='secondary' mt={3} mb={1}>
             Tutoring Hours

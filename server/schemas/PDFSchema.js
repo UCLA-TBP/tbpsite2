@@ -7,7 +7,6 @@ const PDFSchema = new mongoose.Schema({
   filename: { type: String },
   contentType: { type: String },
   data: { type: Buffer },
-  createdAt: { type: Date, default: Date.now },
 });
 
 PDFSchema.plugin(findOrCreate);
