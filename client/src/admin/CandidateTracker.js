@@ -116,7 +116,7 @@ const CandidateTracker = () => {
                 ([requirement, status]) => {
                   return (
                     <Grid container key={requirement}>
-                      <Grid item xs={5} md={2}>
+                      <Grid item xs={9} md={2}>
                         <Typography
                           variant='p'
                           color='primary'
@@ -234,6 +234,7 @@ const CandidateTracker = () => {
                     mb={1}
                     sx={{
                       fontSize: '1rem',
+                      overflow: 'scroll',
                     }}
                   >
                     {JSON.stringify(value, null, 4)}

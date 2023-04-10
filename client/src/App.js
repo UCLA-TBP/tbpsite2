@@ -54,7 +54,8 @@ const navTheme = createTheme({
   },
 });
 
-const theme = createTheme({
+let theme = createTheme({});
+theme = createTheme({
   palette: {
     // white
     primary: {
@@ -77,6 +78,9 @@ const theme = createTheme({
       fontSize: '1.2rem',
       lineHeight: 1.5,
       display: 'block',
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '1rem',
+      },
     },
     h1: {
       color: 'white',
@@ -116,6 +120,9 @@ const theme = createTheme({
         "'Noto Color Emoji'",
       ].join(','),
       fontWeight: 400,
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '1.7rem',
+      },
     },
     h3: {
       fontSize: '1.6rem',
@@ -196,7 +203,7 @@ function App() {
               {/* <Route path='review_sheets' element={<ReviewSheets />} /> */}
               {/* <Route path='feedback' element={<TutoringFeedback />} /> */}
               {/* <Route path='log_hours' eleemnt={<LogHours />} /> */}
-  </Route>
+            </Route>
             <Route path='officers'>
               <Route path='' element={<Officers />} />
               {/* <Route path='faculty' element={<Faculty />} /> */}
@@ -214,8 +221,7 @@ function App() {
                     allowedPositions={[positions.candidate]}
                   />
                 }
-              >
-              </Route>
+              ></Route>
             </Route>
             {/* TODO: ADMIN STUFF */}
             <Route path='candidates'>
@@ -230,7 +236,12 @@ function App() {
               >
                 <Route
                   path=''
-                  element={<InductionProgress candidate={authenticatedUser} setCandidate={setAuthenticatedUser} />}
+                  element={
+                    <InductionProgress
+                      candidate={authenticatedUser}
+                      setCandidate={setAuthenticatedUser}
+                    />
+                  }
                 />
               </Route>
             </Route>
