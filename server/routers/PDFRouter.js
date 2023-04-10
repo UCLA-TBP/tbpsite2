@@ -19,9 +19,10 @@ PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
       filename: originalname,
       contentType: mimetype,
       data: buffer,
+      subject: req.body.subject,
+      classNumber: req.body.classNumber,
+      professor: req.body.professor
     });
-
-    //console.log(newPDF)
   
     // Save the new PDF object to MongoDB
     newPDF.save()  
@@ -31,6 +32,7 @@ PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
                 msgBody: 'PDF successfully uploaded',
                 msgError: false,
                 },
+                pdfId: savedPDF._id,
             });
         })
         .catch((err) => {
@@ -41,6 +43,7 @@ PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
         });
   });
 
+// Get all PDFs
 PDFRouter.get('/get-all-PDFs', (req, res) => {
     PDF.find()
       .then((PDFs) => {
@@ -49,6 +52,18 @@ PDFRouter.get('/get-all-PDFs', (req, res) => {
       .catch((err) => {
         console.log(err);
         res.status(500).send('Could not retrieve PDFs');
+      });
+  });
+
+// Get PDF by ID
+PDFRouter.get('/get-pdf/:id', (req, res) => {
+    PDF.findById(req.params.id)
+      .then((pdf) => {
+        res.send(pdf);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send('Could not retrieve user by id from database');
       });
   });
 

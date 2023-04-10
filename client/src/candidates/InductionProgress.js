@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import React, { useState } from 'react';
 import LogTutoring from '../components/LogTutoring';
+import UploadTest from '../components/UploadTest';
 
 const Check = styled(CheckIcon)(({ theme }) => ({
   position: 'relative',
@@ -55,40 +56,6 @@ const InductionProgress = ({ candidate, setCandidate }) => {
 
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-
-  function handleUpload(event) {
-    event.preventDefault(); // prevent default form submission behavior
-
-    // Get the file input element and the selected PDF file
-    const fileInput = document.querySelector('input[name="pdf"]');
-    const file = fileInput.files[0];
-  
-    axios.get('/api/user/get-user/' + candidate._id)
-    .then(response => {
-      const user = response.data; // get the user object from the response
-
-      // Create a new FormData object to send the file data and user reference to the server
-      const formData = new FormData();
-      formData.append('pdf', file);
-      formData.append('userRef', JSON.stringify(user)); // pass the user object as a JSON string
-
-      // Send a POST request to the server with the form data using Axios
-      axios.post('/api/pdf/upload', formData)
-        .then(response => {
-          console.log('PDF uploaded successfully');
-          setSnackbarMessage('Test uploaded successfully!');
-          setShowSnackbar(true);
-        })
-        .catch(error => {
-          console.error(error);
-          setSnackbarMessage('Upload failed!');
-          setShowSnackbar(true);
-        });
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  } 
 
   const updateRequirement = (requirement, requirementMet) => {
     // requirement (String): name of requirement (as per UserSchema, e.g. 'testBank')
@@ -158,10 +125,8 @@ const InductionProgress = ({ candidate, setCandidate }) => {
             'Submit a copy of one of your tests to our members-only test bank.'
           }
         />
-        <form encType="multipart/form-data">
-          <input type="file" name="pdf" accept="application/pdf" style={{color:'grey'}}/>
-          <button onClick = {handleUpload} type="submit">Upload</button>
-        </form>
+        <UploadTest candidate={candidate} setCandidate={setCandidate}></UploadTest>
+
         <ProgressIndicator requirementMet={candidate.requirements?.testBank} />
       </Box>
 

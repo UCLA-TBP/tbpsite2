@@ -7,6 +7,9 @@ const PDFSchema = new mongoose.Schema({
   filename: { type: String },
   contentType: { type: String },
   data: { type: Buffer },
+  subject: { type: String },
+  classNumber: { type: String },
+  professor: { type: String }
 });
 
 PDFSchema.plugin(findOrCreate);
