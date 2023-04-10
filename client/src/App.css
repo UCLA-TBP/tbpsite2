@@ -12,5 +12,5 @@ body {
 }
 
 a {
-  color: 'gold'
+  color: 'gold' !important;
 }
