@@ -18,6 +18,8 @@ app.use(
   })
 );
 
+console.log(process.env.CLIENT_URL);
+
 var uri = process.env.MONGO_URI;
 
 mongoose
