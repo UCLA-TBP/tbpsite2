@@ -29,7 +29,6 @@ const RequirementDescription = ({ description }) => {
 };
 
 const ProgressIndicator = ({ requirementMet }) => {
-  
   if (requirementMet)
     return (
       <Typography
@@ -52,7 +51,6 @@ const ProgressIndicator = ({ requirementMet }) => {
 };
 
 const InductionProgress = ({ candidate, setCandidate }) => {
-
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
@@ -86,88 +84,89 @@ const InductionProgress = ({ candidate, setCandidate }) => {
 
   if (!candidate) return <></>;
   return (
-    <Container sx={{ paddingBottom: '100px'}}>
+    <Container sx={{ paddingBottom: '100px' }}>
       <Typography variant='h2' color='primary' mt={10}>
         Induction Progress
       </Typography>
-      <Typography variant='p' mt = {5}>
-        These candidate requirements are meant for you to meet other TBP members and serve our community!
+      <Typography variant='p' mt={5}>
+        These candidate requirements are meant for you to meet other TBP members
+        and serve our community!
       </Typography>
 
       <Box mt={5}>
         <Typography variant='h3' color='primary'>
           Tutoring
         </Typography>
+        <ProgressIndicator requirementMet={candidate.requirements?.tutoring} />
         <RequirementDescription
           description={
             '2 hours/week required from Weeks 3-9. Drop-in tutoring style! You can pick the subjects you can tutor.'
           }
         />
         {/* TODO: dillon */}
-        
+
         {/*<Button
           variant='contained'
           onClick={(e) => updateRequirement('tutoring', true)}
         >
           Test update requirement
       </Button>*/}
-        <LogTutoring candidate={candidate} setCandidate={setCandidate}></LogTutoring>
-        <ProgressIndicator requirementMet={candidate.requirements?.tutoring} />
+        <LogTutoring
+          candidate={candidate}
+          setCandidate={setCandidate}
+        ></LogTutoring>
       </Box>
 
       <Box mt={5}>
         <Typography variant='h3' color='primary'>
           Submit Test for Test Bank
         </Typography>
+        <ProgressIndicator requirementMet={candidate.requirements?.testBank} />
         <RequirementDescription
           description={
             'Submit a copy of one of your tests to our members-only test bank.'
           }
         />
-        <form encType="multipart/form-data">
-          <input type="file" name="pdf" accept="application/pdf" style={{color:'grey'}}/>
-          <button type="submit">Upload</button>
+        <form encType='multipart/form-data'>
+          <input
+            type='file'
+            name='pdf'
+            accept='application/pdf'
+            style={{ color: 'grey' }}
+          />
+          <button type='submit'>Upload</button>
         </form>
-        <ProgressIndicator requirementMet={candidate.requirements?.testBank} />
       </Box>
 
       <Box mt={5}>
         <Typography variant='h3' color='primary'>
           New Member Form
         </Typography>
-        <RequirementDescription
-          description={
-            'Confirm your candidacy!'
-          }
-        />        
         <ProgressIndicator
           requirementMet={candidate.requirements?.newMemberForm}
         />
+        <RequirementDescription description={'Confirm your candidacy!'} />
       </Box>
 
       <Box mt={5}>
         <Typography variant='h3' color='primary'>
           Corporate
         </Typography>
-        <RequirementDescription
-          description={
-            'Attend the corporate event'
-          }
-        /> 
         <ProgressIndicator requirementMet={candidate.requirements?.corporate} />
+        <RequirementDescription description={'Attend the corporate event'} />
       </Box>
 
       <Box mt={5}>
         <Typography variant='h3' color='primary'>
           General Social
         </Typography>
+        <ProgressIndicator
+          requirementMet={candidate.requirements?.generalSocial}
+        />
         <RequirementDescription
           description={
             'Come out to fulfill requirements and meet other candidates and officers!'
           }
-        /> 
-        <ProgressIndicator
-          requirementMet={candidate.requirements?.generalSocial}
         />
       </Box>
 
@@ -175,13 +174,13 @@ const InductionProgress = ({ candidate, setCandidate }) => {
         <Typography variant='h3' color='primary'>
           Mentor/Mentee Coffee Chat
         </Typography>
+        <ProgressIndicator
+          requirementMet={candidate.requirements?.coffeeChat}
+        />
         <RequirementDescription
           description={
             'Have a short, casual meeting with a TBP officer! Feel free to ask them any questions or just hang out.'
           }
-        /> 
-        <ProgressIndicator
-          requirementMet={candidate.requirements?.coffeeChat}
         />
       </Box>
 
@@ -189,13 +188,13 @@ const InductionProgress = ({ candidate, setCandidate }) => {
         <Typography variant='h3' color='primary'>
           Academic Outreach
         </Typography>
+        <ProgressIndicator
+          requirementMet={candidate.requirements?.academicOutreach}
+        />
         <RequirementDescription
           description={
             'Help run midterm/final review sessions for lower division classes.'
           }
-        /> 
-        <ProgressIndicator
-          requirementMet={candidate.requirements?.academicOutreach}
         />
       </Box>
 
@@ -203,13 +202,11 @@ const InductionProgress = ({ candidate, setCandidate }) => {
         <Typography variant='h3' color='primary'>
           Candidate Quiz
         </Typography>
-        <RequirementDescription
-          description={
-            'Take the candidate quiz to show your TBP knowledge.'
-          }
-        /> 
         <ProgressIndicator
           requirementMet={candidate.requirements?.candidateQuiz}
+        />
+        <RequirementDescription
+          description={'Take the candidate quiz to show your TBP knowledge.'}
         />
       </Box>
 
@@ -217,13 +214,11 @@ const InductionProgress = ({ candidate, setCandidate }) => {
         <Typography variant='h3' color='primary'>
           Bent Polishing
         </Typography>
-        <RequirementDescription
-          description={
-            'Help keep our bent nice and shiny.'
-          }
-        /> 
         <ProgressIndicator
           requirementMet={candidate.requirements?.bentPolishing}
+        />
+        <RequirementDescription
+          description={'Help keep our bent nice and shiny.'}
         />
       </Box>
 
@@ -231,13 +226,11 @@ const InductionProgress = ({ candidate, setCandidate }) => {
         <Typography variant='h3' color='primary'>
           Social Media Post
         </Typography>
-        <RequirementDescription
-          description={
-            'Advertise TBP on social media. @uclatbp'
-          }
-        /> 
         <ProgressIndicator
           requirementMet={candidate.requirements?.socialMediaPost}
+        />
+        <RequirementDescription
+          description={'Advertise TBP on social media. @uclatbp'}
         />
       </Box>
 
@@ -245,25 +238,21 @@ const InductionProgress = ({ candidate, setCandidate }) => {
         <Typography variant='h3' color='primary'>
           Chalking
         </Typography>
-        <RequirementDescription
-          description={
-            'Advertise TBP on the board in one of your classes.'
-          }
-        /> 
         <ProgressIndicator requirementMet={candidate.requirements?.chalking} />
+        <RequirementDescription
+          description={'Advertise TBP on the board in one of your classes.'}
+        />
       </Box>
 
       <Box mt={5}>
         <Typography variant='h3' color='primary'>
           Membership Fee
         </Typography>
-        <RequirementDescription
-          description={
-            'Pay a one-time fee for smart study buddies.'
-          }
-        /> 
         <ProgressIndicator
           requirementMet={candidate.requirements?.membershipFee}
+        />
+        <RequirementDescription
+          description={'Pay a one-time fee for smart study buddies.'}
         />
       </Box>
 
@@ -271,13 +260,11 @@ const InductionProgress = ({ candidate, setCandidate }) => {
         <Typography variant='h3' color='primary'>
           Initiation
         </Typography>
-        <RequirementDescription
-          description={
-            'Officially join Tau Beta Pi and become a member! #TBP'
-          }
-        /> 
         <ProgressIndicator
           requirementMet={candidate.requirements?.initiation}
+        />
+        <RequirementDescription
+          description={'Officially join Tau Beta Pi and become a member! #TBP'}
         />
       </Box>
       <Snackbar
