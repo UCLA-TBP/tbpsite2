@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import EventsCalendar from '../components/EventsCalendar';
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
 
 const FloatingContainer = styled(Container)(({ theme }) => ({
   backgroundColor: theme.palette.custom.main,
