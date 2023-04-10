@@ -20,7 +20,7 @@ import Officers from './officers/Officers';
 // import Corporate from './member-services/Corporate';
 import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
-import SignupForm from './components/SignupForm'; 
+import SignupForm from './signup/SignupForm'; 
 
 import RouteProtection from './permissions/RouteProtection';
 import { positions } from './permissions/PermissionsUtils';

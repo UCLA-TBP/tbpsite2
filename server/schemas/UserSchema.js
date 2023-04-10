@@ -54,12 +54,12 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
-  graduation_year:{
-    type: String,  
+  graduationYear:{
+    type: Number,  
     trim: true, 
     required: true,
   },
-  initiation_quarter:{
+  initiationQuarter:{
     quarter:{
       type: String, 
       enum: ['Fall', 'Spring'], 
@@ -67,7 +67,7 @@ const UserSchema = new mongoose.Schema({
       required: true, 
     },
     year:{
-      type: String, 
+      type: Number, 
       trim: true,
       required: true, 
     },

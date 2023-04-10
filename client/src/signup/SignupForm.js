@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Container, Box, Button, MenuItem, TextField, Select, Grid, Typography} from '@mui/material';
 import axios from 'axios';
+import TBPBackground from '../components/TBPBackground';
 
 const majors = [
   {
@@ -61,6 +62,25 @@ const init_quarter = [
   },
 ]
 
+const InputField = styled(TextField)(({ theme }) => ({
+  '& label': {
+    fontSize: '0.9rem',
+  },
+  '& label.Mui-focused': {
+    color: theme.palette.secondary.main,
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: theme.palette.primary.main,
+      color: theme.palette.primary.main,
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.secondary.main,
+    },
+  },
+}));
+
+
 const SignupForm = ({ SignupCallback }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -76,23 +96,32 @@ const SignupForm = ({ SignupCallback }) => {
         .post('/api/user/register', {
           email: email,
           password: password,
-          first_name: first_name, 
-          last_name: last_name, 
+          //confirm password?
+          name: {first: first_name, last: last_name}, 
           major: major,
-          graduation_year: graduation_year,
-          initiation_quarter: initiation_quarter, 
-          initiation_year: initiation_year,
+          graduationYear: graduation_year, //number
+          initiationQuarter: {quarter: initiation_quarter, year: initiation_year},
         })
         .then((res) => {
           SignupCallback(res);
+          //give a snackbar to tell the use their account has been created
+          //redirect to home page
         })
         .catch((err) => {
           console.log(err);
+          //show snackbar for failure
         });
     };
   
     return (
-      <Container sx={{ paddingBottom: '100px'}}>
+      <>
+      <TBPBackground/>
+      <Container 
+      sx={{
+        marginTop: '-10px',
+        padding: '25px 35px 100px !important',
+        backgroundColor: (theme) => theme.palette.custom.main,
+      }}>
         <Typography variant='h2' mt={10} mb={3}>
         Sign up
       </Typography>
@@ -102,11 +131,10 @@ const SignupForm = ({ SignupCallback }) => {
           marginLeft: '15px',
         }}
       >
-        <TextField
+        <InputField
           label='Email Address'
           required
-          variant='outlined'
-          size='normal'
+          color='primary'
           fullWidth
           margin='dense'
           autoComplete='off'
@@ -117,7 +145,7 @@ const SignupForm = ({ SignupCallback }) => {
             setEmail(e.target.value);
           }}
         />
-        <TextField
+        <InputField
           label='Password'
           required
           variant='outlined'
@@ -133,7 +161,7 @@ const SignupForm = ({ SignupCallback }) => {
             setPassword(e.target.value);
           }}
         />
-        <TextField
+        <InputField
           label='First Name'
           required
           variant='outlined'
@@ -148,7 +176,7 @@ const SignupForm = ({ SignupCallback }) => {
             setFirstName(e.target.value);
         }}
         />
-        <TextField
+        <InputField
           label='Last Name'
           required
           variant='outlined'
@@ -163,7 +191,7 @@ const SignupForm = ({ SignupCallback }) => {
             setLastName(e.target.value);
         }}
         />
-        <TextField
+        <InputField
           label='Major'
           required
           fullWidth
@@ -178,8 +206,8 @@ const SignupForm = ({ SignupCallback }) => {
             {option.label}
           </MenuItem>
         ))}
-        </TextField> 
-        <TextField
+        </InputField> 
+        <InputField
           label='Graduation Year'
           variant='outlined'
           required
@@ -194,7 +222,7 @@ const SignupForm = ({ SignupCallback }) => {
             setGraduationYear(e.target.value);
         }}
         />
-          <TextField
+          <InputField
             label='Initiation Quarter'
             select
             fullWidth
@@ -209,11 +237,10 @@ const SignupForm = ({ SignupCallback }) => {
             {option.label}
           </MenuItem>
         ))}
-          </TextField>
-          <TextField
+          </InputField>
+          <InputField
             label='Initiation Year'
             required
-            fullWidth
             margin='dense'
             variant='outlined'
             size='normal'
@@ -226,6 +253,7 @@ const SignupForm = ({ SignupCallback }) => {
              }}
         />
         <Button
+
           variant='text'
           color='secondary'
           sx = {{mx: 'auto', width: '100%', mt: '10px' }}
@@ -235,6 +263,7 @@ const SignupForm = ({ SignupCallback }) => {
         </Button>
       </Box>
       </Container>
+      </>
     );
   };
 
