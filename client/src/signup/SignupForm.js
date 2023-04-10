@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Container, Box, Button, MenuItem, TextField, Select, Grid, Typography} from '@mui/material';
+import { Container, Box, Button, MenuItem, TextField, Select, Grid, Typography, Snackbar} from '@mui/material';
 import axios from 'axios';
 import TBPBackground from '../components/TBPBackground';
 
@@ -72,12 +72,17 @@ const InputField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
       borderColor: theme.palette.primary.main,
-      color: theme.palette.primary.main,
+      color: theme.palette.text.main,
+      backgroudColor: theme.palette.primary.main,
     },
     '&.Mui-focused fieldset': {
       borderColor: theme.palette.secondary.main,
+      color: theme.palette.text.main,
     },
   },
+//  '& .MuiInputBase-root': {
+//    color: theme.palette.text.primary,
+//  }
 }));
 
 
@@ -90,6 +95,8 @@ const SignupForm = ({ SignupCallback }) => {
     const [graduation_year, setGraduationYear] = useState(''); 
     const [initiation_quarter, setInitiationQuarter] = useState(''); 
     const [initiation_year, setInitiationYear] = useState(''); 
+    const [showSnackbar, setShowSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
   
     const handleSignup = () => {
       axios
@@ -101,16 +108,25 @@ const SignupForm = ({ SignupCallback }) => {
           major: major,
           graduationYear: graduation_year, //number
           initiationQuarter: {quarter: initiation_quarter, year: initiation_year},
+          //check if a current officer is signing up and give officer permission automatically 
         })
         .then((res) => {
-          SignupCallback(res);
+          console.log(res);
           //give a snackbar to tell the use their account has been created
           //redirect to home page
+          setSnackbarMessage(res.message);
+          setShowSnackbar(true);
+
         })
         .catch((err) => {
           console.log(err);
-          //show snackbar for failure
+          setSnackbarMessage('Unable to sign up');
+          setShowSnackbar(true);
         });
+    };
+
+    const handleSnackbarClose = (event, reason) => {
+      setShowSnackbar(false);
     };
   
     return (
@@ -133,8 +149,8 @@ const SignupForm = ({ SignupCallback }) => {
       >
         <InputField
           label='Email Address'
+          variant='outlined'
           required
-          color='primary'
           fullWidth
           margin='dense'
           autoComplete='off'
@@ -142,7 +158,19 @@ const SignupForm = ({ SignupCallback }) => {
             e.stopPropagation();
           }}
           onChange={(e) => {
-            setEmail(e.target.value);
+            setEmail(e.email);
+          }}
+//          sx={{input: { color: 'while' } }}
+          InputProps={{
+            sx: {
+                "& input": {
+                 color: 'primary.main',
+                },
+              }
+           }}
+           sx ={{"& .MuiFormLabel-root": {
+            color: 'primary.main'
+            },
           }}
         />
         <InputField
@@ -160,6 +188,17 @@ const SignupForm = ({ SignupCallback }) => {
           onChange={(e) => {
             setPassword(e.target.value);
           }}
+          InputProps={{
+            sx: {
+                "& input": {
+                 color: 'primary.main',
+                },
+              }
+           }}
+           sx ={{"& .MuiFormLabel-root": {
+            color: 'primary.main'
+            },
+          }}
         />
         <InputField
           label='First Name'
@@ -174,6 +213,17 @@ const SignupForm = ({ SignupCallback }) => {
         }}
         onChange={(e) => {
             setFirstName(e.target.value);
+        }}
+        InputProps={{
+          sx: {
+              "& input": {
+               color: 'primary.main',
+              },
+            }
+         }}
+         sx ={{"& .MuiFormLabel-root": {
+          color: 'primary.main'
+          },
         }}
         />
         <InputField
@@ -190,6 +240,17 @@ const SignupForm = ({ SignupCallback }) => {
         onChange={(e) => {
             setLastName(e.target.value);
         }}
+        InputProps={{
+          sx: {
+              "& input": {
+               color: 'primary.main',
+              },
+            }
+         }}
+         sx ={{"& .MuiFormLabel-root": {
+          color: 'primary.main'
+          },
+        }}
         />
         <InputField
           label='Major'
@@ -199,6 +260,16 @@ const SignupForm = ({ SignupCallback }) => {
           margin='dense'
           onChange={(e) => {
             setMajor(e.target.value);
+        }}
+        sx ={{"& .MuiFormLabel-root": {
+          color: 'primary.main'
+          },
+          "& .MuiMenuItem-root":{
+            color:'primaty.main'
+          },
+          "& .MuiInputBase-root": {
+            color: 'primary.main'
+        },
         }}
         > 
         {majors.map((option) => (
@@ -221,6 +292,17 @@ const SignupForm = ({ SignupCallback }) => {
         onChange={(e) => {
             setGraduationYear(e.target.value);
         }}
+        InputProps={{
+          sx: {
+              "& input": {
+               color: 'primary.main',
+              },
+            }
+         }}
+         sx ={{"& .MuiFormLabel-root": {
+          color: 'primary.main'
+          },
+        }}
         />
           <InputField
             label='Initiation Quarter'
@@ -231,9 +313,27 @@ const SignupForm = ({ SignupCallback }) => {
             onChange={(e) => {
                 setInitiationQuarter(e.target.value);
             }}
+             sx ={{"& .MuiFormLabel-root": {
+              color: 'primary.main'
+              },
+              "& .MuiMenuItem-root":{
+                color:'primaty.main'
+              },
+              "& .MuiInputBase-root": {
+                color: 'primary.main'
+            },
+            }}
           >
             {init_quarter.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem key={option.value} value={option.value}
+           sx ={{"& .MuiFormLabel-root": {
+            color: 'primary.main'
+            },
+            "& .MuiMenuItem-root":{
+              color:'primaty.main'
+            },
+          }}
+           >
             {option.label}
           </MenuItem>
         ))}
@@ -251,10 +351,20 @@ const SignupForm = ({ SignupCallback }) => {
             onChange={(e) => {
               setInitiationYear(e.target.value);
              }}
+             InputProps={{
+              sx: {
+                  "& input": {
+                   color: 'primary.main',
+                  },
+                }
+             }}
+             sx ={{"& .MuiFormLabel-root": {
+              color: 'primary.main'
+              },
+            }}
         />
         <Button
-
-          variant='text'
+          variant='outlined'
           color='secondary'
           sx = {{mx: 'auto', width: '100%', mt: '10px' }}
           onClick={handleSignup}
@@ -262,6 +372,19 @@ const SignupForm = ({ SignupCallback }) => {
           Submit
         </Button>
       </Box>
+      <Snackbar
+          open={showSnackbar}
+          autoHideDuration={4000}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          onClose={handleSnackbarClose}
+          message={snackbarMessage}
+          sx={{
+            '& .MuiSnackbarContent-root': {
+              color: 'black', //your custom color here
+              backgroundColor: (theme) => theme.palette.secondary.main, //your custom color here
+            },
+          }}
+        />
       </Container>
       </>
     );
