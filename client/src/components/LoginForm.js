@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+} from '@mui/material';
 import axios from 'axios';
 
 const LoginField = styled(TextField)(({ theme }) => ({
@@ -34,8 +40,10 @@ const LoginForm = ({ loginCallback }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
+  const [loadingLogIn, setLoadingLogin] = useState(false);
 
   const handleLogin = () => {
+    setLoadingLogin(true);
     axios
       .post('/api/user/login', {
         email: email,
@@ -44,10 +52,12 @@ const LoginForm = ({ loginCallback }) => {
       .then((res) => {
         loginCallback(res);
         setShowError(false);
+        setLoadingLogin(false);
       })
       .catch((err) => {
         // console.log(err);
         setShowError(true);
+        setLoadingLogin(false);
       });
   };
 
@@ -98,7 +108,7 @@ const LoginForm = ({ loginCallback }) => {
         sx={{ width: '100%', mt: '10px' }}
         onClick={handleLogin}
       >
-        Log In
+        {loadingLogIn ? <CircularProgress size='1.4rem' /> : 'LOG IN'}
       </Button>
     </Box>
   );

@@ -159,7 +159,7 @@ const CandidateTracker = () => {
                   key={index}
                   container
                   rowSpacing={1}
-                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  columnSpacing={{ xs: 15, sm: 2, md: 3 }}
                 >
                   <Grid style={{ color: 'white' }} item xs={2}>
                     Week: {entry.week}
@@ -216,7 +216,43 @@ const CandidateTracker = () => {
             <Typography variant='h4' color='secondary' mt={3} mb={1}>
               Candidate Info
             </Typography>
-            {Object.entries(selectedCandidate).map(([key, value]) => {
+            <Typography
+              variant='p'
+              sx={{
+                color: (theme) => theme.palette.primary.main,
+                fontSize: '1rem',
+              }}
+            >
+              Name
+            </Typography>
+            <Typography
+              variant='p'
+              mb={1}
+              sx={{
+                fontSize: '1rem',
+              }}
+            >
+              {selectedCandidate.name.first} {selectedCandidate.name.last}
+            </Typography>
+            <Typography
+              variant='p'
+              sx={{
+                color: (theme) => theme.palette.primary.main,
+                fontSize: '1rem',
+              }}
+            >
+              Email
+            </Typography>
+            <Typography
+              variant='p'
+              mb={1}
+              sx={{
+                fontSize: '1rem',
+              }}
+            >
+              {selectedCandidate.email}
+            </Typography>
+            {/* {Object.entries(selectedCandidate).map(([key, value]) => {
               return (
                 <div key={key}>
                   <Typography
@@ -240,7 +276,7 @@ const CandidateTracker = () => {
                   </Typography>
                 </div>
               );
-            })}
+            })} */}
           </Box>
         )}
         <Snackbar
