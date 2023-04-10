@@ -14,7 +14,7 @@ app.use(
   cors({
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
-    origin: ['http://localhost:3000'], // replace w/ deployed url on deployment
+    origin: [process.env.CLIENT_URL || 'http://localhost:3000'], // replace w/ deployed url on deployment
   })
 );
 

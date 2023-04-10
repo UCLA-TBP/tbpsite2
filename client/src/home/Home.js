@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import EventsCalendar from '../components/EventsCalendar';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 const FloatingContainer = styled(Container)(({ theme }) => ({
   backgroundColor: theme.palette.custom.main,
@@ -82,7 +83,12 @@ function Home() {
 
   return (
     <>
-      <div className='background'>
+      <div
+        className='background'
+        onClick={() => {
+          console.log('bg click');
+        }}
+      >
         {/* <Grid
           container
           spacing={0}
@@ -106,13 +112,23 @@ function Home() {
           maxWidth='100%'
           sx={{
             position: 'sticky',
-            top: `${40 - scrollPos / 100}%`,
+            top: {
+              xs: `${37 - scrollPos / 100}%`,
+              md: `${40 - scrollPos / 100}%`,
+            },
             textAlign: 'right',
             paddingRight: { sm: '10vw', xl: '20vw' },
             opacity: Math.max(0, 1.4 - scrollPos / 400),
           }}
         >
-          <Typography variant='h1'>
+          <Typography
+            variant='h1'
+            sx={{
+              fontSize: { xs: '200%', sm: '250%', md: '350%' },
+              textAlign: { xs: 'center', md: 'right' },
+              lineHeight: { xs: '2', md: '1.2' },
+            }}
+          >
             The Honor Society for
             <br></br>
             <Typography variant='highlight'>All Engineers </Typography>
@@ -126,6 +142,9 @@ function Home() {
             top: `${90 - scrollPos / 25}%`,
             opacity: Math.max(0, 1.4 - scrollPos / 100),
           }}
+          onClick={() => {
+            console.log('clicked');
+          }}
         >
           {/* <a href='/#who-we-are'>
             <KeyboardArrowDownIcon />
@@ -135,6 +154,23 @@ function Home() {
           <div className='arrow arrow-second' />
         </section>
       </div>
+      <div
+        style={{
+          position: 'absolute',
+          top: '80vh',
+          height: '20vh',
+          width: '100%',
+          cursor: 'pointer',
+        }}
+        onClick={() => {
+          const whoWeAreEle = document.getElementById('who-we-are');
+          whoWeAreEle.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }}
+      ></div>
 
       <div className='section-secondary'>
         <FloatingContainer
@@ -172,7 +208,8 @@ function Home() {
           </Typography>
           <Typography variant='p' mb={'20px'}>
             Invitations for membership may be extended to undergraduate
-            engineering majors who are in the top 1/5 of Senior Class or 1/8 of Junior Class.
+            engineering majors who are in the top 1/5 of Senior Class or 1/8 of
+            Junior Class.
           </Typography>
           <Typography variant='p' mb={'20px'}>
             Candidates must also have completed at least 28 units from UCLA to
@@ -305,8 +342,7 @@ function Home() {
         </FloatingContainer>
 
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
-      
-        
+
         <FloatingContainer
           className='section-container'
           id='event-calendar'
@@ -355,10 +391,11 @@ function Home() {
                     <p className='card-text'>
                       With so many accomplished members, TBP is dedicated to
                       assisting the next generation of engineers reach their
-                      professional goals. We host career fairs and offer 
-                      information sessions to help connect members to employers 
-                      as well as resume workshops and support to prepare for graduate school.
-                      <br></br> <br></br> 
+                      professional goals. We host career fairs and offer
+                      information sessions to help connect members to employers
+                      as well as resume workshops and support to prepare for
+                      graduate school.
+                      <br></br> <br></br>
                     </p>
                   </CardContent>
                 </CardActionArea>
@@ -374,7 +411,7 @@ function Home() {
                     image={`${process.env.PUBLIC_URL}/home/ao.jpeg`}
                   />
                   <CardContent className='card-background'>
-        <h2 className='card-title'>Academic Outreach</h2>
+                    <h2 className='card-title'>Academic Outreach</h2>
                     {/* I know these line breaks are so ugly, but it was an easy way to make all cards the same size :/ */}
                     <p className='card-text'>
                       In addition to TBP’s drop-in tutoring program, we also
@@ -393,7 +430,7 @@ function Home() {
                   <CardMedia
                     component='img'
                     height='200'
-                    image= {`${process.env.PUBLIC_URL}/home/emcc.png`}
+                    image={`${process.env.PUBLIC_URL}/home/emcc.png`}
                   />
                   <CardContent className='card-background'>
                     <h2 className='card-title'>EMCC</h2>
@@ -434,7 +471,7 @@ function Home() {
                 </CardActionArea>
               </Card>
             </Grid>
-      </Grid>
+          </Grid>
         </FloatingContainer>
 
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}

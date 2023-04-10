@@ -8,6 +8,7 @@ import {
   Link,
   Menu,
   MenuItem,
+  useMediaQuery,
 } from '@mui/material';
 import styled from '@emotion/styled';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -37,6 +38,7 @@ const DropDownItemLink = ({
             color: (theme) => alpha(theme.palette.text.secondary, 0.6),
           },
           fontSize: '.9rem',
+          mt: { xs: -2.5, sm: 0 },
         }}
         onClick={() => {
           // handleDropDownClose();
@@ -116,6 +118,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   const [userDropDownEntries, setUserDropDownEntries] = useState([]);
 
   const [doScrollFade, setDoScrollFade] = useState(false);
+  const isMobileView = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
@@ -221,10 +224,20 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         container
         direction='row'
         justifyContent='flex-end'
-        spacing={1.5}
-        sx={{ px: 3, py: 1.5 }}
+        spacing={isMobileView ? 0 : 1.5}
+        sx={{ px: { xs: 0.5, md: 3 }, py: 1.5 }}
       >
-        <Grid item>
+        <Grid
+          item
+          sx={
+            isMobileView
+              ? {
+                  position: 'absolute',
+                  left: '12px',
+                }
+              : {}
+          }
+        >
           <Button
             color='inherit'
             variant='text'
@@ -241,7 +254,8 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
               alt='tbp-logo'
               height='25'
             />
-            &nbsp; Tau Beta Pi | UCLA
+            &nbsp;
+            {isMobileView ? 'TBP | UCLA' : ' Tau Beta Pi | UCLA'}
           </Button>
         </Grid>
         <Grid item>
@@ -368,7 +382,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
                     color: (theme) => theme.palette.text.primary,
                     opacity: 1,
                   },
-                  mt: idx > 0 ? 2 : 0,
+                  mt: { xs: -0.5, sm: idx > 0 ? 2 : 0 },
                   fontSize: '.9rem',
                 }}
               >

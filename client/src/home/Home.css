@@ -12,6 +12,10 @@
   color: white;
 }
 
+#who-we-are-text {
+  font-size: 1.5rem;
+}
+
 @media only screen and (max-width: 640px) {
   .background {
     /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://tbp.seas.ucla.edu/static/img/background.gif); */
@@ -24,6 +28,9 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position-x: 25%;
+  }
+  #who-we-are-text {
+    font-size: 1.2rem;
   }
 }
 
@@ -60,7 +67,9 @@
 .arrow {
   opacity: 0;
   position: absolute;
-  left: 50%;
+  /* left: -webkit-calc(50% - 15px);
+  left: -moz-calc(50% - 15px); */
+  left: calc(50% - 25px);
   top: 50%;
   transform-origin: 50% 50%;
   transform: translate3d(-50%, -50%, 0);
@@ -117,10 +126,6 @@
   font-weight: 400;
   color: #fff;
   text-transform: none;
-}
-
-#who-we-are-text {
-  font-size: 1.5rem;
 }
 
 .section-container {
