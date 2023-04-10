@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Autocomplete,
+  Box,
   Button,
   Container,
   Grid,
@@ -8,11 +9,12 @@ import {
   TextField,
   Typography,
   createFilterOptions,
-  Item
+  Item,
 } from '@mui/material';
 import { positions } from '../permissions/PermissionsUtils';
 import axios from 'axios';
 import _ from 'lodash';
+import TBPBackground from '../components/TBPBackground';
 
 const filterOptions = createFilterOptions({
   ignorecase: true,
@@ -60,174 +62,202 @@ const CandidateTracker = () => {
   };
 
   return (
-    <Container>
-      <Typography variant='h2' mt={10} mb={3}>
-        Candidate Tracker
-      </Typography>
-      <Typography variant='h3' color='primary' mt={3} mb={1}>
-        Candidate Name
-      </Typography>
-      <Autocomplete
-        disablePortal
-        options={candidates}
-        getOptionLabel={(candidate) =>
-          `${candidate.name?.first} ${candidate.name?.last}`
-        }
-        onChange={(e, val) => {
-          setSelectedCandidate(val);
-        }}
-        sx={{
-          backgroundColor: (theme) => theme.palette.primary.main,
-          borderRadius: '0.2rem',
-        }}
-        filterOptions={filterOptions}
-        isOptionEqualToValue={(option, value) => option.email === value.email}
-        renderInput={(params) => {
-          return <TextField {...params} />;
-        }}
-      />
-      {selectedCandidate && (
-        <>
-          <Typography variant='h4' color='secondary' mt={3} mb={1}>
-            Candidate Requirements
-          </Typography>
-          {selectedCandidate.requirements &&
-            Object.entries(selectedCandidate.requirements).map(
-              ([requirement, status]) => {
-                return (
-                  <Grid container key={requirement}>
-                    <Grid item xs={5} md={2}>
-                      <Typography
-                        variant='p'
-                        color='primary'
-                        sm={3}
-                        sx={{
-                          fontSize: '1rem',
-                          width: '15rem',
-                        }}
-                      >
-                        {_.startCase(requirement)}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                      <input
-                        id={requirement}
-                        type='checkbox'
-                        checked={status}
-                        onChange={(e) => {
-                          setSelectedCandidate({
-                            ...selectedCandidate,
-                            requirements: {
-                              ...selectedCandidate.requirements,
-                              [e.target.id]: e.target.checked,
-                            },
-                          });
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                );
-              }
-            )}
-
-          <Typography variant='h4' color='secondary' mt={3} mb={1}>
-            Tutoring Hours
-          </Typography>
-
-          {selectedCandidate.tutoringLog && selectedCandidate.tutoringLog.map((entry, index) => (
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-              <Grid style={{ color: 'white' }} item xs={2}>
-                Week: {entry.week}
-              </Grid>
-              <Grid style={{ color: 'white' }} item xs={2}>
-                Hours: {entry.hours}
-              </Grid>
-              <Grid style={{ color: 'white' }} item xs={3}>
-                Secret Phrase: {entry.secretPhrase}
-              </Grid>
-            </Grid>
-          ))}
-          
-          
-
-          <Typography variant='h4' color='secondary' mt={3} mb={1}>
-            Membership Status
-          </Typography>
-          <select
-            value={selectedCandidate.position}
-            onChange={(e) => {
-              setSelectedCandidate({
-                ...selectedCandidate,
-                position: e.target.value,
-              });
+    <>
+      <TBPBackground />
+      <Container>
+        <Typography
+          variant='h2'
+          mt={15}
+          mb={3}
+          color='primary'
+          sx={{
+            fontWeight: 'bold',
+          }}
+        >
+          Candidate Tracker
+        </Typography>
+        <Typography variant='h3' color='primary' mt={3} mb={1}>
+          Candidate Name
+        </Typography>
+        <Autocomplete
+          disablePortal
+          options={candidates}
+          getOptionLabel={(candidate) =>
+            `${candidate.name?.first} ${candidate.name?.last}`
+          }
+          onChange={(e, val) => {
+            setSelectedCandidate(val);
+          }}
+          sx={{
+            backgroundColor: (theme) => theme.palette.primary.main,
+            borderRadius: '0.2rem',
+          }}
+          filterOptions={filterOptions}
+          isOptionEqualToValue={(option, value) => option.email === value.email}
+          renderInput={(params) => {
+            return <TextField {...params} />;
+          }}
+        />
+        {selectedCandidate && (
+          <Box
+            mt={4}
+            mb={4}
+            sx={{
+              backgroundColor: (theme) => theme.palette.custom.main,
+              padding: '1px 40px 10px',
+              borderRadius: '12px',
             }}
           >
-            {Object.values(positions).map((position) => (
-              <option key={position} value={position}>
-                {position}
-              </option>
-            ))}
-          </select>
-          <Grid
-            container
-            pt={3}
-            sx={{ display: 'flex', justifyContent: 'left' }}
-          >
-            <Grid item xs={12} sm={3} lg={2}>
-              <Button
-                color='secondary'
-                variant='contained'
-                onClick={handleSave}
-                sx={{ width: '100%' }}
-              >
-                Save Changes
-              </Button>
-            </Grid>
-          </Grid>
+            <Typography variant='h4' color='secondary' mt={3} mb={1}>
+              Candidate Requirements
+            </Typography>
+            {selectedCandidate.requirements &&
+              Object.entries(selectedCandidate.requirements).map(
+                ([requirement, status]) => {
+                  return (
+                    <Grid container key={requirement}>
+                      <Grid item xs={5} md={2}>
+                        <Typography
+                          variant='p'
+                          color='primary'
+                          sm={3}
+                          sx={{
+                            fontSize: '1rem',
+                            width: '15rem',
+                          }}
+                        >
+                          {_.startCase(requirement)}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={2}>
+                        <input
+                          id={requirement}
+                          type='checkbox'
+                          checked={status}
+                          onChange={(e) => {
+                            setSelectedCandidate({
+                              ...selectedCandidate,
+                              requirements: {
+                                ...selectedCandidate.requirements,
+                                [e.target.id]: e.target.checked,
+                              },
+                            });
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                  );
+                }
+              )}
 
-          <Typography variant='h4' color='secondary' mt={3} mb={1}>
-            Candidate Info
-          </Typography>
-          {Object.entries(selectedCandidate).map(([key, value]) => {
-            return (
-              <div key={key}>
-                <Typography
-                  variant='p'
-                  sx={{
-                    color: (theme) => theme.palette.primary.main,
-                    fontSize: '1rem',
-                  }}
+            <Typography variant='h4' color='secondary' mt={3} mb={1}>
+              Tutoring Logs
+            </Typography>
+
+            {selectedCandidate.tutoringLog?.length ? (
+              selectedCandidate.tutoringLog.map((entry, index) => (
+                <Grid
+                  key={index}
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
-                  {key}
-                </Typography>
-                <Typography
-                  variant='p'
-                  mb={1}
-                  sx={{
-                    fontSize: '1rem',
-                  }}
+                  <Grid style={{ color: 'white' }} item xs={2}>
+                    Week: {entry.week}
+                  </Grid>
+                  <Grid style={{ color: 'white' }} item xs={2}>
+                    Hours: {entry.hours}
+                  </Grid>
+                  <Grid style={{ color: 'white' }} item xs={3}>
+                    Secret Phrase: {entry.secretPhrase}
+                  </Grid>
+                </Grid>
+              ))
+            ) : (
+              <Typography variant='p' color='custom'>
+                None
+              </Typography>
+            )}
+
+            <Typography variant='h4' color='secondary' mt={3} mb={1}>
+              Membership Status
+            </Typography>
+            <select
+              value={selectedCandidate.position}
+              onChange={(e) => {
+                setSelectedCandidate({
+                  ...selectedCandidate,
+                  position: e.target.value,
+                });
+              }}
+            >
+              {Object.values(positions).map((position) => (
+                <option key={position} value={position}>
+                  {position}
+                </option>
+              ))}
+            </select>
+            <Grid
+              container
+              pt={3}
+              sx={{ display: 'flex', justifyContent: 'left' }}
+            >
+              <Grid item xs={12} sm={3} lg={2}>
+                <Button
+                  color='secondary'
+                  variant='contained'
+                  onClick={handleSave}
+                  sx={{ width: '100%' }}
                 >
-                  {JSON.stringify(value, null, 4)}
-                </Typography>
-              </div>
-            );
-          })}
-        </>
-      )}
-      <Snackbar
-        open={showSnackbar}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={handleSnackbarClose}
-        message={snackbarMessage}
-        sx={{
-          '& .MuiSnackbarContent-root': {
-            color: 'black', //your custom color here
-            backgroundColor: (theme) => theme.palette.secondary.main, //your custom color here
-          },
-        }}
-      />
-    </Container>
+                  Save Changes
+                </Button>
+              </Grid>
+            </Grid>
+
+            <Typography variant='h4' color='secondary' mt={3} mb={1}>
+              Candidate Info
+            </Typography>
+            {Object.entries(selectedCandidate).map(([key, value]) => {
+              return (
+                <div key={key}>
+                  <Typography
+                    variant='p'
+                    sx={{
+                      color: (theme) => theme.palette.primary.main,
+                      fontSize: '1rem',
+                    }}
+                  >
+                    {key}
+                  </Typography>
+                  <Typography
+                    variant='p'
+                    mb={1}
+                    sx={{
+                      fontSize: '1rem',
+                    }}
+                  >
+                    {JSON.stringify(value, null, 4)}
+                  </Typography>
+                </div>
+              );
+            })}
+          </Box>
+        )}
+        <Snackbar
+          open={showSnackbar}
+          autoHideDuration={4000}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          onClose={handleSnackbarClose}
+          message={snackbarMessage}
+          sx={{
+            '& .MuiSnackbarContent-root': {
+              color: 'black', //your custom color here
+              backgroundColor: (theme) => theme.palette.secondary.main, //your custom color here
+            },
+          }}
+        />
+      </Container>
+    </>
   );
 };
 

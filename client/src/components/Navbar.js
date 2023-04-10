@@ -115,9 +115,12 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   const [dropDownOpened, setDropDownOpened] = useState(false);
   const [userDropDownEntries, setUserDropDownEntries] = useState([]);
 
+  const [doScrollFade, setDoScrollFade] = useState(false);
+
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
     centerOnElement(targetId);
+    setDoScrollFade(window.location.pathname === '/');
     // eslint-disable-next-line
   }, [window.location.href]);
 
@@ -205,7 +208,12 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
       position='fixed'
       sx={{
         backgroundColor: (theme) =>
-          alpha(theme.palette.primary.main, 0.8 * Math.min(1, scrollPos / 500)),
+          doScrollFade
+            ? alpha(
+                theme.palette.primary.main,
+                0.8 * Math.min(1, scrollPos / 500)
+              )
+            : theme.palette.primary.main,
         boxShadow: 0,
       }}
     >
