@@ -1,8 +1,7 @@
-import { Box, Button, Container, Snackbar, Typography } from '@mui/material';
+import { Box, Container, Snackbar, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import axios from 'axios';
 import React, { useState } from 'react';
 import LogTutoring from '../components/LogTutoring';
 import TBPBackground from '../components/TBPBackground';
@@ -53,31 +52,32 @@ const ProgressIndicator = ({ requirementMet }) => {
 
 const InductionProgress = ({ candidate, setCandidate }) => {
   const [showSnackbar, setShowSnackbar] = useState(false);
+  //eslint-disable-next-line
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
-  const updateRequirement = (requirement, requirementMet) => {
-    // requirement (String): name of requirement (as per UserSchema, e.g. 'testBank')
-    // requirement (Boolean): is requirement met? (should probably be true)
-    const updatedCandidate = {
-      ...candidate,
-      requirements: {
-        ...candidate.requirements,
-        [requirement]: requirementMet,
-      },
-    };
+  // const updateRequirement = (requirement, requirementMet) => {
+  //   // requirement (String): name of requirement (as per UserSchema, e.g. 'testBank')
+  //   // requirement (Boolean): is requirement met? (should probably be true)
+  //   const updatedCandidate = {
+  //     ...candidate,
+  //     requirements: {
+  //       ...candidate.requirements,
+  //       [requirement]: requirementMet,
+  //     },
+  //   };
 
-    axios
-      .put('/api/user/update-user/' + candidate._id, updatedCandidate)
-      .then((res) => {
-        setSnackbarMessage('Induction requirement updated!');
-        setShowSnackbar(true);
-      })
-      .catch((err) => {
-        console.log(err);
-        setSnackbarMessage('Save error!');
-        setShowSnackbar(true);
-      });
-  };
+  //   axios
+  //     .put('/api/user/update-user/' + candidate._id, updatedCandidate)
+  //     .then((res) => {
+  //       setSnackbarMessage('Induction requirement updated!');
+  //       setShowSnackbar(true);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setSnackbarMessage('Save error!');
+  //       setShowSnackbar(true);
+  //     });
+  // };
 
   const handleSnackbarClose = (event, reason) => {
     setShowSnackbar(false);

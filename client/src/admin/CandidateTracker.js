@@ -9,7 +9,6 @@ import {
   TextField,
   Typography,
   createFilterOptions,
-  Item,
 } from '@mui/material';
 import { positions } from '../permissions/PermissionsUtils';
 import axios from 'axios';
