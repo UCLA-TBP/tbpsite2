@@ -1,2 +1,2 @@
-/api/_ https://tbpsite.onrender.com/:splat 200  
-/_ /index.html 200
+/api/* https://tbpsite.onrender.com/:splat 200  
+/* /index.html 200
