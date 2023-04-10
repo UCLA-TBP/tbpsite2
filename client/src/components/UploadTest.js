@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, Button, FormControl, InputLabel, Select, MenuItem, TextField, Snackbar} from '@mui/material';
+import SubmittedTests from './SubmittedTests';
 
 function UploadTest({candidate, setCandidate}) {
 
@@ -26,32 +27,6 @@ function UploadTest({candidate, setCandidate}) {
     const [classNumber, setClassNumber] = useState("");
     function handleClassNumberChange(event) {
         setClassNumber(event.target.value);
-    }
-
-    const [testList, setTestList] = useState([]);
-    useEffect(() => {
-      const getTests = async () => {
-        try {
-          const promises = candidate.submittedTests?.map(async (testId) => {
-            const response = await axios.get('/api/pdf/get-pdf/' + testId);
-            return <li key={testId} style={{color: 'white'}}> {
-                    response.data.subject + "_" +
-                    response.data.classNumber + "_" +
-                    response.data.professor + ".PDF"}
-                </li>;
-          });
-          const testItems = await Promise.all(promises);
-          setTestList(testItems);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-    
-      getTests();
-    }, [candidate]);
-
-    function tester() {
-        console.log(candidate);
     }
 
     function handleUpload(event) {
@@ -189,15 +164,7 @@ function UploadTest({candidate, setCandidate}) {
                 </Button>
             </form>
 
-           
-           <Typography variant='p' mt = {1}>
-                Submitted tests:
-            </Typography>
-            
-            <ul>
-                {testList}
-            </ul>
-
+           <SubmittedTests candidate = {candidate}></SubmittedTests>
 
             <Snackbar
                 open={showSnackbar}

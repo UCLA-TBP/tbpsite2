@@ -10,9 +10,11 @@ import {
   createFilterOptions,
   Item
 } from '@mui/material';
+import SubmittedTests from '../components/SubmittedTests';
 import { positions } from '../permissions/PermissionsUtils';
 import axios from 'axios';
 import _ from 'lodash';
+
 
 const filterOptions = createFilterOptions({
   ignorecase: true,
@@ -161,8 +163,8 @@ const CandidateTracker = () => {
               </Grid>
             </Grid>
           ))}
-          
-          
+
+          <SubmittedTests candidate = {selectedCandidate}></SubmittedTests>
 
           <Typography variant='h4' color='secondary' mt={3} mb={1}>
             Membership Status
