@@ -114,7 +114,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   const [dropDownItems, setDropDownItems] = useState([]);
   const dropDownEntered = useRef(false);
   const [dropDownTimer, setDropDownTimer] = useState(null);
-  const [dropDownOpened, setDropDownOpened] = useState(false);
+  const [dropDownParent, setDropDownParent] = useState(null);
   const [userDropDownEntries, setUserDropDownEntries] = useState([]);
 
   const [doScrollFade, setDoScrollFade] = useState(false);
@@ -177,16 +177,16 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
     }
   };
 
-  const handleDropDown = (e, items) => {
+  const handleDropDown = (e, items, dropDownParent) => {
     setAnchorEl(e.currentTarget);
     setDropDownItems(items);
-    setDropDownOpened(true);
+    setDropDownParent(dropDownParent);
     if (dropDownTimer) clearTimeout(dropDownTimer);
   };
 
   const handleDropDownClose = () => {
     setAnchorEl(null);
-    setDropDownOpened(false);
+    setDropDownParent(null);
     dropDownEntered.current = false;
   };
 
@@ -263,16 +263,16 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             variant='text'
             size='large'
             onClick={
-              dropDownOpened
+              dropDownParent === 'more'
                 ? handleDropDownClose
                 : (e) => {
-                    handleDropDown(e, MoreDropDownEntries);
+                    handleDropDown(e, MoreDropDownEntries, 'more');
                   }
             }
             onMouseEnter={(e) => {
-              handleDropDown(e, MoreDropDownEntries);
+              handleDropDown(e, MoreDropDownEntries, 'more');
             }}
-            onMouseLeave={startDropDownTimer}
+            onMouseLeave={isMobileView ? undefined : startDropDownTimer}
           >
             More <MoreVertIcon />
           </NavButton>
@@ -283,16 +283,16 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
               variant='text'
               size='large'
               onClick={
-                dropDownOpened
+                dropDownParent === 'user'
                   ? handleDropDownClose
                   : (e) => {
-                      handleDropDown(e, userDropDownEntries);
+                      handleDropDown(e, userDropDownEntries, 'user');
                     }
               }
               onMouseEnter={(e) => {
-                handleDropDown(e, userDropDownEntries);
+                handleDropDown(e, userDropDownEntries, 'user');
               }}
-              onMouseLeave={startDropDownTimer}
+              onMouseLeave={isMobileView ? undefined : startDropDownTimer}
             >
               {authenticatedUser.name.first} <PersonOutlineIcon />
             </NavButton>
@@ -303,16 +303,20 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
               variant='text'
               size='large'
               onClick={
-                dropDownOpened
+                dropDownParent === 'user'
                   ? handleDropDownClose
                   : (e) => {
-                      handleDropDown(e, [new DropDownItemData('login')]);
+                      handleDropDown(
+                        e,
+                        [new DropDownItemData('login')],
+                        'user'
+                      );
                     }
               }
               onMouseEnter={(e) => {
-                handleDropDown(e, [new DropDownItemData('login')]);
+                handleDropDown(e, [new DropDownItemData('login')], 'user');
               }}
-              onMouseLeave={startDropDownTimer}
+              onMouseLeave={isMobileView ? undefined : startDropDownTimer}
             >
               log in <PersonOutlineIcon />
             </NavButton>
@@ -337,7 +341,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         <Container
           disableGutters
           sx={{ py: 1, pl: 1, pr: 3 }}
-          onMouseLeave={handleDropDownClose}
+          onMouseLeave={isMobileView ? undefined : handleDropDownClose}
           onMouseEnter={() => {
             dropDownEntered.current = true;
           }}
