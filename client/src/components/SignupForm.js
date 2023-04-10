@@ -1,10 +1,67 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Box, Button, MenuItem, TextField } from '@mui/material';
+import { Container, Box, Button, MenuItem, TextField, Select, Grid, Typography} from '@mui/material';
 import axios from 'axios';
-import LoginField from './LoginForm'; 
 
-const SignupForm = ({ loginCallback }) => {
+const majors = [
+  {
+    value: 'Aerospace Engineering',
+    label: 'Aerospace Engineering',
+  },
+  {
+    value: 'Bioengineering',
+    label: 'Bioengineering',
+  },
+  {
+    value: 'Chemical Engineering',
+    label: 'Chemical Engineering',
+  },
+  {
+    value: 'Civil Engineering',
+    label: 'Civil Engineering',
+  },
+  {
+    value: 'Computer Engineering',
+    label: 'Computer Engineering',
+  },
+  {
+    value: 'Computer Science',
+    label: 'Computer Science',
+  },
+  {
+    value: 'Computer Science and Engineering',
+    label: 'Computer Science and Engineering',
+  },
+  {
+    value: 'Electrical Engineering',
+    label: 'Electrical Engineering',
+  },
+  {
+    value: 'Materials Engineering',
+    label: 'Materials Engineering',
+  },
+  {
+    value: 'Mechanical Engineering',
+    label: 'Mechanical Engineering',
+  },
+  {
+    value: 'Undeclared Engineering',
+    label: 'Undeclared Engineering',
+  },
+]
+
+const init_quarter = [
+  {
+    value: 'Fall', 
+    label: 'Fall',
+  },
+  {
+    value: 'Spring', 
+    label: 'Spring',
+  },
+]
+
+const SignupForm = ({ SignupCallback }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [first_name, setFirstName] = useState(''); 
@@ -27,7 +84,7 @@ const SignupForm = ({ loginCallback }) => {
           initiation_year: initiation_year,
         })
         .then((res) => {
-          loginCallback(res);
+          SignupCallback(res);
         })
         .catch((err) => {
           console.log(err);
@@ -35,16 +92,21 @@ const SignupForm = ({ loginCallback }) => {
     };
   
     return (
+      <Container sx={{ paddingBottom: '100px'}}>
+        <Typography variant='h2' mt={10} mb={3}>
+        Sign up
+      </Typography>
       <Box
         sx={{
           width: { xs: '80vw', sm: '17rem' },
           marginLeft: '15px',
         }}
       >
-        <LoginField
+        <TextField
           label='Email Address'
+          required
           variant='outlined'
-          size='small'
+          size='normal'
           fullWidth
           margin='dense'
           autoComplete='off'
@@ -55,12 +117,13 @@ const SignupForm = ({ loginCallback }) => {
             setEmail(e.target.value);
           }}
         />
-        <LoginField
+        <TextField
           label='Password'
+          required
           variant='outlined'
-          size='small'
+          size='normal'
           fullWidth
-          margin='normal'
+          margin='dense'
           autoComplete='off'
           type={'password'}
           onKeyDown={(e) => {
@@ -70,12 +133,13 @@ const SignupForm = ({ loginCallback }) => {
             setPassword(e.target.value);
           }}
         />
-        <LoginField
+        <TextField
           label='First Name'
+          required
           variant='outlined'
-          size='small'
-          halfWidth
-          margin='normal'
+          size='normal'
+          fullWidth
+          margin='dense'
           autoComplete='off'
           onKeyDown={(e) => {
             e.stopPropagation();
@@ -84,12 +148,13 @@ const SignupForm = ({ loginCallback }) => {
             setFirstName(e.target.value);
         }}
         />
-        <LoginField
+        <TextField
           label='Last Name'
+          required
           variant='outlined'
-          size='small'
-          halfWidth
-          margin='normal'
+          size='normal'
+          margin='dense'
+          fullWidth
           autoComplete='off'
           onKeyDown={(e) => {
             e.stopPropagation();
@@ -98,31 +163,29 @@ const SignupForm = ({ loginCallback }) => {
             setLastName(e.target.value);
         }}
         />
-        <Select
-          value='major'
+        <TextField
           label='Major'
+          required
+          fullWidth
+          select
+          margin='dense'
           onChange={(e) => {
             setMajor(e.target.value);
         }}
-        >   
-            <MenuItem>Aerospace Engineering</MenuItem>
-            <MenuItem>Bioengineering</MenuItem>
-            <MenuItem>Chemical Engineering</MenuItem>
-            <MenuItem>Civil Engineering</MenuItem>
-            <MenuItem>Computer Engineering</MenuItem>
-            <MenuItem>Computer Science</MenuItem>
-            <MenuItem>Computer Science and Engineering</MenuItem>
-            <MenuItem>Electrical Engineering</MenuItem>
-            <MenuItem>Materials Engineering</MenuItem>
-            <MenuItem>Mechanical Engineering</MenuItem>
-            <MenuItem>Undelcared Engineering</MenuItem>
-        </Select>
-        <LoginField
+        > 
+        {majors.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+        </TextField> 
+        <TextField
           label='Graduation Year'
           variant='outlined'
-          size='small'
-          halfWidth
-          margin='normal'
+          required
+          size='normal'
+          fullWidth          
+          margin='dense'
           autoComplete='off'
           onKeyDown={(e) => {
             e.stopPropagation();
@@ -131,23 +194,29 @@ const SignupForm = ({ loginCallback }) => {
             setGraduationYear(e.target.value);
         }}
         />
-        <Grid>
-          <Select
-            value='initiation_quarter'
+          <TextField
             label='Initiation Quarter'
+            select
+            fullWidth
+            required
+            margin='dense'
             onChange={(e) => {
                 setInitiationQuarter(e.target.value);
             }}
           >
-            <MenuItem>Fall</MenuItem>
-            <MenuItem>Spring</MenuItem>
-          </Select>
-          <LoginField
-            label='Initiation Quarter'
+            {init_quarter.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+          </TextField>
+          <TextField
+            label='Initiation Year'
+            required
+            fullWidth
+            margin='dense'
             variant='outlined'
-            size='small'
-            halfWidth
-            margin='normal'
+            size='normal'
             autoComplete='off'
             onKeyDown={(e) => {
               e.stopPropagation();
@@ -156,14 +225,17 @@ const SignupForm = ({ loginCallback }) => {
               setInitiationYear(e.target.value);
              }}
         />
-        </Grid>
         <Button
           variant='text'
           color='secondary'
           sx = {{mx: 'auto', width: '100%', mt: '10px' }}
+          onClick={handleSignup}
         >
           Submit
         </Button>
       </Box>
+      </Container>
     );
   };
+
+  export default SignupForm; 
