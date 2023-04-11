@@ -93,7 +93,7 @@ function timeout(delay) {
 }
 
 async function waitAndRedirect(path){
-  await timeout(2000); 
+  await timeout(1000); 
   window.location = path;
 }
 
@@ -102,6 +102,7 @@ async function waitAndRedirect(path){
 const SignupForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [verify_password, setVerifyPassword] = useState('');
     const [first_name, setFirstName] = useState(''); 
     const [last_name, setLastName] = useState(''); 
     const [major, setMajor] = useState(''); 
@@ -112,14 +113,26 @@ const SignupForm = () => {
     const [snackbarMessage, setSnackbarMessage] = useState('');
   
     const handleSignup = () => {
+      if(password !== verify_password){
+        setSnackbarMessage('Please enter matching passwords');
+        setShowSnackbar(true);
+      }
+      else if(graduation_year.length !== 4){
+        setSnackbarMessage('Please enter graduation year in the correct format');
+        setShowSnackbar(true);
+      }
+      else if(initiation_year.length !== 4){
+        setSnackbarMessage('Please enter initiation year in the correct format');
+        setShowSnackbar(true);
+      }
+      else{
       axios
         .post('/api/user/register', {
           email: email,
-          password: password,
-          //confirm password?
+          password: password, 
           name: {first: first_name, last: last_name}, 
           major: major,
-          graduationYear: graduation_year, //number
+          graduationYear: graduation_year, 
           initiationQuarter: {quarter: initiation_quarter, year: initiation_year}, 
         })
         .then((res) => {
@@ -134,6 +147,7 @@ const SignupForm = () => {
           setSnackbarMessage('Unable to sign up');
           setShowSnackbar(true);
         });
+      }
     };
 
     const handleSnackbarClose = (event, reason) => {
@@ -187,7 +201,6 @@ const SignupForm = () => {
           label='Password'
           required
           variant='outlined'
-          size='normal'
           fullWidth
           margin='dense'
           autoComplete='off'
@@ -211,10 +224,35 @@ const SignupForm = () => {
           }}
         />
         <InputField
+          label='Verify Password'
+          required
+          variant='outlined'
+          fullWidth
+          margin='dense'
+          autoComplete='off'
+          type={'password'}
+          onKeyDown={(e) => {
+            e.stopPropagation();
+          }}
+          onChange={(e) => {
+            setVerifyPassword(e.target.value);
+          }}
+          InputProps={{
+            sx: {
+                "& input": {
+                 color: 'primary.main',
+                },
+              }
+           }}
+           sx ={{"& .MuiFormLabel-root": {
+            color: 'primary.main'
+            },
+          }}
+        />
+        <InputField
           label='First Name'
           required
           variant='outlined'
-          size='normal'
           fullWidth
           margin='dense'
           autoComplete='off'
@@ -365,8 +403,6 @@ const SignupForm = () => {
             onKeyDown={(e) => {
               e.stopPropagation();
             }}
-            //error={(e) => {isYearValid(e.target.value)}}
-            //helperText={(e) => {isYearValid(e.target.value) ? "Please enter a 4 digit integer" : ""}}
             onChange={(e) => {
               setInitiationYear(e.target.value);
              }}

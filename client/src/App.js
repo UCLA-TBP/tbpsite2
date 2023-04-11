@@ -191,7 +191,7 @@ function App() {
         <Router>
           <Routes>
             <Route path='' element={<Home />} />
-            <Route path='signup' element={<SignupForm/>}/>
+            <Route path='spicybroccoli5000' element={<SignupForm/>}/>
             <Route path='profile'>
               <Route path='' element={<Profile />} />
               <Route path='requirements' element={<ProfileRequirements />} />
