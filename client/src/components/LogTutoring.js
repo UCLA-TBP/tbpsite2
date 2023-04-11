@@ -98,7 +98,7 @@ function LogTutoring ({candidate, setCandidate}) {
                     size="small"
                     onChange={handleNumHoursChange}
                     style={{ paddingBottom: '10px' }}
-                    InputLabelProps={{ min:"0"}}
+                    InputLabelProps={{ }}
                     sx={{
                         '& .MuiInputLabel-root': {
                           color: 'gold',
