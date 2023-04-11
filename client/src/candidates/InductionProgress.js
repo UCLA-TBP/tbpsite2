@@ -4,7 +4,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import LogTutoring from '../components/LogTutoring';
-// import TBPBackground from '../components/TBPBackground';
+import TBPBackground from '../components/TBPBackground';
 import UploadTest from '../components/UploadTest';
 
 const Check = styled(CheckIcon)(({ theme }) => ({
@@ -87,7 +87,7 @@ const InductionProgress = ({ candidate, setCandidate }) => {
   if (!candidate) return <></>;
   return (
     <>
-      {/* <TBPBackground /> */}
+      <TBPBackground />
       <Container
         sx={{
           marginTop: '-14px',

@@ -1,5 +1,6 @@
 .tbpBackground {
-  background-image: url('../../public/temp_background.png');
+  /* background-image: url('../../public/temp_background.png'); */
+  background-image: url('../../public/home/background.gif');
   position: fixed;
   z-index: -1;
   top: 0;
