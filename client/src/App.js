@@ -20,6 +20,7 @@ import Officers from './officers/Officers';
 // import Corporate from './member-services/Corporate';
 import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
+import SignupForm from './signup/SignupForm'; 
 
 import RouteProtection from './permissions/RouteProtection';
 import { positions } from './permissions/PermissionsUtils';
@@ -190,6 +191,7 @@ function App() {
         <Router>
           <Routes>
             <Route path='' element={<Home />} />
+            <Route path='signup' element={<SignupForm/>}/>
             <Route path='profile'>
               <Route path='' element={<Profile />} />
               <Route path='requirements' element={<ProfileRequirements />} />
