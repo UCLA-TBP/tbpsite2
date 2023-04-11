@@ -14,9 +14,11 @@ app.use(
   cors({
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
-    origin: ['http://localhost:3000'], // replace w/ deployed url on deployment
+    origin: [process.env.CLIENT_URL || 'http://localhost:3000'], // replace w/ deployed url on deployment
   })
 );
+
+console.log(process.env.CLIENT_URL);
 
 var uri = process.env.MONGO_URI;
 
@@ -31,6 +33,9 @@ mongoose
 
 const userRouter = require('./routers/UserRouter');
 app.use('/user', userRouter);
+
+const PDFRouter = require('./routers/PDFRouter');
+app.use('/pdf', PDFRouter);
 
 const PORT = process.env.PORT || 8000;
 

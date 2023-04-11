@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const findOrCreate = require('mongoose-findorcreate');
+const PDFSchema = require('./PDFSchema')
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -47,6 +48,43 @@ const UserSchema = new mongoose.Schema({
       type: String,
       trim: true,
       required: true,
+    },
+  },
+  major:{
+    type: String, 
+    enum: 
+    [
+      'Aerospace Engineering',
+      'Bioengineering',
+      'Chemical Engineering',
+      'Civil Engineering',
+      'Computer Engineering',
+      'Computer Science',
+      'Computer Science and Engineering',
+      'Electrical Engineering',
+      'Materials Engineering',
+      'Mechanical Engineering',
+      'Undeclared Engineering'
+    ],
+    trim: true,
+    required: true,
+  },
+  graduationYear:{
+    type: Number,  
+    trim: true, 
+    required: true,
+  },
+  initiationQuarter:{
+    quarter:{
+      type: String, 
+      enum: ['Fall', 'Spring'], 
+      trim: true,
+      required: true, 
+    },
+    year:{
+      type: Number, 
+      trim: true,
+      required: true, 
     },
   },
   requirements: {
@@ -103,6 +141,23 @@ const UserSchema = new mongoose.Schema({
       default: false,
     },
   },
+  tutoringLog: {
+    
+    type: [{
+      week: { type: Number},
+      hours: { type: Number},
+      secretPhrase: { type: String},
+    }],
+
+    default: []
+  },
+  submittedTests: {
+    
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PDF' }],
+
+    default: []
+  }
+
   // add resume, submitted tests field, other profile information (name, etc.)
 });
 

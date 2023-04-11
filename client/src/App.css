@@ -10,3 +10,7 @@ body {
 .MuiBackdrop-root {
   pointer-events: none !important;
 }
+
+a {
+  color: gold !important;
+}

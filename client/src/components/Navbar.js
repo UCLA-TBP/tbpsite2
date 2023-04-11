@@ -8,6 +8,7 @@ import {
   Link,
   Menu,
   MenuItem,
+  useMediaQuery,
 } from '@mui/material';
 import styled from '@emotion/styled';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -37,6 +38,7 @@ const DropDownItemLink = ({
             color: (theme) => alpha(theme.palette.text.secondary, 0.6),
           },
           fontSize: '.9rem',
+          mt: { xs: -2.5, sm: 0 },
         }}
         onClick={() => {
           // handleDropDownClose();
@@ -66,13 +68,13 @@ const MoreDropDownEntries = [
   new DropDownItemData('Contact', '#contact'),
   new DropDownItemData('EVENTS'),
   new DropDownItemData('Events', 'events'),
-  // new DropDownItemData('TUTORING QUICKLINKS'),
-  // new DropDownItemData('Schedule', 'tutoring/schedule'),
+  new DropDownItemData('TUTORING QUICKLINKS'),
+  new DropDownItemData('Schedule', 'tutoring/schedule'),
   // new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
   // new DropDownItemData('Feedback', 'tutoring/feedback'),
   // new DropDownItemData('Log Hours', 'log_hours'),
-  // new DropDownItemData('CONTACT QUICKLINKS'),
-  // new DropDownItemData('Officers', 'officers'),
+  new DropDownItemData('CONTACT QUICKLINKS'),
+  new DropDownItemData('Officers', 'officers'),
   // new DropDownItemData('Advisors and Faculty', 'officers/faculty'),
 ];
 
@@ -94,9 +96,15 @@ const OfficerDropDownEntries = [
   // new DropDownItemData('Log Out', '#!'),
 ];
 
-const MemberDropDownEntries = [new DropDownItemData('MEMBER SERVICES')];
+const MemberDropDownEntries = [
+  new DropDownItemData('MEMBER SERVICES'),
+  new DropDownItemData('Testbank', 'in-progress'),
+];
 
-const CandidateDropDownEntries = [new DropDownItemData('CANDIDATE SERVICES')];
+const CandidateDropDownEntries = [
+  new DropDownItemData('CANDIDATE SERVICES'),
+  new DropDownItemData('Induction Progress', 'candidates/induction-progress'),
+];
 
 const UniversalDropDownEntries = [new DropDownItemData('logout')];
 
@@ -106,12 +114,16 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   const [dropDownItems, setDropDownItems] = useState([]);
   const dropDownEntered = useRef(false);
   const [dropDownTimer, setDropDownTimer] = useState(null);
-  const [dropDownOpened, setDropDownOpened] = useState(false);
+  const [dropDownParent, setDropDownParent] = useState(null);
   const [userDropDownEntries, setUserDropDownEntries] = useState([]);
+
+  const [doScrollFade, setDoScrollFade] = useState(false);
+  const isMobileView = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
     centerOnElement(targetId);
+    setDoScrollFade(window.location.pathname === '/');
     // eslint-disable-next-line
   }, [window.location.href]);
 
@@ -122,14 +134,14 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         setUserDropDownEntries([
           ...OfficerDropDownEntries,
           ...MemberDropDownEntries,
-          ...CandidateDropDownEntries,
+          // ...CandidateDropDownEntries,
           ...UniversalDropDownEntries,
         ]);
         break;
       case 'member':
         setUserDropDownEntries([
           ...MemberDropDownEntries,
-          ...CandidateDropDownEntries,
+          // ...CandidateDropDownEntries,
           ...UniversalDropDownEntries,
         ]);
         break;
@@ -165,16 +177,16 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
     }
   };
 
-  const handleDropDown = (e, items) => {
+  const handleDropDown = (e, items, dropDownParent) => {
     setAnchorEl(e.currentTarget);
     setDropDownItems(items);
-    setDropDownOpened(true);
+    setDropDownParent(dropDownParent);
     if (dropDownTimer) clearTimeout(dropDownTimer);
   };
 
   const handleDropDownClose = () => {
     setAnchorEl(null);
-    setDropDownOpened(false);
+    setDropDownParent(null);
     dropDownEntered.current = false;
   };
 
@@ -199,7 +211,12 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
       position='fixed'
       sx={{
         backgroundColor: (theme) =>
-          alpha(theme.palette.primary.main, 0.8 * Math.min(1, scrollPos / 500)),
+          doScrollFade
+            ? alpha(
+                theme.palette.primary.main,
+                0.8 * Math.min(1, scrollPos / 500)
+              )
+            : theme.palette.primary.main,
         boxShadow: 0,
       }}
     >
@@ -207,10 +224,20 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         container
         direction='row'
         justifyContent='flex-end'
-        spacing={1.5}
-        sx={{ px: 3, py: 1.5 }}
+        spacing={isMobileView ? 0 : 1.5}
+        sx={{ px: { xs: 0.5, md: 3 }, py: 1.5 }}
       >
-        <Grid item>
+        <Grid
+          item
+          sx={
+            isMobileView
+              ? {
+                  position: 'absolute',
+                  left: '12px',
+                }
+              : {}
+          }
+        >
           <Button
             color='inherit'
             variant='text'
@@ -227,7 +254,8 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
               alt='tbp-logo'
               height='25'
             />
-            &nbsp; Tau Beta Pi | UCLA
+            &nbsp;
+            {isMobileView ? 'TBP | UCLA' : ' Tau Beta Pi | UCLA'}
           </Button>
         </Grid>
         <Grid item>
@@ -235,16 +263,16 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             variant='text'
             size='large'
             onClick={
-              dropDownOpened
+              dropDownParent === 'more'
                 ? handleDropDownClose
                 : (e) => {
-                    handleDropDown(e, MoreDropDownEntries);
+                    handleDropDown(e, MoreDropDownEntries, 'more');
                   }
             }
             onMouseEnter={(e) => {
-              handleDropDown(e, MoreDropDownEntries);
+              handleDropDown(e, MoreDropDownEntries, 'more');
             }}
-            onMouseLeave={startDropDownTimer}
+            onMouseLeave={isMobileView ? undefined : startDropDownTimer}
           >
             More <MoreVertIcon />
           </NavButton>
@@ -255,16 +283,16 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
               variant='text'
               size='large'
               onClick={
-                dropDownOpened
+                dropDownParent === 'user'
                   ? handleDropDownClose
                   : (e) => {
-                      handleDropDown(e, userDropDownEntries);
+                      handleDropDown(e, userDropDownEntries, 'user');
                     }
               }
               onMouseEnter={(e) => {
-                handleDropDown(e, userDropDownEntries);
+                handleDropDown(e, userDropDownEntries, 'user');
               }}
-              onMouseLeave={startDropDownTimer}
+              onMouseLeave={isMobileView ? undefined : startDropDownTimer}
             >
               {authenticatedUser.name.first} <PersonOutlineIcon />
             </NavButton>
@@ -275,16 +303,20 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
               variant='text'
               size='large'
               onClick={
-                dropDownOpened
+                dropDownParent === 'user'
                   ? handleDropDownClose
                   : (e) => {
-                      handleDropDown(e, [new DropDownItemData('login')]);
+                      handleDropDown(
+                        e,
+                        [new DropDownItemData('login')],
+                        'user'
+                      );
                     }
               }
               onMouseEnter={(e) => {
-                handleDropDown(e, [new DropDownItemData('login')]);
+                handleDropDown(e, [new DropDownItemData('login')], 'user');
               }}
-              onMouseLeave={startDropDownTimer}
+              onMouseLeave={isMobileView ? undefined : startDropDownTimer}
             >
               log in <PersonOutlineIcon />
             </NavButton>
@@ -309,7 +341,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         <Container
           disableGutters
           sx={{ py: 1, pl: 1, pr: 3 }}
-          onMouseLeave={handleDropDownClose}
+          onMouseLeave={isMobileView ? undefined : handleDropDownClose}
           onMouseEnter={() => {
             dropDownEntered.current = true;
           }}
@@ -354,7 +386,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
                     color: (theme) => theme.palette.text.primary,
                     opacity: 1,
                   },
-                  mt: idx > 0 ? 2 : 0,
+                  mt: { xs: -0.5, sm: idx > 0 ? 2 : 0 },
                   fontSize: '.9rem',
                 }}
               >

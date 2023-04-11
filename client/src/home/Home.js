@@ -82,7 +82,12 @@ function Home() {
 
   return (
     <>
-      <div className='background'>
+      <div
+        className='background'
+        onClick={() => {
+          console.log('bg click');
+        }}
+      >
         {/* <Grid
           container
           spacing={0}
@@ -106,13 +111,23 @@ function Home() {
           maxWidth='100%'
           sx={{
             position: 'sticky',
-            top: `${40 - scrollPos / 100}%`,
+            top: {
+              xs: `${37 - scrollPos / 100}%`,
+              md: `${40 - scrollPos / 100}%`,
+            },
             textAlign: 'right',
             paddingRight: { sm: '10vw', xl: '20vw' },
             opacity: Math.max(0, 1.4 - scrollPos / 400),
           }}
         >
-          <Typography variant='h1'>
+          <Typography
+            variant='h1'
+            sx={{
+              fontSize: { xs: '200%', sm: '250%', md: '350%' },
+              textAlign: { xs: 'center', md: 'right' },
+              lineHeight: { xs: '2', md: '1.2' },
+            }}
+          >
             The Honor Society for
             <br></br>
             <Typography variant='highlight'>All Engineers </Typography>
@@ -126,6 +141,9 @@ function Home() {
             top: `${90 - scrollPos / 25}%`,
             opacity: Math.max(0, 1.4 - scrollPos / 100),
           }}
+          onClick={() => {
+            console.log('clicked');
+          }}
         >
           {/* <a href='/#who-we-are'>
             <KeyboardArrowDownIcon />
@@ -135,6 +153,23 @@ function Home() {
           <div className='arrow arrow-second' />
         </section>
       </div>
+      <div
+        style={{
+          position: 'absolute',
+          top: '80vh',
+          height: '20vh',
+          width: '100%',
+          cursor: 'pointer',
+        }}
+        onClick={() => {
+          const whoWeAreEle = document.getElementById('who-we-are');
+          whoWeAreEle.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+          });
+        }}
+      ></div>
 
       <div className='section-secondary'>
         <FloatingContainer
@@ -172,9 +207,9 @@ function Home() {
           </Typography>
           <Typography variant='p' mb={'20px'}>
             Invitations for membership may be extended to undergraduate
-            engineering majors who are in the top:
+            engineering majors who are in the top 1/5 of Senior Class or 1/8 of
+            Junior Class.
           </Typography>
-          <div>placeholder</div>
           <Typography variant='p' mb={'20px'}>
             Candidates must also have completed at least 28 units from UCLA to
             be invited in the Fall or Spring. Junior and senior class
@@ -195,8 +230,8 @@ function Home() {
             After officially initiating, members have the option to continue
             their involvement by either joining the officer board or becoming a
             distinguished active member. Both receive discounts on TBP
-            graduation regalia. Please follow links below for more details on
-            induction, requirements, and officership.
+            graduation regalia. Please visit the links below for more details on
+            induction and requirements.
           </Typography>
 
           <Grid
@@ -209,54 +244,26 @@ function Home() {
           >
             <Grid item>
               <Button
-                href='https://docs.google.com/document/d/17oQJGGIGzcz9VtFnot_9rObTi4uyO117aAPtr_z0jjk/edit'
                 color='secondary'
                 variant='outlined'
+                href='https://docs.google.com/document/d/1w567a8c_GJnN9DrAKqqTTo_hjs1esScIGITWK5NK7DY/edit?usp=sharing'
                 size='large'
               >
                 Candidate Packet
               </Button>
             </Grid>
-
-            {/* The following href link should take you to the requirements page, not sure if this is setup yet */}
             <Grid item>
-              {/* <a href='/requirements/' className='no-underline'> */}
               <Button
                 color='secondary'
                 variant='outlined'
-                href='/requirements/'
-                size='large'
-              >
-                Induction Requirements
-              </Button>
-              {/* </a> */}
-            </Grid>
-
-            <Grid item>
-              <Button
-                href='https://docs.google.com/presentation/d/1QIRI2plBd81QsNovjsXyeII12dIHrJie0B3EFORbUjA/edit#slide=id.p'
-                color='secondary'
-                variant='outlined'
+                href='https://docs.google.com/presentation/d/1hDlnXMIfnnxsmA8eR5ZJZ1gmQ4CWpuiqnSHJ2bNpJDQ/edit?usp=sharing'
                 size='large'
               >
                 Orientation Presentation
               </Button>
             </Grid>
-
-            <Grid item>
-              <Button
-                href='https://tbp.seas.ucla.edu/media/files/Officer-Positions.pdf'
-                color='secondary'
-                variant='outlined'
-                size='large'
-              >
-                Officer Positions
-              </Button>
-            </Grid>
           </Grid>
         </FloatingContainer>
-
-        {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
 
         <FloatingContainer
           className='section-container'
@@ -290,7 +297,7 @@ function Home() {
             <Grid item>
               <Button
                 size='large'
-                href='/schedule/'
+                href='tutoring/schedule/'
                 color='secondary'
                 variant='outlined'
               >
@@ -298,20 +305,20 @@ function Home() {
               </Button>
             </Grid>
 
-            <Grid item>
+            {/* <Grid item>
               <Button
-                href='/reviewsheets/'
+                href='tutoring/reviewsheets/'
                 color='secondary'
                 variant='outlined'
                 size='large'
               >
                 REVIEW SHEETS
               </Button>
-            </Grid>
+            </Grid> */}
 
             <Grid item>
               <Button
-                href='/tutoring/feedback/'
+                href='https://forms.gle/sburNuSv83ekaTTf8'
                 color='secondary'
                 variant='outlined'
                 size='large'
@@ -320,7 +327,7 @@ function Home() {
               </Button>
             </Grid>
 
-            <Grid item>
+            {/* <Grid item>
               <Button
                 href='/tutoring/log_hours/'
                 color='secondary'
@@ -329,7 +336,7 @@ function Home() {
               >
                 LOG HOURS
               </Button>
-            </Grid>
+            </Grid> */}
           </Grid>
         </FloatingContainer>
 
@@ -376,19 +383,18 @@ function Home() {
                   <CardMedia
                     component='img'
                     height='200'
-                    image='https://tbp.seas.ucla.edu/static/img/career_guidance.jpg'
+                    image={`${process.env.PUBLIC_URL}/home/careerguidance.png`}
                   />
                   <CardContent className='card-background'>
                     <h2 className='card-title'>Career Guidance</h2>
                     <p className='card-text'>
                       With so many accomplished members, TBP is dedicated to
                       assisting the next generation of engineers reach their
-                      professional goals. Every year, we host Internship Insider
-                      Night featuring a panel of students sharing their summer
-                      internship experience and job hunting advice. We also
-                      helped plan the 2018 Dean’s Student Showcase, an exclusive
-                      networking event for honor society and Dean’s diversity
-                      group members.
+                      professional goals. We host career fairs and offer
+                      information sessions to help connect members to employers
+                      as well as resume workshops and support to prepare for
+                      graduate school.
+                      <br></br> <br></br>
                     </p>
                   </CardContent>
                 </CardActionArea>
@@ -401,7 +407,7 @@ function Home() {
                   <CardMedia
                     component='img'
                     height='200'
-                    image='https://tbp.seas.ucla.edu/static/img/academic_guidance1.jpg'
+                    image={`${process.env.PUBLIC_URL}/home/ao.jpeg`}
                   />
                   <CardContent className='card-background'>
                     <h2 className='card-title'>Academic Outreach</h2>
@@ -423,7 +429,7 @@ function Home() {
                   <CardMedia
                     component='img'
                     height='200'
-                    image='https://tbp.seas.ucla.edu/static/img/emcc.png'
+                    image={`${process.env.PUBLIC_URL}/home/emcc.png`}
                   />
                   <CardContent className='card-background'>
                     <h2 className='card-title'>EMCC</h2>
@@ -447,7 +453,7 @@ function Home() {
                   <CardMedia
                     component='img'
                     height='200'
-                    image='https://tbp.seas.ucla.edu/static/img/competition1.jpg'
+                    image={`${process.env.PUBLIC_URL}/home/competition.png`}
                   />
                   <CardContent className='card-background'>
                     <h2 className='card-title'>Competitions</h2>
@@ -511,17 +517,17 @@ function Home() {
               </Button>
             </Grid>
 
-            <Grid item>
+            {/* <Grid item>
               <Button href='/faculty/' color='secondary' variant='outlined'>
                 ADVISORS AND FACULTY
               </Button>
-            </Grid>
+            </Grid> */}
 
-            <Grid item>
+            {/* <Grid item>
               <Button href='/donate/' color='secondary' variant='outlined'>
                 DONATE
               </Button>
-            </Grid>
+            </Grid> */}
 
             <Grid item>
               <Button

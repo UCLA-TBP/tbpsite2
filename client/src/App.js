@@ -10,20 +10,23 @@ import Profile from './profile/Profile';
 import TutoringProfile from './profile/TutoringProfile';
 import UploadTest from './profile/UploadTest';
 import Events from './events/Events';
-// import TutoringSchedule from './tutoring/TutoringSchedule';
+import TutoringSchedule from './tutoring/TutoringSchedule';
 // import ReviewSheets from './tutoring/ReviewSheets';
 // import TutoringFeedback from './tutoring/TutoringFeedback';
 // import LogHours from './tutoring/LogHours';
-// import Officers from './officers/Officers';
+import Officers from './officers/Officers';
 // import Faculty from './officers/Faculty';
-// import TestBank from './member-services/TestBank';
+//import TestBank from './member-services/TestBank';
 // import Corporate from './member-services/Corporate';
+import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
+import SignupForm from './signup/SignupForm'; 
 
 import RouteProtection from './permissions/RouteProtection';
 import { positions } from './permissions/PermissionsUtils';
 
 import './App.css';
+import FeatureInProgress from './FeatureInProgress';
 
 const navTheme = createTheme({
   palette: {
@@ -52,7 +55,8 @@ const navTheme = createTheme({
   },
 });
 
-const theme = createTheme({
+let theme = createTheme({});
+theme = createTheme({
   palette: {
     // white
     primary: {
@@ -75,6 +79,9 @@ const theme = createTheme({
       fontSize: '1.2rem',
       lineHeight: 1.5,
       display: 'block',
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '1rem',
+      },
     },
     h1: {
       color: 'white',
@@ -114,6 +121,9 @@ const theme = createTheme({
         "'Noto Color Emoji'",
       ].join(','),
       fontWeight: 400,
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '1.7rem',
+      },
     },
     h3: {
       fontSize: '1.6rem',
@@ -181,6 +191,7 @@ function App() {
         <Router>
           <Routes>
             <Route path='' element={<Home />} />
+            <Route path='signup' element={<SignupForm/>}/>
             <Route path='profile'>
               <Route path='' element={<Profile />} />
               <Route path='requirements' element={<ProfileRequirements />} />
@@ -188,22 +199,54 @@ function App() {
               <Route path='upload_test' element={<UploadTest />} />
             </Route>
             <Route path='events' element={<Events />} />
-            {/* <Route path='tutoring'>
-              <Route path='' element={<Navigate to='schedule' replace />} />
+            <Route path='tutoring'>
+              {/* <Route path='' element={<Navigate to='schedule' replace />} /> */}
               <Route path='schedule' element={<TutoringSchedule />} />
-              <Route path='review_sheets' element={<ReviewSheets />} />
-              <Route path='feedback' element={<TutoringFeedback />} />
-              <Route path='log_hours' eleemnt={<LogHours />} />
+              {/* <Route path='review_sheets' element={<ReviewSheets />} /> */}
+              {/* <Route path='feedback' element={<TutoringFeedback />} /> */}
+              {/* <Route path='log_hours' eleemnt={<LogHours />} /> */}
             </Route>
             <Route path='officers'>
               <Route path='' element={<Officers />} />
-              <Route path='faculty' element={<Faculty />} />
+              {/* <Route path='faculty' element={<Faculty />} /> */}
             </Route>
-            <Route path='member_services'>
+            {/* <Route path='member_services'>
               <Route path='testbank' element={<TestBank />} />
               <Route path='corporate' element={<Corporate />} />
             </Route> */}
+            <Route path='candidates'>
+              <Route
+                path='requirements'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.candidate]}
+                  />
+                }
+              ></Route>
+            </Route>
             {/* TODO: ADMIN STUFF */}
+            <Route path='candidates'>
+              <Route
+                path='induction-progress'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.candidate]}
+                  />
+                }
+              >
+                <Route
+                  path=''
+                  element={
+                    <InductionProgress
+                      candidate={authenticatedUser}
+                      setCandidate={setAuthenticatedUser}
+                    />
+                  }
+                />
+              </Route>
+            </Route>
             <Route path='admin'>
               <Route
                 path='candidate_tracker'
@@ -217,6 +260,7 @@ function App() {
                 <Route path='' element={<CandidateTracker />} />
               </Route>
             </Route>
+            <Route path='in-progress' element={<FeatureInProgress />} />
           </Routes>
         </Router>
       </ThemeProvider>

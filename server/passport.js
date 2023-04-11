@@ -20,6 +20,7 @@ passport.use(
       passReqToCallback: true,
     },
     (req, payload, done) => {
+      console.log(process.env.CLIENT_URL);
       User.findById({ _id: payload.sub })
         .then((user) => {
           if (user) return done(null, user, req.body);
