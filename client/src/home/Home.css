@@ -1,6 +1,6 @@
 .background {
-  /* background-image: url(https://tbp.seas.ucla.edu/static/img/background.gif); */
-  background-image: url('../../public/temp_background.png');
+  background-image: url('../../public/home/background.gif');
+  /* background-image: url('../../public/temp_background.png'); */
   position: sticky;
   z-index: -1;
   top: 0;
