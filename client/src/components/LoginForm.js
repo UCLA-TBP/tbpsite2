@@ -110,14 +110,14 @@ const LoginForm = ({ loginCallback }) => {
       >
         {loadingLogIn ? <CircularProgress size='1.4rem' /> : 'LOG IN'}
       </Button>
-      <Button
+      {/* <Button
         variant='text'
         color='secondary'
         sx = {{mx: 'auto', width: '100%', mt: '10px' }}
         href='/signup'
       >
         Sign up 
-      </Button>
+      </Button> */}
     </Box>
   );
 };
