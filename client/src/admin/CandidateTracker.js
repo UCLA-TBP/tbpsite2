@@ -108,48 +108,51 @@ const CandidateTracker = () => {
               borderRadius: '12px',
             }}
           >
-            <Typography variant='h4' color='secondary' mt={3} mb={1}>
-              Candidate Requirements
-            </Typography>
-            {selectedCandidate.requirements &&
-              Object.entries(selectedCandidate.requirements).map(
-                ([requirement, status]) => {
-                  return (
-                    <Grid container key={requirement}>
-                      <Grid item xs={9} md={2}>
-                        <Typography
-                          variant='p'
-                          color='primary'
-                          sm={3}
-                          sx={{
-                            fontSize: '1rem',
-                            width: '15rem',
-                          }}
-                        >
-                          {_.startCase(requirement)}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={2}>
-                        <input
-                          id={requirement}
-                          type='checkbox'
-                          checked={status}
-                          onChange={(e) => {
-                            setSelectedCandidate({
-                              ...selectedCandidate,
-                              requirements: {
-                                ...selectedCandidate.requirements,
-                                [e.target.id]: e.target.checked,
-                              },
-                            });
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                  );
-                }
-              )}
-
+            {selectedCandidate.position === positions.candidate && (
+              <>
+                <Typography variant='h4' color='secondary' mt={3} mb={1}>
+                  Candidate Requirements
+                </Typography>
+                {selectedCandidate.requirements &&
+                  Object.entries(selectedCandidate.requirements).map(
+                    ([requirement, status]) => {
+                      return (
+                        <Grid container key={requirement}>
+                          <Grid item xs={9} md={2}>
+                            <Typography
+                              variant='p'
+                              color='primary'
+                              sm={3}
+                              sx={{
+                                fontSize: '1rem',
+                                width: '15rem',
+                              }}
+                            >
+                              {_.startCase(requirement)}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={2}>
+                            <input
+                              id={requirement}
+                              type='checkbox'
+                              checked={status}
+                              onChange={(e) => {
+                                setSelectedCandidate({
+                                  ...selectedCandidate,
+                                  requirements: {
+                                    ...selectedCandidate.requirements,
+                                    [e.target.id]: e.target.checked,
+                                  },
+                                });
+                              }}
+                            />
+                          </Grid>
+                        </Grid>
+                      );
+                    }
+                  )}
+              </>
+            )}
             <Typography variant='h4' color='secondary' mt={3} mb={1}>
               Membership Status
             </Typography>
