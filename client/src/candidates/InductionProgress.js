@@ -4,7 +4,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import LogTutoring from '../components/LogTutoring';
-import TBPBackground from '../components/TBPBackground';
+import UploadTest from '../components/UploadTest';
 
 const Check = styled(CheckIcon)(({ theme }) => ({
   position: 'relative',
@@ -86,7 +86,7 @@ const InductionProgress = ({ candidate, setCandidate }) => {
   if (!candidate) return <></>;
   return (
     <>
-      <TBPBackground />
+      {/* <TBPBackground /> */}
       <Container
         sx={{
           marginTop: '-14px',
@@ -128,28 +128,19 @@ const InductionProgress = ({ candidate, setCandidate }) => {
           ></LogTutoring>
         </Box>
 
-        <Box mt={5}>
-          <Typography variant='h3' color='primary'>
-            Submit Test for Test Bank
-          </Typography>
-          <ProgressIndicator
-            requirementMet={candidate.requirements?.testBank}
-          />
-          <RequirementDescription
-            description={
-              'Submit a copy of one of your tests to our members-only test bank.'
-            }
-          />
-          <form encType='multipart/form-data'>
-            <input
-              type='file'
-              name='pdf'
-              accept='application/pdf'
-              style={{ color: 'grey' }}
-            />
-            <button type='submit'>Upload</button>
-          </form>
-        </Box>
+      <Box mt={5}>
+        <Typography variant='h3' color='primary'>
+          Submit Test for Test Bank
+        </Typography>
+        <RequirementDescription
+          description={
+            'Submit a copy of one of your tests to our members-only test bank.'
+          }
+        />
+        <UploadTest candidate={candidate} setCandidate={setCandidate}></UploadTest>
+
+        <ProgressIndicator requirementMet={candidate.requirements?.testBank} />
+      </Box>
 
         <Box mt={5}>
           <Typography variant='h3' color='primary'>

@@ -246,7 +246,7 @@ function Home() {
               <Button
                 color='secondary'
                 variant='outlined'
-                href='/candidates/'
+                href='https://docs.google.com/document/d/1w567a8c_GJnN9DrAKqqTTo_hjs1esScIGITWK5NK7DY/edit?usp=sharing'
                 size='large'
               >
                 Candidate Packet
@@ -256,7 +256,7 @@ function Home() {
               <Button
                 color='secondary'
                 variant='outlined'
-                href='/candidates/'
+                href='https://docs.google.com/presentation/d/1hDlnXMIfnnxsmA8eR5ZJZ1gmQ4CWpuiqnSHJ2bNpJDQ/edit?usp=sharing'
                 size='large'
               >
                 Orientation Presentation

@@ -68,7 +68,7 @@ function LogTutoring ({candidate, setCandidate}) {
         <div>
             <div>
                 <FormControl sx={{ m: 1, minWidth: 80 }} size="small" >
-                    <InputLabel id="week-select-label" style={{color: 'gold'}}>Week</InputLabel>
+                    <InputLabel id="week-select-label" style={{color: 'gold', bordercolor:'white'}}>Week</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
@@ -105,7 +105,10 @@ function LogTutoring ({candidate, setCandidate}) {
                         },
                         '& input': {
                             color: 'white',
-                          },
+                        },
+                        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "white"
+                        },
                     }}
                 />
             </div>
@@ -127,6 +130,9 @@ function LogTutoring ({candidate, setCandidate}) {
                         '& input': {
                             color: 'white',
                           },
+                        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "white"
+                        },
                     }}
                 />
             </div>

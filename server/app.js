@@ -34,6 +34,9 @@ mongoose
 const userRouter = require('./routers/UserRouter');
 app.use('/user', userRouter);
 
+const PDFRouter = require('./routers/PDFRouter');
+app.use('/pdf', PDFRouter);
+
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, function () {
