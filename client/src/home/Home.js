@@ -517,11 +517,11 @@ function Home() {
               </Button>
             </Grid>
 
-            {/* <Grid item>
+            <Grid item>
               <Button href='/faculty/' color='secondary' variant='outlined'>
-                ADVISORS AND FACULTY
+                FACULTY
               </Button>
-            </Grid> */}
+            </Grid>
 
             {/* <Grid item>
               <Button href='/donate/' color='secondary' variant='outlined'>
@@ -565,7 +565,17 @@ function Home() {
                 color='secondary'
                 variant='outlined'
               >
-                UCLA ENGINEERING
+                UCLA HSSEAS
+              </Button>
+            </Grid>
+
+            <Grid item>
+              <Button
+                href='https://forms.gle/AQau2zmN1wug2GKa7'
+                color='secondary'
+                variant='outlined'
+              >
+                WEBSITE FEEDBACK
               </Button>
             </Grid>
           </Grid>

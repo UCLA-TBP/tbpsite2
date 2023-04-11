@@ -75,7 +75,8 @@ const MoreDropDownEntries = [
   // new DropDownItemData('Log Hours', 'log_hours'),
   new DropDownItemData('CONTACT QUICKLINKS'),
   new DropDownItemData('Officers', 'officers'),
-  // new DropDownItemData('Advisors and Faculty', 'officers/faculty'),
+  new DropDownItemData('Faculty', 'faculty'),
+  new DropDownItemData('Website Feedback', 'https://forms.gle/AQau2zmN1wug2GKa7')
 ];
 
 // TODO: change available links based on user position
