@@ -259,6 +259,61 @@ const CandidateTracker = () => {
             >
               {selectedCandidate.email}
             </Typography>
+            <Typography
+              variant='p'
+              sx={{
+                color: (theme) => theme.palette.primary.main,
+                fontSize: '1rem',
+              }}
+            >
+              Major
+            </Typography>
+            <Typography
+              variant='p'
+              mb={1}
+              sx={{
+                fontSize: '1rem',
+              }}
+            >
+              {selectedCandidate.major}
+            </Typography>
+            <Typography
+              variant='p'
+              sx={{
+                color: (theme) => theme.palette.primary.main,
+                fontSize: '1rem',
+              }}
+            >
+              Graduation Year
+            </Typography>
+            <Typography
+              variant='p'
+              mb={1}
+              sx={{
+                fontSize: '1rem',
+              }}
+            >
+              {selectedCandidate.graduationYear}
+            </Typography>
+            <Typography
+              variant='p'
+              sx={{
+                color: (theme) => theme.palette.primary.main,
+                fontSize: '1rem',
+              }}
+            >
+              Initiation Quarter
+            </Typography>
+            <Typography
+              variant='p'
+              mb={1}
+              sx={{
+                fontSize: '1rem',
+              }}
+            >
+              {selectedCandidate.initiationQuarter.year}{' '}
+              {selectedCandidate.initiationQuarter.quarter}
+            </Typography>
           </Box>
         )}
 
