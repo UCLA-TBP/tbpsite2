@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const findOrCreate = require('mongoose-findorcreate');
+const PDFSchema = require('./PDFSchema')
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -147,6 +148,12 @@ const UserSchema = new mongoose.Schema({
       hours: { type: Number},
       secretPhrase: { type: String},
     }],
+
+    default: []
+  },
+  submittedTests: {
+    
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PDF' }],
 
     default: []
   }

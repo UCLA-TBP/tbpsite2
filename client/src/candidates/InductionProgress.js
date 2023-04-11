@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import LogTutoring from '../components/LogTutoring';
 import TBPBackground from '../components/TBPBackground';
+import UploadTest from '../components/UploadTest';
 
 const Check = styled(CheckIcon)(({ theme }) => ({
   position: 'relative',
@@ -140,15 +141,10 @@ const InductionProgress = ({ candidate, setCandidate }) => {
               'Submit a copy of one of your tests to our members-only test bank.'
             }
           />
-          <form encType='multipart/form-data'>
-            <input
-              type='file'
-              name='pdf'
-              accept='application/pdf'
-              style={{ color: 'grey' }}
-            />
-            <button type='submit'>Upload</button>
-          </form>
+          <UploadTest
+            candidate={candidate}
+            setCandidate={setCandidate}
+          ></UploadTest>
         </Box>
 
         <Box mt={5}>

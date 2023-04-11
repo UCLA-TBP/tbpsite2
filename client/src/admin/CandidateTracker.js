@@ -10,6 +10,7 @@ import {
   Typography,
   createFilterOptions,
 } from '@mui/material';
+import SubmittedTests from '../components/SubmittedTests';
 import { positions } from '../permissions/PermissionsUtils';
 import axios from 'axios';
 import _ from 'lodash';
@@ -150,35 +151,6 @@ const CandidateTracker = () => {
               )}
 
             <Typography variant='h4' color='secondary' mt={3} mb={1}>
-              Tutoring Logs
-            </Typography>
-
-            {selectedCandidate.tutoringLog?.length ? (
-              selectedCandidate.tutoringLog.map((entry, index) => (
-                <Grid
-                  key={index}
-                  container
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 15, sm: 2, md: 3 }}
-                >
-                  <Grid style={{ color: 'white' }} item xs={2}>
-                    Week: {entry.week}
-                  </Grid>
-                  <Grid style={{ color: 'white' }} item xs={2}>
-                    Hours: {entry.hours}
-                  </Grid>
-                  <Grid style={{ color: 'white' }} item xs={3}>
-                    Secret Phrase: {entry.secretPhrase}
-                  </Grid>
-                </Grid>
-              ))
-            ) : (
-              <Typography variant='p' color='custom'>
-                None
-              </Typography>
-            )}
-
-            <Typography variant='h4' color='secondary' mt={3} mb={1}>
               Membership Status
             </Typography>
             <select
@@ -212,6 +184,38 @@ const CandidateTracker = () => {
                 </Button>
               </Grid>
             </Grid>
+            <Typography variant='h4' color='secondary' mt={3} mb={1}>
+              Tutoring Logs
+            </Typography>
+
+            {selectedCandidate.tutoringLog?.length ? (
+              selectedCandidate.tutoringLog.map((entry, index) => (
+                <Grid
+                  key={index}
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 15, sm: 2, md: 3 }}
+                >
+                  <Grid style={{ color: 'white' }} item xs={2}>
+                    Week: {entry.week}
+                  </Grid>
+                  <Grid style={{ color: 'white' }} item xs={2}>
+                    Hours: {entry.hours}
+                  </Grid>
+                  <Grid style={{ color: 'white' }} item xs={3}>
+                    Secret Phrase: {entry.secretPhrase}
+                  </Grid>
+                </Grid>
+              ))
+            ) : (
+              <Typography variant='p' color='custom'>
+                None
+              </Typography>
+            )}
+            <Typography variant='h4' color='secondary' mt={3} mb={1}>
+              Submitted Tests
+            </Typography>
+            <SubmittedTests candidate={selectedCandidate} />
 
             <Typography variant='h4' color='secondary' mt={3} mb={1}>
               Candidate Info
@@ -252,33 +256,9 @@ const CandidateTracker = () => {
             >
               {selectedCandidate.email}
             </Typography>
-            {/* {Object.entries(selectedCandidate).map(([key, value]) => {
-              return (
-                <div key={key}>
-                  <Typography
-                    variant='p'
-                    sx={{
-                      color: (theme) => theme.palette.primary.main,
-                      fontSize: '1rem',
-                    }}
-                  >
-                    {key}
-                  </Typography>
-                  <Typography
-                    variant='p'
-                    mb={1}
-                    sx={{
-                      fontSize: '1rem',
-                      overflow: 'scroll',
-                    }}
-                  >
-                    {JSON.stringify(value, null, 4)}
-                  </Typography>
-                </div>
-              );
-            })} */}
           </Box>
         )}
+
         <Snackbar
           open={showSnackbar}
           autoHideDuration={4000}
