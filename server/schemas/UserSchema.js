@@ -51,6 +51,20 @@ const UserSchema = new mongoose.Schema({
   },
   major:{
     type: String, 
+    enum: 
+    [
+      'Aerospace Engineering',
+      'Bioengineering',
+      'Chemical Engineering',
+      'Civil Engineering',
+      'Computer Engineering',
+      'Computer Science',
+      'Computer Science and Engineering',
+      'Electrical Engineering',
+      'Materials Engineering',
+      'Mechanical Engineering',
+      'Undeclared Engineering'
+    ],
     trim: true,
     required: true,
   },

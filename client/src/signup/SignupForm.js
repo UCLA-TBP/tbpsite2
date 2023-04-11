@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Container, Box, Button, MenuItem, TextField, Select, Grid, Typography, Snackbar} from '@mui/material';
+import { 
+  Container, 
+  Box, 
+  Button, 
+  MenuItem, 
+  TextField, 
+  Typography, 
+  Snackbar
+} from '@mui/material';
 import axios from 'axios';
 import TBPBackground from '../components/TBPBackground';
 
@@ -72,21 +80,26 @@ const InputField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
       borderColor: theme.palette.primary.main,
-      color: theme.palette.text.main,
-      backgroudColor: theme.palette.primary.main,
     },
     '&.Mui-focused fieldset': {
       borderColor: theme.palette.secondary.main,
       color: theme.palette.text.main,
     },
   },
-//  '& .MuiInputBase-root': {
-//    color: theme.palette.text.primary,
-//  }
 }));
 
+function timeout(delay) {
+  return new Promise( res => setTimeout(res, delay) );
+}
 
-const SignupForm = ({ SignupCallback }) => {
+async function waitAndRedirect(path){
+  await timeout(2000); 
+  window.location = path;
+}
+
+//const isYearValid = (year) => year.length != 4; 
+
+const SignupForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [first_name, setFirstName] = useState(''); 
@@ -107,16 +120,14 @@ const SignupForm = ({ SignupCallback }) => {
           name: {first: first_name, last: last_name}, 
           major: major,
           graduationYear: graduation_year, //number
-          initiationQuarter: {quarter: initiation_quarter, year: initiation_year},
-          //check if a current officer is signing up and give officer permission automatically 
+          initiationQuarter: {quarter: initiation_quarter, year: initiation_year}, 
         })
         .then((res) => {
           console.log(res);
-          //give a snackbar to tell the use their account has been created
           //redirect to home page
-          setSnackbarMessage(res.message);
+          setSnackbarMessage('Account created');
           setShowSnackbar(true);
-
+          waitAndRedirect('/'); 
         })
         .catch((err) => {
           console.log(err);
@@ -158,9 +169,8 @@ const SignupForm = ({ SignupCallback }) => {
             e.stopPropagation();
           }}
           onChange={(e) => {
-            setEmail(e.email);
+            setEmail(e.target.value);
           }}
-//          sx={{input: { color: 'while' } }}
           InputProps={{
             sx: {
                 "& input": {
@@ -258,6 +268,9 @@ const SignupForm = ({ SignupCallback }) => {
           fullWidth
           select
           margin='dense'
+          onClick={(e) => {
+            e.stopPropagation();
+        }}
           onChange={(e) => {
             setMajor(e.target.value);
         }}
@@ -279,7 +292,7 @@ const SignupForm = ({ SignupCallback }) => {
         ))}
         </InputField> 
         <InputField
-          label='Graduation Year'
+          label='Graduation Year (yyyy)'
           variant='outlined'
           required
           size='normal'
@@ -310,6 +323,9 @@ const SignupForm = ({ SignupCallback }) => {
             fullWidth
             required
             margin='dense'
+            onClick={(e) => {
+              e.stopPropagation();
+          }}
             onChange={(e) => {
                 setInitiationQuarter(e.target.value);
             }}
@@ -339,8 +355,9 @@ const SignupForm = ({ SignupCallback }) => {
         ))}
           </InputField>
           <InputField
-            label='Initiation Year'
+            label='Initiation Year (yyyy)'
             required
+            fullWidth
             margin='dense'
             variant='outlined'
             size='normal'
@@ -348,6 +365,8 @@ const SignupForm = ({ SignupCallback }) => {
             onKeyDown={(e) => {
               e.stopPropagation();
             }}
+            //error={(e) => {isYearValid(e.target.value)}}
+            //helperText={(e) => {isYearValid(e.target.value) ? "Please enter a 4 digit integer" : ""}}
             onChange={(e) => {
               setInitiationYear(e.target.value);
              }}
@@ -380,8 +399,8 @@ const SignupForm = ({ SignupCallback }) => {
           message={snackbarMessage}
           sx={{
             '& .MuiSnackbarContent-root': {
-              color: 'black', //your custom color here
-              backgroundColor: (theme) => theme.palette.secondary.main, //your custom color here
+              color: 'black', 
+              backgroundColor: (theme) => theme.palette.secondary.main, 
             },
           }}
         />
