@@ -67,4 +67,19 @@ PDFRouter.get('/get-pdf/:id', (req, res) => {
       });
   });
 
+// Download PDF byID
+PDFRouter.get('/download/:id', async (req, res) => {
+  try {
+    const pdf = await PDFSchema.findById(req.params.id);
+    if (!pdf) {
+      return res.status(404).json({ message: 'PDF not found' });
+    }
+    const filePath = path.join(__dirname, '../uploads', pdf.filename);
+    res.download(filePath, pdf.filename);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 module.exports = PDFRouter;
