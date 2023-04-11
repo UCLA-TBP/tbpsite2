@@ -114,7 +114,9 @@ function UploadTest({ candidate, setCandidate }) {
   return (
     <div>
       <div>
-        <FormControl sx={{ m: 1, minWidth: 80 }} size='small'>
+        <FormControl sx={{ m: 1, minWidth: 80,"& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "gray"
+                        }, }} size='small'>
           <InputLabel id='subject-select-label' style={{ color: 'gold' }}>
             Subject
           </InputLabel>
@@ -124,7 +126,7 @@ function UploadTest({ candidate, setCandidate }) {
             value={subject}
             label='Subject'
             onChange={handleSubjectChange}
-            style={{ color: 'white' }}
+            style={{ color: 'white', borderColor:'gray' }}
           >
             {subjects.map((subjectName) => (
               <MenuItem key={subjectName} value={subjectName}>
@@ -143,13 +145,16 @@ function UploadTest({ candidate, setCandidate }) {
           defaultValue=''
           onChange={handleClassNumberChange}
           style={{ paddingBottom: '10px' }}
-          InputProps={{}}
+          InputProps={{placeholder: 'ie. 132A'}}
           sx={{
             '& .MuiInputLabel-root': {
               color: 'gold',
             },
             '& input': {
               color: 'white',
+            },
+            "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+              borderColor: "gray"
             },
           }}
         />
@@ -170,6 +175,9 @@ function UploadTest({ candidate, setCandidate }) {
             },
             '& input': {
               color: 'white',
+            },
+            "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+              borderColor: "gray"
             },
           }}
         />

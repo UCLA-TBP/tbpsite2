@@ -87,7 +87,7 @@ const InductionProgress = ({ candidate, setCandidate }) => {
   if (!candidate) return <></>;
   return (
     <>
-      <TBPBackground />
+      {/* <TBPBackground /> */}
       <Container
         sx={{
           marginTop: '-14px',
