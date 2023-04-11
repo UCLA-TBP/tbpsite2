@@ -49,6 +49,43 @@ const UserSchema = new mongoose.Schema({
       required: true,
     },
   },
+  major:{
+    type: String, 
+    enum: 
+    [
+      'Aerospace Engineering',
+      'Bioengineering',
+      'Chemical Engineering',
+      'Civil Engineering',
+      'Computer Engineering',
+      'Computer Science',
+      'Computer Science and Engineering',
+      'Electrical Engineering',
+      'Materials Engineering',
+      'Mechanical Engineering',
+      'Undeclared Engineering'
+    ],
+    trim: true,
+    required: true,
+  },
+  graduationYear:{
+    type: Number,  
+    trim: true, 
+    required: true,
+  },
+  initiationQuarter:{
+    quarter:{
+      type: String, 
+      enum: ['Fall', 'Spring'], 
+      trim: true,
+      required: true, 
+    },
+    year:{
+      type: Number, 
+      trim: true,
+      required: true, 
+    },
+  },
   requirements: {
     tutoring: {
       type: Boolean,
