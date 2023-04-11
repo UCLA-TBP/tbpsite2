@@ -15,7 +15,7 @@ import TutoringSchedule from './tutoring/TutoringSchedule';
 // import TutoringFeedback from './tutoring/TutoringFeedback';
 // import LogHours from './tutoring/LogHours';
 import Officers from './officers/Officers';
-// import Faculty from './officers/Faculty';
+import Faculty from './officers/Faculty';
 //import TestBank from './member-services/TestBank';
 // import Corporate from './member-services/Corporate';
 import InductionProgress from './candidates/InductionProgress';
@@ -208,8 +208,8 @@ function App() {
             </Route>
             <Route path='officers'>
               <Route path='' element={<Officers />} />
-              {/* <Route path='faculty' element={<Faculty />} /> */}
             </Route>
+            <Route path='faculty' element={<Faculty />} />
             {/* <Route path='member_services'>
               <Route path='testbank' element={<TestBank />} />
               <Route path='corporate' element={<Corporate />} />

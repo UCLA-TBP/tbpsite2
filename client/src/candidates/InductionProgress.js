@@ -164,7 +164,7 @@ const InductionProgress = ({ candidate, setCandidate }) => {
           <ProgressIndicator
             requirementMet={candidate.requirements?.corporate}
           />
-          <RequirementDescription description={'Attend the corporate event'} />
+          <RequirementDescription description={'Attend a corporate or professional development event!'} />
         </Box>
 
         <Box mt={5}>
@@ -265,7 +265,7 @@ const InductionProgress = ({ candidate, setCandidate }) => {
             requirementMet={candidate.requirements?.membershipFee}
           />
           <RequirementDescription
-            description={'Pay a one-time fee for smart study buddies.'}
+            description={'Covers national and chapter dues, a certificate, and a subscription to “The Bent” magazine.'}
           />
         </Box>
 
