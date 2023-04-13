@@ -76,7 +76,7 @@ const MoreDropDownEntries = [
   new DropDownItemData('CONTACT QUICKLINKS'),
   new DropDownItemData('Officers', 'officers'),
   new DropDownItemData('Faculty', 'faculty'),
-  new DropDownItemData('Website Feedback', 'https://forms.gle/AQau2zmN1wug2GKa7')
+  new DropDownItemData('Website Feedback', '#contact')
 ];
 
 // TODO: change available links based on user position
