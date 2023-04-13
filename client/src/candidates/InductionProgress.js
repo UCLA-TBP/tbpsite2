@@ -115,14 +115,6 @@ const InductionProgress = ({ candidate, setCandidate }) => {
               '2 hours/week required from Weeks 3-9. Drop-in tutoring style! You can pick the subjects you can tutor.'
             }
           />
-          {/* TODO: dillon */}
-
-          {/*<Button
-          variant='contained'
-          onClick={(e) => updateRequirement('tutoring', true)}
-        >
-          Test update requirement
-      </Button>*/}
           <LogTutoring
             candidate={candidate}
             setCandidate={setCandidate}
@@ -141,10 +133,7 @@ const InductionProgress = ({ candidate, setCandidate }) => {
               'Submit a copy of one of your tests to our members-only test bank.'
             }
           />
-          <UploadTest
-            candidate={candidate}
-            setCandidate={setCandidate}
-          ></UploadTest>
+          <UploadTest candidate={candidate} setCandidate={setCandidate} />
         </Box>
 
         <Box mt={5}>
@@ -164,7 +153,25 @@ const InductionProgress = ({ candidate, setCandidate }) => {
           <ProgressIndicator
             requirementMet={candidate.requirements?.corporate}
           />
-          <RequirementDescription description={'Attend a corporate or professional development event!'} />
+          <RequirementDescription
+            description={
+              'Attend a corporate or professional development event!'
+            }
+          />
+        </Box>
+
+        <Box mt={5}>
+          <Typography variant='h3' color='primary'>
+            Interview
+          </Typography>
+          <ProgressIndicator
+            requirementMet={candidate.requirements?.interview}
+          />
+          <RequirementDescription
+            description={
+              'Take part in a low-stakes interview in a friendly environment!'
+            }
+          />
         </Box>
 
         <Box mt={5}>
@@ -265,7 +272,9 @@ const InductionProgress = ({ candidate, setCandidate }) => {
             requirementMet={candidate.requirements?.membershipFee}
           />
           <RequirementDescription
-            description={'Covers national and chapter dues, a certificate, and a subscription to “The Bent” magazine.'}
+            description={
+              'Covers national and chapter dues, a certificate, and a subscription to “The Bent” magazine.'
+            }
           />
         </Box>
 

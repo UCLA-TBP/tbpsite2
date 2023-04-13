@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {
   Button,
+  Box,
   FormControl,
   InputLabel,
   Select,
@@ -112,12 +113,22 @@ function UploadTest({ candidate, setCandidate }) {
   }
 
   return (
-    <div>
-      <div>
-        <FormControl sx={{ m: 1, minWidth: 80,"& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-                            borderColor: "gray"
-                        }, }} size='small'>
-          <InputLabel id='subject-select-label' style={{ color: 'gold' }}>
+    <>
+      <Box sx={{ display: 'inline-flex' }} mt={2}>
+        <FormControl
+          sx={{
+            m: 1,
+            minWidth: 80,
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+              borderColor: (theme) => theme.palette.custom2.main,
+            },
+          }}
+          size='small'
+        >
+          <InputLabel
+            id='subject-select-label'
+            sx={{ color: (theme) => theme.palette.secondary.main }}
+          >
             Subject
           </InputLabel>
           <Select
@@ -126,7 +137,10 @@ function UploadTest({ candidate, setCandidate }) {
             value={subject}
             label='Subject'
             onChange={handleSubjectChange}
-            style={{ color: 'white', borderColor:'gray' }}
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              borderColor: (theme) => theme.palette.custom2.main,
+            }}
           >
             {subjects.map((subjectName) => (
               <MenuItem key={subjectName} value={subjectName}>
@@ -135,70 +149,75 @@ function UploadTest({ candidate, setCandidate }) {
             ))}
           </Select>
         </FormControl>
-      </div>
 
-      <div>
         <TextField
           id='outlined-input'
           label='Class Number'
           size='small'
           defaultValue=''
           onChange={handleClassNumberChange}
-          style={{ paddingBottom: '10px' }}
-          InputProps={{placeholder: 'ie. 132A'}}
+          InputProps={{ placeholder: 'e.g. 35L for CS 35L' }}
           sx={{
             '& .MuiInputLabel-root': {
-              color: 'gold',
+              color: (theme) => theme.palette.secondary.main,
             },
             '& input': {
-              color: 'white',
+              color: (theme) => theme.palette.primary.main,
             },
-            "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-              borderColor: "gray"
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+              borderColor: (theme) => theme.palette.custom2.main,
             },
+            paddingBottom: '10px',
+            marginTop: '8px',
+            marginLeft: '12px',
           }}
         />
-      </div>
 
-      <div>
         <TextField
           id='outlined-input'
           label='Professor'
           size='small'
           defaultValue=''
           onChange={handleProfessorChange}
-          style={{ paddingBottom: '10px' }}
           InputProps={{}}
           sx={{
             '& .MuiInputLabel-root': {
-              color: 'gold',
+              color: (theme) => theme.palette.secondary.main,
             },
             '& input': {
-              color: 'white',
+              color: (theme) => theme.palette.primary.main,
             },
-            "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-              borderColor: "gray"
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+              borderColor: (theme) => theme.palette.custom2.main,
             },
+            paddingBottom: '10px',
+            marginTop: '8px',
+            marginLeft: '20px',
           }}
         />
-      </div>
+      </Box>
 
-      <form encType='multipart/form-data'>
-        <input
-          type='file'
-          name='pdf'
-          accept='application/pdf'
-          style={{ color: 'grey' }}
-        />
-        <Button
-          variant='contained'
-          size='small'
-          onClick={handleUpload}
-          type='submit'
-        >
-          Submit
-        </Button>
-      </form>
+      <Box>
+        <form encType='multipart/form-data'>
+          <input
+            type='file'
+            name='pdf'
+            accept='application/pdf'
+            style={{ color: 'gold', marginLeft: '8px' }}
+          />
+          <br />
+          <Button
+            variant='contained'
+            size='small'
+            color='secondary'
+            onClick={handleUpload}
+            type='submit'
+            sx={{ marginLeft: '8px' }}
+          >
+            Submit Test
+          </Button>
+        </form>
+      </Box>
 
       <SubmittedTests candidate={candidate}></SubmittedTests>
 
@@ -215,7 +234,7 @@ function UploadTest({ candidate, setCandidate }) {
           },
         }}
       />
-    </div>
+    </>
   );
 }
 

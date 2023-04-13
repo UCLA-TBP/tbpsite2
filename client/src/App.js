@@ -20,7 +20,7 @@ import Faculty from './officers/Faculty';
 // import Corporate from './member-services/Corporate';
 import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
-import SignupForm from './signup/SignupForm'; 
+import SignupForm from './signup/SignupForm';
 
 import RouteProtection from './permissions/RouteProtection';
 import { positions } from './permissions/PermissionsUtils';
@@ -69,6 +69,10 @@ theme = createTheme({
     // dark grey
     custom: {
       main: '#222',
+    },
+    // light grey
+    custom2: {
+      main: '#bdbdbd',
     },
   },
   typography: {
@@ -191,7 +195,7 @@ function App() {
         <Router>
           <Routes>
             <Route path='' element={<Home />} />
-            <Route path='spicybroccoli5000' element={<SignupForm/>}/>
+            <Route path='spicybroccoli5000' element={<SignupForm />} />
             <Route path='profile'>
               <Route path='' element={<Profile />} />
               <Route path='requirements' element={<ProfileRequirements />} />

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const findOrCreate = require('mongoose-findorcreate');
-const PDFSchema = require('./PDFSchema')
+const PDFSchema = require('./PDFSchema');
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -50,10 +50,9 @@ const UserSchema = new mongoose.Schema({
       required: true,
     },
   },
-  major:{
-    type: String, 
-    enum: 
-    [
+  major: {
+    type: String,
+    enum: [
       'Aerospace Engineering',
       'Bioengineering',
       'Chemical Engineering',
@@ -64,27 +63,27 @@ const UserSchema = new mongoose.Schema({
       'Electrical Engineering',
       'Materials Engineering',
       'Mechanical Engineering',
-      'Undeclared Engineering'
+      'Undeclared Engineering',
     ],
     trim: true,
     required: true,
   },
-  graduationYear:{
-    type: Number,  
-    trim: true, 
+  graduationYear: {
+    type: Number,
+    trim: true,
     required: true,
   },
-  initiationQuarter:{
-    quarter:{
-      type: String, 
-      enum: ['Fall', 'Spring'], 
+  initiationQuarter: {
+    quarter: {
+      type: String,
+      enum: ['Fall', 'Spring'],
       trim: true,
-      required: true, 
+      required: true,
     },
-    year:{
-      type: Number, 
+    year: {
+      type: Number,
       trim: true,
-      required: true, 
+      required: true,
     },
   },
   requirements: {
@@ -97,6 +96,10 @@ const UserSchema = new mongoose.Schema({
       default: false,
     },
     corporate: {
+      type: Boolean,
+      default: false,
+    },
+    interview: {
       type: Boolean,
       default: false,
     },
@@ -142,21 +145,21 @@ const UserSchema = new mongoose.Schema({
     },
   },
   tutoringLog: {
-    
-    type: [{
-      week: { type: Number},
-      hours: { type: Number},
-      secretPhrase: { type: String},
-    }],
+    type: [
+      {
+        week: { type: Number },
+        hours: { type: Number },
+        secretPhrase: { type: String },
+      },
+    ],
 
-    default: []
+    default: [],
   },
   submittedTests: {
-    
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PDF' }],
 
-    default: []
-  }
+    default: [],
+  },
 
   // add resume, submitted tests field, other profile information (name, etc.)
 });
