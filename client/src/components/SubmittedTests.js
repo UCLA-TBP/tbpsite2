@@ -36,15 +36,8 @@ function UploadTest({ candidate }) {
       {testList.length > 0 ? (
         <ul>{testList}</ul>
       ) : (
-        <Typography
-          variant='p'
-          mt={1}
-          sx={{
-            color: (theme) => theme.palette.primary.main,
-            fontSize: '1rem',
-          }}
-        >
-          None
+        <Typography variant='p' mt={2}>
+          No tests submitted yet...
         </Typography>
       )}
     </div>

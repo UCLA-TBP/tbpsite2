@@ -211,7 +211,14 @@ const CandidateTracker = () => {
                 </Grid>
               ))
             ) : (
-              <Typography variant='p' color='custom'>
+              <Typography
+                variant='p'
+                mt={1}
+                sx={{
+                  color: (theme) => theme.palette.primary.main,
+                  fontSize: '1rem',
+                }}
+              >
                 None
               </Typography>
             )}
@@ -239,7 +246,7 @@ const CandidateTracker = () => {
                 fontSize: '1rem',
               }}
             >
-              {selectedCandidate.name.first} {selectedCandidate.name.last}
+              {selectedCandidate.name?.first} {selectedCandidate.name?.last}
             </Typography>
             <Typography
               variant='p'
@@ -311,8 +318,8 @@ const CandidateTracker = () => {
                 fontSize: '1rem',
               }}
             >
-              {selectedCandidate.initiationQuarter.year}{' '}
-              {selectedCandidate.initiationQuarter.quarter}
+              {selectedCandidate.initiationQuarter?.year}{' '}
+              {selectedCandidate.initiationQuarter?.quarter}
             </Typography>
           </Box>
         )}
