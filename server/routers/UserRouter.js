@@ -4,6 +4,7 @@ const passport = require('passport');
 const passportConfig = require('../passport');
 const JWT = require('jsonwebtoken');
 const User = require('../schemas/UserSchema');
+const memberEmails = require('../memberEmails'); 
 
 const signToken = (userID) => {
   return JWT.sign(
@@ -44,7 +45,13 @@ userRouter.post('/register', (req, res) => {
         });
       else {
         const newUser = User(req.body);
-        newUser
+        if (memberEmails.findOne({ email }))
+        
+          //newUser.position('member')
+          res.status(400).json({
+            message: { msgBody: 'member', msgError: true },
+          });
+/*         newUser
           .save()
           .then((savedUser) => {
             res.status(201).json({
@@ -59,7 +66,7 @@ userRouter.post('/register', (req, res) => {
             res.status(500).json({
               message: { msgBody: 'Error saving user', msgError: true },
             });
-          });
+          }); */
       }
     })
     .catch((err) => {
