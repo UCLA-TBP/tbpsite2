@@ -252,7 +252,7 @@ function Home() {
                 Candidate Packet
               </Button>
             </Grid>
-            <Grid item>
+{/*             <Grid item>
               <Button
                 color='secondary'
                 variant='outlined'
@@ -261,7 +261,7 @@ function Home() {
               >
                 Orientation Presentation
               </Button>
-            </Grid>
+            </Grid> */}
           </Grid>
         </FloatingContainer>
 
