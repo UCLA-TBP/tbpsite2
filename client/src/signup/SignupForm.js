@@ -138,7 +138,6 @@ const SignupForm = () => {
         })
         .then((res) => {
           console.log(res);
-          //redirect to home page
           setSnackbarMessage('Account created');
           setShowSnackbar(true);
           waitAndRedirect('/');

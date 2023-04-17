@@ -31,7 +31,7 @@ mongoose
     console.log('Error connecting to MongoDB:', err);
   });
 
-const userRouter = require('./routers/UserRouter');
+const userRouter = require('./routers/UserRouter.js');
 app.use('/user', userRouter);
 
 const PDFRouter = require('./routers/PDFRouter');
