@@ -28,9 +28,9 @@ function TutoringSchedule() {
       <br></br>
       <iframe
         title='tutoringSchedule'
-        src='https://docs.google.com/spreadsheets/d/e/2PACX-1vT57u-gqnqFQh_JeXSPys80WKAGDIBkO8enNdDQr5zeikaEn7ha4ALOCcaaoqeJfPJQ9Gd4zjOLzi3O/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false'
-        width='100%'
-        height='625'
+        src='https://docs.google.com/spreadsheets/d/e/2PACX-1vT57u-gqnqFQh_JeXSPys80WKAGDIBkO8enNdDQr5zeikaEn7ha4ALOCcaaoqeJfPJQ9Gd4zjOLzi3O/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false&amp;chrome=false'
+        width='108.8%'
+        height='595'
         frameBorder='0'
       ></iframe>
     </Container>

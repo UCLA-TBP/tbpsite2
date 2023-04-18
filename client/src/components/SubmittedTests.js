@@ -34,7 +34,10 @@ function UploadTest({ candidate }) {
   return (
     <div>
       {testList.length > 0 ? (
-        <ul>{testList}</ul>
+        <>
+          {candidate.requirements.testBank = true}
+          <ul>{testList}</ul>
+        </>
       ) : (
         <Typography variant='p' mt={2}>
           No tests submitted yet...
