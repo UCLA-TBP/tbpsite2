@@ -59,7 +59,21 @@ function UploadTest({ candidate, setCandidate }) {
     // Get the file input element and the selected PDF file
     const fileInput = document.querySelector('input[name="pdf"]');
     const file = fileInput.files[0];
-
+    if (!file) {
+      setSnackbarMessage('Please select a PDF');
+      setShowSnackbar(true);
+      return;
+    }
+    if (file.size >= 4000000) {
+      setSnackbarMessage('PDF too big! PDFs are limited to 4MB');
+      setShowSnackbar(true);
+      return;
+    }
+    if (!subject || !professor || !classNumber) {
+      setSnackbarMessage('Please fill out all inputs');
+      setShowSnackbar(true);
+      return;
+    }
     axios
       .get('/api/user/get-user/' + candidate._id)
       .then((response) => {
