@@ -120,6 +120,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
 
   const [doScrollFade, setDoScrollFade] = useState(false);
   const isMobileView = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const dropDownRef = useRef(null);
   const navbarRef = useRef(null);
 
   useEffect(() => {
@@ -175,9 +176,9 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
 
   useEffect(() => {
     const handleClickAway = (e) => {
-      if (navbarRef.current && !navbarRef.current.contains(e.target)) {
+      if (!e.target.closest('.MuiContainer-root')) {
         if (Boolean(anchorEl)) {
-          handleDropDownClose();
+          handleDropDownClose(false);
         }
       }
     };
@@ -327,6 +328,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         )}
       </Grid>
       <Menu
+        ref={dropDownRef}
         sx={{ mt: '54px' }}
         anchorEl={anchorEl}
         anchorOrigin={{
