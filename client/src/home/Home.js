@@ -156,8 +156,8 @@ function Home() {
       <div
         style={{
           position: 'absolute',
-          top: '80vh',
-          height: '20vh',
+          top: '20vh',
+          height: '80vh',
           width: '100%',
           cursor: 'pointer',
         }}
@@ -252,7 +252,7 @@ function Home() {
                 Candidate Packet
               </Button>
             </Grid>
-{/*             <Grid item>
+            {/*             <Grid item>
               <Button
                 color='secondary'
                 variant='outlined'
