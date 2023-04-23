@@ -83,6 +83,7 @@ const MoreDropDownEntries = [
 const OfficerDropDownEntries = [
   new DropDownItemData('OFFICER'),
   new DropDownItemData('Candidate Tracker', 'admin/candidate_tracker'),
+  new DropDownItemData('Set Tutoring Phrase', 'admin/tutoring_phrase')
   // new DropDownItemData('Admin Panel', '#!'),
   // new DropDownItemData('Candidates', '#!'),
   // new DropDownItemData('Active members', '#!'),

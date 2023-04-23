@@ -20,6 +20,7 @@ import Faculty from './officers/Faculty';
 // import Corporate from './member-services/Corporate';
 import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
+import TutoringPhrase from './admin/TutoringPhrase';
 import SignupForm from './signup/SignupForm';
 
 import RouteProtection from './permissions/RouteProtection';
@@ -263,6 +264,17 @@ function App() {
               >
                 <Route path='' element={<CandidateTracker />} />
               </Route>
+              <Route
+                path='tutoring_phrase'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.officer]}
+                  />
+                }
+              >
+                <Route path='' element={<TutoringPhrase />} />
+              </Route> 
             </Route>
             <Route path='in-progress' element={<FeatureInProgress />} />
           </Routes>
