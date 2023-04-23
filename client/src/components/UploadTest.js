@@ -11,6 +11,7 @@ import {
   Snackbar,
 } from '@mui/material';
 import SubmittedTests from './SubmittedTests';
+import _ from 'lodash';
 
 function UploadTest({ candidate, setCandidate }) {
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -64,8 +65,8 @@ function UploadTest({ candidate, setCandidate }) {
       setShowSnackbar(true);
       return;
     }
-    if (file.size >= 2000000) {
-      setSnackbarMessage('PDF too big! PDFs are limited to 2MB');
+    if (file.size >= 4000000) {
+      setSnackbarMessage('PDF too big! PDFs are limited to 4MB');
       setShowSnackbar(true);
       return;
     }
@@ -84,7 +85,7 @@ function UploadTest({ candidate, setCandidate }) {
         formData.append('pdf', file);
         formData.append('userRef', JSON.stringify(user)); // pass the user object as a JSON string
         formData.append('subject', subject);
-        formData.append('professor', professor);
+        formData.append('professor', _.startCase(professor));
         formData.append('classNumber', classNumber);
 
         // Send a POST request to the server with the form data using Axios
@@ -108,7 +109,6 @@ function UploadTest({ candidate, setCandidate }) {
                 console.log(err);
               });
 
-            console.log('PDF uploaded successfully');
             setSnackbarMessage('Test uploaded successfully!');
             setShowSnackbar(true);
           })
@@ -226,7 +226,7 @@ function UploadTest({ candidate, setCandidate }) {
             color='secondary'
             onClick={handleUpload}
             type='submit'
-            sx={{ marginLeft: '8px' }}
+            sx={{ marginLeft: '8px', marginTop: '8px' }}
           >
             Submit Test
           </Button>

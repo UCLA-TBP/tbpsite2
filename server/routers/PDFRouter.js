@@ -7,65 +7,87 @@ const PDF = require('../schemas/PDFSchema');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+const cloudinary = require('cloudinary').v2;
+let streamifier = require('streamifier');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 // Handle file upload form submission
 PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
-    // Extract PDF file data from form submission
-    const { originalname, mimetype, buffer } = req.file;
-    const ref = JSON.parse(req.body.userRef);
-  
-    // Create new PDF object with extracted data
-    const newPDF = new PDF({
-      user: ref._id, // set user to the logged in user's id
-      filename: originalname,
-      contentType: mimetype,
-      data: buffer,
-      subject: req.body.subject,
-      classNumber: req.body.classNumber,
-      professor: req.body.professor
-    });
-  
-    // Save the new PDF object to MongoDB
-    newPDF.save()  
+  // Extract PDF file data from form submission
+  const { originalname, mimetype, buffer } = req.file;
+  const ref = JSON.parse(req.body.userRef);
+  let cloudinaryUploadStream = cloudinary.uploader.upload_stream(
+    { folder: 'TestPDFs' },
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(500).json({
+          message: { msgBody: 'Error uploading PDF', msgError: true },
+        });
+        return;
+      }
+      console.log(err, result);
+      const newPDF = new PDF({
+        user: ref._id,
+        filename: originalname,
+        contentType: mimetype,
+        cloudinaryURL: result.secure_url,
+        subject: req.body.subject,
+        classNumber: req.body.classNumber,
+        professor: req.body.professor,
+      });
+      console.log(newPDF);
+      newPDF
+        .save()
         .then((savedPDF) => {
-            res.status(201).json({
-                message: {
-                msgBody: 'PDF successfully uploaded',
-                msgError: false,
-                },
-                pdfId: savedPDF._id,
-            });
+          res.status(201).json({
+            message: {
+              msgBody: 'PDF successfully uploaded',
+              msgError: false,
+            },
+            pdfId: savedPDF._id,
+          });
         })
         .catch((err) => {
-            console.log(err);
-            res.status(500).json({
-                message: { msgBody: 'Error uploading PDF', msgError: true },
-            });
+          console.log(err);
+          res.status(500).json({
+            message: { msgBody: 'Error uploading PDF', msgError: true },
+          });
         });
-  });
+    }
+  );
+
+  streamifier.createReadStream(req.file.buffer).pipe(cloudinaryUploadStream);
+});
 
 // Get all PDFs
 PDFRouter.get('/get-all-PDFs', (req, res) => {
-    PDF.find()
-      .then((PDFs) => {
-        res.send(PDFs)
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send('Could not retrieve PDFs');
-      });
-  });
+  PDF.find()
+    .then((PDFs) => {
+      res.send(PDFs);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not retrieve PDFs');
+    });
+});
 
 // Get PDF by ID
 PDFRouter.get('/get-pdf/:id', (req, res) => {
-    PDF.findById(req.params.id)
-      .then((pdf) => {
-        res.send(pdf);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send('Could not retrieve user by id from database');
-      });
-  });
+  PDF.findById(req.params.id)
+    .then((pdf) => {
+      res.send(pdf);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not retrieve user by id from database');
+    });
+});
 
 // Download PDF byID
 PDFRouter.get('/download/:id', async (req, res) => {
