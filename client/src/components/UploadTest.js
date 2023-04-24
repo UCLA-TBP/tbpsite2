@@ -65,8 +65,8 @@ function UploadTest({ candidate, setCandidate }) {
       setShowSnackbar(true);
       return;
     }
-    if (file.size >= 4000000) {
-      setSnackbarMessage('PDF too big! PDFs are limited to 4MB');
+    if (file.size >= 8 * 1024 * 1024) {
+      setSnackbarMessage('PDF too big! PDFs are limited to 8MB');
       setShowSnackbar(true);
       return;
     }
