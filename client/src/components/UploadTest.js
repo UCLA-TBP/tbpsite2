@@ -41,6 +41,21 @@ function UploadTest({ candidate, setCandidate }) {
     'STATS',
   ];
 
+  const testTypes = [
+    'Quiz',
+    'Midterm',
+    'Final',
+  ]
+
+  const testNums = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+  ]
+
   const [subject, setSubject] = useState('');
   function handleSubjectChange(event) {
     setSubject(event.target.value);
@@ -54,6 +69,16 @@ function UploadTest({ candidate, setCandidate }) {
   const [classNumber, setClassNumber] = useState('');
   function handleClassNumberChange(event) {
     setClassNumber(event.target.value);
+  }
+
+  const [testType, setTestType] = useState('');
+  function  handleTestTypeChange(event) {
+    setTestType(event.target.value);
+  }
+
+  const [testNum, setTestNum] = useState('');
+  function  handleTestNumChange(event) {
+    setTestNum(event.target.value);
   }
 
   function handleUpload(event) {
@@ -75,7 +100,7 @@ function UploadTest({ candidate, setCandidate }) {
       setLoadingTest(false);
       return;
     }
-    if (!subject || !professor || !classNumber) {
+    if (!subject || !professor || !classNumber || !testNum || !testType) {
       setSnackbarMessage('Please fill out all inputs');
       setShowSnackbar(true);
       setLoadingTest(false);
@@ -93,6 +118,8 @@ function UploadTest({ candidate, setCandidate }) {
         formData.append('subject', subject);
         formData.append('professor', _.startCase(professor));
         formData.append('classNumber', classNumber.toUpperCase());
+        formData.append('testType', testType);
+        formData.append('testNum', testNum);
 
         // Send a POST request to the server with the form data using Axios
         axios
@@ -217,6 +244,78 @@ function UploadTest({ candidate, setCandidate }) {
             marginLeft: '20px',
           }}
         />
+
+        <FormControl
+          sx={{
+            m: 1,
+            minWidth: 80,
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+              borderColor: (theme) => theme.palette.custom2.main,
+            },
+          }}
+          size='small'
+        >
+          <InputLabel
+            id='test-type-select-label'
+            sx={{ color: (theme) => theme.palette.secondary.main }}
+          >
+            Test Type
+          </InputLabel>
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            value={testType}
+            label='testType'
+            onChange={handleTestTypeChange}
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              borderColor: (theme) => theme.palette.custom2.main,
+            }}
+          >
+            {testTypes.map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {testType != "" &&
+                <FormControl
+                  sx={{
+                    m: 1,
+                    minWidth: 80,
+                    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                      borderColor: (theme) => theme.palette.custom2.main,
+                    },
+                  }}
+                  size='small'
+                >
+                  <InputLabel
+                    id='test-num-select-label'
+                    sx={{ color: (theme) => theme.palette.secondary.main }}
+                  >
+                    Test Number
+                  </InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={testNum}
+                    label='testNum'
+                    onChange={handleTestNumChange}
+                    sx={{
+                      color: (theme) => theme.palette.primary.main,
+                      borderColor: (theme) => theme.palette.custom2.main,
+                    }}
+                  >
+                    {testNums.map((num) => (
+                      <MenuItem key={num} value={num}>
+                        {num}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+        }
       </Box>
 
       <Box>
