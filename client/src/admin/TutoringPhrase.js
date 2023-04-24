@@ -4,7 +4,6 @@ import {
   Button,
   Container,
 	FormControl,
-  Grid,
 	InputLabel,
 	MenuItem,
 	Select,
@@ -23,7 +22,7 @@ const TutoringPhrase = () => {
     setShowSnackbar(false);
   };
 
-  const [weekOption, setWeekOption] = useState(2);
+  const [weekOption, setWeekOption] = useState(0);
   function handleWeekOptionChange(event) {
     console.log(event.target.value);
     setWeekOption(Number(event.target.value));
@@ -35,11 +34,14 @@ const TutoringPhrase = () => {
     setSecretPhrase(event.target.value);
   }
 
-  function handleSubmit() {
+  const handleSubmit = () => {
 		axios
-			.put('/api/phrase')
+			.post('/api/phrase/set-phrase',{
+				week: weekOption, 
+				secretPhrase: secretPhrase,
+			})
 			.then((res) => {
-
+				console.log(res);
 				setSnackbarMessage('Phrase recorded!');
 				setShowSnackbar(true);
 			})
@@ -50,7 +52,7 @@ const TutoringPhrase = () => {
 			});
 		setWeekOption(2);
 		setSecretPhrase('');
-	}
+	};
 	
   return (
   <>
@@ -139,13 +141,27 @@ const TutoringPhrase = () => {
         <Button
           variant='contained'
           color='secondary'
-          //onClick={handleSubmit}
+          onClick={handleSubmit}
           sx={{ marginTop: '20px', marginLeft: '7px' }}
         >
           Submit Phrase
         </Button>
       </Box>
     </Container>
+
+		<Snackbar
+        open={showSnackbar}
+        autoHideDuration={4000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+        sx={{
+          '& .MuiSnackbarContent-root': {
+            color: 'black', //your custom color here
+            backgroundColor: (theme) => theme.palette.secondary.main, //your custom color here
+          },
+        }}
+      />
   </>
   );
 };
