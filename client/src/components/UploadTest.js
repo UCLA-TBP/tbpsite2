@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   Button,
   Box,
+  CircularProgress,
   FormControl,
   InputLabel,
   Select,
@@ -16,6 +17,7 @@ import _ from 'lodash';
 function UploadTest({ candidate, setCandidate }) {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [loadingTest, setLoadingTest] = useState(false);
 
   const handleSnackbarClose = (event, reason) => {
     setShowSnackbar(false);
@@ -55,6 +57,7 @@ function UploadTest({ candidate, setCandidate }) {
   }
 
   function handleUpload(event) {
+    setLoadingTest(true);
     event.preventDefault(); // prevent default form submission behavior
 
     // Get the file input element and the selected PDF file
@@ -63,16 +66,19 @@ function UploadTest({ candidate, setCandidate }) {
     if (!file) {
       setSnackbarMessage('Please select a PDF');
       setShowSnackbar(true);
+      setLoadingTest(false);
       return;
     }
     if (file.size >= 8 * 1024 * 1024) {
       setSnackbarMessage('PDF too big! PDFs are limited to 8MB');
       setShowSnackbar(true);
+      setLoadingTest(false);
       return;
     }
     if (!subject || !professor || !classNumber) {
       setSnackbarMessage('Please fill out all inputs');
       setShowSnackbar(true);
+      setLoadingTest(false);
       return;
     }
     axios
@@ -86,7 +92,7 @@ function UploadTest({ candidate, setCandidate }) {
         formData.append('userRef', JSON.stringify(user)); // pass the user object as a JSON string
         formData.append('subject', subject);
         formData.append('professor', _.startCase(professor));
-        formData.append('classNumber', classNumber);
+        formData.append('classNumber', classNumber.toUpperCase());
 
         // Send a POST request to the server with the form data using Axios
         axios
@@ -111,19 +117,21 @@ function UploadTest({ candidate, setCandidate }) {
 
             setSnackbarMessage('Test uploaded successfully!');
             setShowSnackbar(true);
+            setLoadingTest(false);
           })
           .catch((error) => {
+            setLoadingTest(false);
             console.error(error);
             setSnackbarMessage('Upload failed!');
             setShowSnackbar(true);
           });
       })
       .catch((error) => {
+        setLoadingTest(false);
         console.error(error);
+        setSnackbarMessage('Upload failed!');
+        setShowSnackbar(true);
       });
-
-    setClassNumber('');
-    setProfessor('');
   }
 
   return (
@@ -228,7 +236,14 @@ function UploadTest({ candidate, setCandidate }) {
             type='submit'
             sx={{ marginLeft: '8px', marginTop: '8px' }}
           >
-            Submit Test
+            {loadingTest ? (
+              <CircularProgress
+                size='1.4rem'
+                sx={{ color: '#000', marginLeft: '2rem', marginRight: '2rem' }}
+              />
+            ) : (
+              'Submit Test'
+            )}
           </Button>
         </form>
       </Box>
