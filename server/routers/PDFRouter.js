@@ -31,7 +31,6 @@ PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
         });
         return;
       }
-      console.log(err, result);
       const newPDF = new PDF({
         user: ref._id,
         filename: originalname,
@@ -41,7 +40,6 @@ PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
         classNumber: req.body.classNumber,
         professor: req.body.professor,
       });
-      console.log(newPDF);
       newPDF
         .save()
         .then((savedPDF) => {
