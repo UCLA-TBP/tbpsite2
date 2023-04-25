@@ -11,18 +11,32 @@ function UploadTest({ candidate }) {
           const response = await axios.get('/api/pdf/get-pdf/' + testId);
           return (
             <li key={testId} style={{ color: 'white' }}>
-              {' '}
-              {response.data.subject +
-                '_' +
-                response.data.classNumber +
-                '_' +
-                response.data.professor +
-                '_' +
-                response.data.testType +
-                '_' +
-                response.data.testNum +
-                '.PDF'
+              {response.data.testType === undefined ? 
+                <div>
+                  {response.data.subject +
+                    '_' +
+                    response.data.classNumber +
+                    '_' +
+                    response.data.professor +
+                    '.PDF'
+                  }
+                </div>
+                : 
+                <div>
+                  {response.data.subject +
+                    '_' +
+                    response.data.classNumber +
+                    '_' +
+                    response.data.professor +
+                    '_' +
+                    response.data.testType +
+                    '_' +
+                    response.data.testNum +
+                    '.PDF'
+                  }
+                </div>
               }
+              
             </li>
           );
         });

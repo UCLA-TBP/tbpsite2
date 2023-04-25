@@ -244,11 +244,13 @@ function UploadTest({ candidate, setCandidate }) {
             marginLeft: '20px',
           }}
         />
+      </Box>
 
+      <Box>
         <FormControl
           sx={{
             m: 1,
-            minWidth: 80,
+            minWidth: 100,
             '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
               borderColor: (theme) => theme.palette.custom2.main,
             },
@@ -280,11 +282,11 @@ function UploadTest({ candidate, setCandidate }) {
           </Select>
         </FormControl>
 
-        {testType != "" &&
+        {testType !== "" &&
                 <FormControl
                   sx={{
                     m: 1,
-                    minWidth: 80,
+                    minWidth: 120,
                     '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
                       borderColor: (theme) => theme.palette.custom2.main,
                     },
