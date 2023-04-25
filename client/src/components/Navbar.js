@@ -41,7 +41,7 @@ const DropDownItemLink = ({
           mt: { xs: -2.5, sm: 0 },
         }}
         onClick={() => {
-          // handleDropDownClose();
+          handleDropDownClose();
           // if (destination[0] === '#') centerOnElement(destination.slice(1));
         }}
       >
@@ -76,7 +76,7 @@ const MoreDropDownEntries = [
   new DropDownItemData('CONTACT QUICKLINKS'),
   new DropDownItemData('Officers', 'officers'),
   new DropDownItemData('Faculty', 'faculty'),
-  new DropDownItemData('Website Feedback', '#contact')
+  new DropDownItemData('Website Feedback', '#contact'),
 ];
 
 // TODO: change available links based on user position
@@ -114,12 +114,13 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [dropDownItems, setDropDownItems] = useState([]);
   const dropDownEntered = useRef(false);
-  const [dropDownTimer, setDropDownTimer] = useState(null);
   const [dropDownParent, setDropDownParent] = useState(null);
   const [userDropDownEntries, setUserDropDownEntries] = useState([]);
 
   const [doScrollFade, setDoScrollFade] = useState(false);
   const isMobileView = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const dropDownRef = useRef(null);
+  const navbarRef = useRef(null);
 
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
@@ -159,12 +160,32 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   }, [authenticatedUser]);
 
   useEffect(() => {
+    const handleScroll = () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      setScrollPos(winScroll);
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    const handleClickAway = (e) => {
+      if (!e.target.closest('.MuiContainer-root')) {
+        if (Boolean(anchorEl)) {
+          handleDropDownClose(false);
+        }
+      }
+    };
+    window.addEventListener('mousedown', handleClickAway);
+    return () => {
+      window.removeEventListener('mousedown', handleClickAway);
+    };
+  }, [anchorEl]);
 
   const centerOnElement = (targetId) => {
     if (targetId) {
@@ -182,7 +203,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
     setAnchorEl(e.currentTarget);
     setDropDownItems(items);
     setDropDownParent(dropDownParent);
-    if (dropDownTimer) clearTimeout(dropDownTimer);
   };
 
   const handleDropDownClose = () => {
@@ -191,24 +211,9 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
     dropDownEntered.current = false;
   };
 
-  const handleScroll = () => {
-    const winScroll =
-      document.body.scrollTop || document.documentElement.scrollTop;
-    setScrollPos(winScroll);
-  };
-
-  const startDropDownTimer = () => {
-    setDropDownTimer(
-      setTimeout(() => {
-        if (!dropDownEntered.current) {
-          handleDropDownClose();
-        }
-      }, 100)
-    );
-  };
-
   return (
     <AppBar
+      ref={navbarRef}
       position='fixed'
       sx={{
         backgroundColor: (theme) =>
@@ -273,7 +278,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             onMouseEnter={(e) => {
               handleDropDown(e, MoreDropDownEntries, 'more');
             }}
-            onMouseLeave={isMobileView ? undefined : startDropDownTimer}
           >
             More <MoreVertIcon />
           </NavButton>
@@ -293,7 +297,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
               onMouseEnter={(e) => {
                 handleDropDown(e, userDropDownEntries, 'user');
               }}
-              onMouseLeave={isMobileView ? undefined : startDropDownTimer}
             >
               {authenticatedUser.name.first} <PersonOutlineIcon />
             </NavButton>
@@ -317,7 +320,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
               onMouseEnter={(e) => {
                 handleDropDown(e, [new DropDownItemData('login')], 'user');
               }}
-              onMouseLeave={isMobileView ? undefined : startDropDownTimer}
             >
               log in <PersonOutlineIcon />
             </NavButton>
@@ -325,6 +327,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         )}
       </Grid>
       <Menu
+        ref={dropDownRef}
         sx={{ mt: '54px' }}
         anchorEl={anchorEl}
         anchorOrigin={{
@@ -342,7 +345,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         <Container
           disableGutters
           sx={{ py: 1, pl: 1, pr: 3 }}
-          onMouseLeave={isMobileView ? undefined : handleDropDownClose}
           onMouseEnter={() => {
             dropDownEntered.current = true;
           }}
