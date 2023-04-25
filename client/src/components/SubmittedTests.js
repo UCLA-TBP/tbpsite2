@@ -17,7 +17,12 @@ function UploadTest({ candidate }) {
                 response.data.classNumber +
                 '_' +
                 response.data.professor +
-                '.PDF'}
+                '_' +
+                response.data.testType +
+                '_' +
+                response.data.testNum +
+                '.PDF'
+              }
             </li>
           );
         });

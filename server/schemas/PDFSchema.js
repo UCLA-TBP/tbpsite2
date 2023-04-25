@@ -15,6 +15,8 @@ const PDFSchema = new mongoose.Schema({
   subject: { type: String, trim: true, required: true },
   classNumber: { type: String, trim: true, required: true },
   professor: { type: String, trim: true },
+  testType: { type: String, trim: true },
+  testNum: { type: String, trim: true },
 });
 
 PDFSchema.plugin(findOrCreate);
