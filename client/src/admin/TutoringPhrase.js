@@ -3,16 +3,44 @@ import {
   Box,
   Button,
   Container,
-	FormControl,
-	InputLabel,
 	MenuItem,
-	Select,
   Snackbar,
   TextField,
   Typography,
 } from '@mui/material';
 import axios from 'axios';
 import TBPBackground from '../components/TBPBackground';
+
+const week = [
+	{
+		value: 3, 
+		label: 'Week 3', 
+	},
+	{
+		value: 4, 
+		label: 'Week 4', 
+	},
+	{
+		value: 5, 
+		label: 'Week 5', 
+	},
+	{
+		value: 6, 
+		label: 'Week 6', 
+	},
+	{
+		value: 7, 
+		label: 'Week 7', 
+	},
+	{
+		value: 8, 
+		label: 'Week 8', 
+	},
+	{
+		value: 9, 
+		label: 'Week 9', 
+	}
+];
 
 const TutoringPhrase = () => {
 	const [showSnackbar, setShowSnackbar] = useState(false);
@@ -22,10 +50,10 @@ const TutoringPhrase = () => {
     setShowSnackbar(false);
   };
 
-  const [weekOption, setWeekOption] = useState(0);
+  const [weekOption, setWeekOption] = useState(2);
   function handleWeekOptionChange(event) {
     console.log(event.target.value);
-    setWeekOption(Number(event.target.value));
+    setWeekOption((event.target.vale));
   }
 
   const [secretPhrase, setSecretPhrase] = useState('');
@@ -37,11 +65,13 @@ const TutoringPhrase = () => {
   const handleSubmit = () => {
 		axios
 			.post('/api/phrase/set-phrase',{
-				week: weekOption, 
-				secretPhrase: secretPhrase,
+				tutoringPhrase:
+				{week: weekOption, 
+				secretPhrase: secretPhrase},
 			})
 			.then((res) => {
 				console.log(res);
+				console.log('axios request');
 				setSnackbarMessage('Phrase recorded!');
 				setShowSnackbar(true);
 			})
@@ -50,8 +80,6 @@ const TutoringPhrase = () => {
 				setSnackbarMessage('Submission error!');
 				setShowSnackbar(true);
 			});
-		setWeekOption(2);
-		setSecretPhrase('');
 	};
 	
   return (
@@ -78,46 +106,41 @@ const TutoringPhrase = () => {
 					Set Tutoring Phrase
 			</Typography>
 			<Box sx={{ display: 'inline-flex' }} mt={1}>
-        <FormControl
-          sx={{
-            m: 1,
-            minWidth: 80,
-            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-              borderColor: (theme) => theme.palette.custom2.main,
-            },
-          }}
-        >
-          <InputLabel
-            id='week-select-label'
-            style={{
-              color: 'gold',
-              borderColor: (theme) => theme.palette.primary.main,
-            }}
-          >
-            Week
-          </InputLabel>
-          <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            value={weekOption}
-            label='Week'
-            onChange={handleWeekOptionChange}
-            sx={{ color: (theme) => theme.palette.primary.main }}
-          >
-            <MenuItem value={3}>Week 3</MenuItem>
-            <MenuItem value={4}>Week 4</MenuItem>
-            <MenuItem value={5}>Week 5</MenuItem>
-            <MenuItem value={6}>Week 6</MenuItem>
-            <MenuItem value={7}>Week 7</MenuItem>
-            <MenuItem value={8}>Week 8</MenuItem>
-            <MenuItem value={9}>Week 9</MenuItem>
-          </Select>
-        </FormControl>
+				<TextField
+					label='Week'
+					onChange={handleWeekOptionChange}
+					select
+					sx={{
+					'& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+						borderColor: (theme) => theme.palette.custom2.main,
+					}, 
+					'& .MuiFormLabel-root': {
+						color: 'secondary.main',
+					},
+					'& .MuiMenuItem-root': {
+						color: 'primaty.main',
+					},
+					'& .MuiInputBase-root': {
+						color: 'primary.main',
+					},
+					paddingBottom: '10px',
+					marginTop: '8px',
+					marginLeft: '20px',
+					width: '60%',
+				}}
+				>
+					{week.map((option) => (
+						<MenuItem key={option.value} value={option.value}>
+							{option.label}
+						</MenuItem>
+					))}
+				</TextField>
 
         <TextField
           id='outlined-input'
           label='Secret Phrase'
           defaultValue=''
+					fullWidth
           onChange={handleSecretPhraseChange}
           InputProps={{}}
           sx={{
@@ -167,3 +190,7 @@ const TutoringPhrase = () => {
 };
 
 export default TutoringPhrase; 
+
+          //  labelId='demo-simple-select-label'
+          //  id='demo-simple-select'
+          //  value={weekOption}
