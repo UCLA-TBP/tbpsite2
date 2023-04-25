@@ -39,6 +39,8 @@ PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
         subject: req.body.subject,
         classNumber: req.body.classNumber,
         professor: req.body.professor,
+        testType: req.body.testType,
+        testNum: req.body.testNum,
       });
       newPDF
         .save()
