@@ -176,14 +176,17 @@ const InductionProgress = ({ candidate, setCandidate }) => {
 
         <Box mt={5}>
           <Typography variant='h3' color='primary'>
-            General Social
+            General Socials
           </Typography>
           <ProgressIndicator
-            requirementMet={candidate.requirements?.generalSocial}
+            requirementMet={candidate.requirements?.generalSocial1}
+          />
+          <ProgressIndicator
+            requirementMet={candidate.requirements?.generalSocial2}
           />
           <RequirementDescription
             description={
-              'Come out to fulfill requirements and meet other candidates and officers!'
+              'Come out to at least two socials fulfill requirements and meet other candidates and officers!'
             }
           />
         </Box>

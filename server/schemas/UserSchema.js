@@ -123,7 +123,11 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
-    generalSocial: {
+    generalSocial1: {
+      type: Boolean,
+      default: false,
+    },
+    generalSocial2: {
       type: Boolean,
       default: false,
     },
