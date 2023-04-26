@@ -20,7 +20,6 @@ passport.use(
       passReqToCallback: true,
     },
     (req, payload, done) => {
-      console.log(process.env.CLIENT_URL);
       User.findById({ _id: payload.sub })
         .then((user) => {
           if (user) return done(null, user, req.body);
@@ -58,7 +57,7 @@ passport.use(
   new LocalStrategy(
     { usernameField: 'email', passwordField: 'password' },
     (email, password, done) => {
-      User.findOne({ email })
+      User.findOne({ email: email.toLowerCase() })
         .then((user) => {
           if (!user) return done(null, false);
           user.comparePassword(password, done);
