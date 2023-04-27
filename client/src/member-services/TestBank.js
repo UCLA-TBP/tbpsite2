@@ -1,84 +1,100 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Container, Link, Typography } from '@mui/material';
 import axios from 'axios';
+import TBPBackground from '../components/TBPBackground';
+import LazyExecutor from '../components/LazyExecutor';
 
-/*function TestBank() {
-  const [testList, setTestList] = useState([]);
-  useEffect(() => {
-    const getTests = async () => {
-      try {
-        const listOfTests = await axios.get('/api/pdf/get-all-PDFs');
-        const promises = listOfTests.data.map((test) => {
-           DOWNLOAD LINK FOR TEST 
-          console.log(test);
-          const downloadUrl = `/api/pdf/${test._id}/download`;
-          return (
-            <li key={test._id}>
-              <a href={downloadUrl} 
-              
-                 download= {test.data.subject + "_" +
-                 test.data.classNumber + "_" +
-                 test.data.professor + ".PDF"}>
-
-                {test.data.subject + "_" +
-                 test.data.classNumber + "_" +
-                 test.data.professor + ".PDF"}
-
-              </a>
-            </li>
-          );
-        });
-        const testItems = await Promise.all(promises);
-        setTestList(testItems);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    getTests();
-  }, []);
-
-  return (
-    <div>
-      <Typography variant='p' mt = {1}>
-          Test Bank
-      </Typography>
-      
-      <ul>
-          {testList}
-      </ul>
-    </div>
-  )
-}*/
-
+// TODO maintain sorted orders for subject and classnum, sort tests by recency
+// Already sorted by subject in backend, use arrays to maintain current data in frontend
 function TestBank() {
-  const [tests, setTests] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [testData, setTestData] = useState({});
+  const [lazyExecutorEnabled, setLazyExecutorEnabled] = useState(true);
+  const [showLazyExecutor, setShowLazyExecutor] = useState(true);
+  const [batchNum, setBatchNum] = useState(1);
+  const batchSize = 60;
 
-  useEffect(() => {
-    async function fetchTests() {
-      const response = await axios.get('/api/pdf/get-all-PDFs');
-      const testList = response.data;
-      setTests(testList);
-      setIsLoaded(true);
+  const addTest = (data, subject, classNum, test) => {
+    if (!data[subject]) {
+      data[subject] = {};
     }
-    fetchTests();
-  }, []);
+    if (!data[subject][classNum]) {
+      data[subject][classNum] = [];
+    }
+    data[subject][classNum].push(test);
+  };
 
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
+  const getTestBatch = () => {
+    console.log('fetching batch');
+    setLazyExecutorEnabled(false);
+    axios
+      .post('/api/pdf/get-all-pdfs', {
+        batchSize: batchSize,
+        batchNum: batchNum,
+      })
+      .then((res) => {
+        let retrievedData = { ...testData };
+        res.data.forEach((test) => {
+          if (test.subject && test.classNumber) {
+            addTest(retrievedData, test.subject, test.classNumber, {
+              cloudinaryURL: test.cloudinaryURL,
+            });
+          }
+        });
+        setBatchNum(batchNum + 1);
+        setTestData(retrievedData);
+        if (res.data.length === batchSize) setLazyExecutorEnabled(true);
+        else setShowLazyExecutor(false);
+        console.log('resolved');
+      })
+      .catch((err) => {
+        console.log('Error fetching PDFs', err);
+      });
+  };
 
   return (
-    <div>
-      <h2>Tests</h2>
-      <ul>
-        {tests.map((test) => (
-          <li key={test._id} style={{ color: 'white' }}>
-            {test.subject}, {test.classNumber}, {test.professor}
-          </li>
+    <>
+      <TBPBackground />
+      <Container
+        sx={{
+          marginTop: '-14px',
+          padding: '85px 35px 100px !important',
+          minHeight: '105vh',
+          backgroundColor: (theme) => theme.palette.custom.main,
+        }}
+      >
+        <Typography variant='h2'>Tests</Typography>
+        {Object.keys(testData).map((subject) => (
+          <div key={subject}>
+            <Typography variant='h2' color='primary'>
+              {subject}
+            </Typography>
+            {Object.keys(testData[subject]).map((classNum) => (
+              <div key={subject + classNum}>
+                <Typography variant='p' color='primary'>
+                  {subject} {classNum}
+                </Typography>
+                {testData[subject][classNum].map((test) => (
+                  <div key={test.cloudinaryURL + subject}>
+                    <Link
+                      color='secondary'
+                      target='_blank'
+                      href={test.cloudinaryURL}
+                    >
+                      {test.cloudinaryURL}
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         ))}
-      </ul>
-    </div>
+        <LazyExecutor
+          func={getTestBatch}
+          enabled={lazyExecutorEnabled}
+          show={showLazyExecutor}
+        />
+      </Container>
+    </>
   );
 }
 

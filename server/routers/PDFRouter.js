@@ -66,9 +66,22 @@ PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
 });
 
 // Get all PDFs
-PDFRouter.get('/get-all-PDFs', (req, res) => {
-  PDF.find()
+PDFRouter.post('/get-all-pdfs', (req, res) => {
+  console.log('getting');
+  // PDF.find()
+  //   .sort([
+  //     ['subject', 1],
+  //     // ['classNumber', 1],
+  //   ])
+  PDF.aggregate([
+    // { $group: { _id: '$subject', classNumbers: { $push: '$classNumber' } } },
+    // { $sort: { _id: 1 } },
+    { $sort: { subject: 1 } },
+  ])
+    .skip(req.body.batchSize * (req.body.batchNum - 1))
+    .limit(req.body.batchSize)
     .then((PDFs) => {
+      console.log('stuck');
       res.send(PDFs);
     })
     .catch((err) => {

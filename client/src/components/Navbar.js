@@ -99,7 +99,7 @@ const OfficerDropDownEntries = [
 
 const MemberDropDownEntries = [
   new DropDownItemData('MEMBER SERVICES'),
-  new DropDownItemData('Testbank', 'in-progress'),
+  new DropDownItemData('Testbank', 'members/testbank'),
 ];
 
 const CandidateDropDownEntries = [

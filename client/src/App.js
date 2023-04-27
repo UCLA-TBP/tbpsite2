@@ -16,7 +16,7 @@ import TutoringSchedule from './tutoring/TutoringSchedule';
 // import LogHours from './tutoring/LogHours';
 import Officers from './officers/Officers';
 import Faculty from './officers/Faculty';
-//import TestBank from './member-services/TestBank';
+import TestBank from './member-services/TestBank';
 // import Corporate from './member-services/Corporate';
 import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
@@ -214,10 +214,6 @@ function App() {
               <Route path='' element={<Officers />} />
             </Route>
             <Route path='faculty' element={<Faculty />} />
-            {/* <Route path='member_services'>
-              <Route path='testbank' element={<TestBank />} />
-              <Route path='corporate' element={<Corporate />} />
-            </Route> */}
             <Route path='candidates'>
               <Route
                 path='requirements'
@@ -262,6 +258,19 @@ function App() {
                 }
               >
                 <Route path='' element={<CandidateTracker />} />
+              </Route>
+            </Route>
+            <Route path='members'>
+              <Route
+                path='testbank'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.member, positions.officer]}
+                  />
+                }
+              >
+                <Route path='' element={<TestBank />} />
               </Route>
             </Route>
             <Route path='in-progress' element={<FeatureInProgress />} />
