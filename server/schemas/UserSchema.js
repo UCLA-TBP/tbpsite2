@@ -183,6 +183,10 @@ UserSchema.pre('save', function (next) {
   });
 });
 
+UserSchema.pre('remove', function (next) {
+  this.model('PDF').remove({ user: this._id }, next);
+});
+
 UserSchema.methods.comparePassword = function (password, callback) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
     if (err) return callback(err);

@@ -68,16 +68,17 @@ PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
 // Get all PDFs
 PDFRouter.post('/get-all-pdfs', (req, res) => {
   console.log('getting');
-  // PDF.find()
-  //   .sort([
-  //     ['subject', 1],
-  //     // ['classNumber', 1],
-  //   ])
-  PDF.aggregate([
-    // { $group: { _id: '$subject', classNumbers: { $push: '$classNumber' } } },
-    // { $sort: { _id: 1 } },
-    { $sort: { subject: 1 } },
-  ])
+  PDF.find()
+    .sort([
+      ['subject', 1],
+      ['classNumber', 1],
+    ])
+    // PDF.aggregate([
+    //   // { $group: { _id: '$subject', classNumbers: { $push: '$classNumber' } } },
+    //   // { $sort: { _id: 1 } },
+    //   { $sort: { subject: 1 } },
+    // ])
+    // PDF.find()
     .skip(req.body.batchSize * (req.body.batchNum - 1))
     .limit(req.body.batchSize)
     .then((PDFs) => {
@@ -115,6 +116,24 @@ PDFRouter.get('/download/:id', async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
+});
+
+PDFRouter.get('/delete-bad-pdf', (req, res) => {
+  // PDF.findByIdAndRemove('6438f6268150e65ba49793c4')
+  // PDF.findByIdAndRemove('6438f62a8150e65ba49793ce')
+  // PDF.findByIdAndRemove('6438f62b8150e65ba49793d3')
+  // PDF.findByIdAndRemove('6438f6298150e65ba49793c8')
+  // PDF.findByIdAndRemove('6438f6288150e65ba49793c6')
+  // PDF.findByIdAndRemove('6438f6298150e65ba49793ca')
+  PDF.findByIdAndRemove('6438f62b8150e65ba49793d1')
+    .then((pdf) => {
+      console.log(pdf);
+      res.status(200).send('successful deletion');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not remove');
+    });
 });
 
 module.exports = PDFRouter;

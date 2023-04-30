@@ -12,9 +12,9 @@ const PDFSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
-  subject: { type: String, trim: true, required: true, index: true },
-  classNumber: { type: String, trim: true, required: true, index: true },
-  professor: { type: String, trim: true, index: true },
+  subject: { type: String, trim: true, required: true },
+  classNumber: { type: String, trim: true, required: true },
+  professor: { type: String, trim: true },
   testType: { type: String, trim: true },
   testNum: { type: String, trim: true },
 });
