@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {
   Button,
-  Box,
   CircularProgress,
   FormControl,
   InputLabel,
@@ -10,6 +9,8 @@ import {
   MenuItem,
   TextField,
   Snackbar,
+  Grid,
+  Typography,
 } from '@mui/material';
 import SubmittedTests from './SubmittedTests';
 import _ from 'lodash';
@@ -41,20 +42,11 @@ function UploadTest({ candidate, setCandidate }) {
     'STATS',
   ];
 
-  const testTypes = [
-    'Quiz',
-    'Midterm',
-    'Final',
-  ]
+  const testTypes = ['Quiz', 'Midterm', 'Final'];
 
-  const testNums = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-  ]
+  const testNums = [1, 2, 3, 4, 5, 6];
+
+  const quarters = ['Fall', 'Winter', 'Spring', 'Summer'];
 
   const [subject, setSubject] = useState('');
   function handleSubjectChange(event) {
@@ -72,14 +64,16 @@ function UploadTest({ candidate, setCandidate }) {
   }
 
   const [testType, setTestType] = useState('');
-  function  handleTestTypeChange(event) {
+  function handleTestTypeChange(event) {
     setTestType(event.target.value);
   }
 
   const [testNum, setTestNum] = useState('');
-  function  handleTestNumChange(event) {
+  function handleTestNumChange(event) {
     setTestNum(event.target.value);
   }
+
+  const [term, setTerm] = useState({ quarter: '', year: -1 });
 
   function handleUpload(event) {
     setLoadingTest(true);
@@ -100,8 +94,22 @@ function UploadTest({ candidate, setCandidate }) {
       setLoadingTest(false);
       return;
     }
-    if (!subject || !professor || !classNumber || !testNum || !testType) {
+    if (
+      !subject ||
+      !professor ||
+      !classNumber ||
+      !testNum ||
+      !testType ||
+      !term.quarter ||
+      !term.year
+    ) {
       setSnackbarMessage('Please fill out all inputs');
+      setShowSnackbar(true);
+      setLoadingTest(false);
+      return;
+    }
+    if (term.year.length !== 4) {
+      setSnackbarMessage('Please enter year in YYYY format, e.g. 2023');
       setShowSnackbar(true);
       setLoadingTest(false);
       return;
@@ -120,6 +128,8 @@ function UploadTest({ candidate, setCandidate }) {
         formData.append('classNumber', classNumber.toUpperCase());
         formData.append('testType', testType);
         formData.append('testNum', testNum);
+        formData.append('termQuarter', term.quarter);
+        formData.append('termYear', term.year);
 
         // Send a POST request to the server with the form data using Axios
         axios
@@ -162,12 +172,19 @@ function UploadTest({ candidate, setCandidate }) {
   }
 
   return (
-    <>
-      <Box sx={{ display: 'inline-flex' }} mt={2}>
+    <Grid
+      container
+      spacing={{ xs: 1, md: 2 }}
+      rowSpacing={1}
+      pt={2}
+      sx={{
+        width: { xs: '100%', sm: '75%', md: '65%', lg: '55%' },
+      }}
+    >
+      <Grid item xs={4}>
         <FormControl
           sx={{
-            m: 1,
-            minWidth: 80,
+            minWidth: '100%',
             '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
               borderColor: (theme) => theme.palette.custom2.main,
             },
@@ -198,10 +215,12 @@ function UploadTest({ candidate, setCandidate }) {
             ))}
           </Select>
         </FormControl>
+      </Grid>
 
+      <Grid item xs={4}>
         <TextField
           id='outlined-input'
-          label='Class Number'
+          label='Class Code'
           size='small'
           defaultValue=''
           onChange={handleClassNumberChange}
@@ -216,12 +235,12 @@ function UploadTest({ candidate, setCandidate }) {
             '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
               borderColor: (theme) => theme.palette.custom2.main,
             },
-            paddingBottom: '10px',
-            marginTop: '8px',
-            marginLeft: '12px',
+            minWidth: '100%',
           }}
         />
+      </Grid>
 
+      <Grid item xs={4}>
         <TextField
           id='outlined-input'
           label='Professor'
@@ -240,17 +259,15 @@ function UploadTest({ candidate, setCandidate }) {
               borderColor: (theme) => theme.palette.custom2.main,
             },
             paddingBottom: '10px',
-            marginTop: '8px',
-            marginLeft: '20px',
+            minWidth: '100%',
           }}
         />
-      </Box>
+      </Grid>
 
-      <Box>
+      <Grid item xs={4}>
         <FormControl
           sx={{
-            m: 1,
-            minWidth: 100,
+            minWidth: '100%',
             '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
               borderColor: (theme) => theme.palette.custom2.main,
             },
@@ -261,7 +278,7 @@ function UploadTest({ candidate, setCandidate }) {
             id='test-type-select-label'
             sx={{ color: (theme) => theme.palette.secondary.main }}
           >
-            Test Type
+            Type
           </InputLabel>
           <Select
             labelId='demo-simple-select-label'
@@ -281,75 +298,148 @@ function UploadTest({ candidate, setCandidate }) {
             ))}
           </Select>
         </FormControl>
+      </Grid>
 
-        {testType !== "" &&
-                <FormControl
-                  sx={{
-                    m: 1,
-                    minWidth: 120,
-                    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                      borderColor: (theme) => theme.palette.custom2.main,
-                    },
-                  }}
-                  size='small'
-                >
-                  <InputLabel
-                    id='test-num-select-label'
-                    sx={{ color: (theme) => theme.palette.secondary.main }}
-                  >
-                    Test Number
-                  </InputLabel>
-                  <Select
-                    labelId='demo-simple-select-label'
-                    id='demo-simple-select'
-                    value={testNum}
-                    label='testNum'
-                    onChange={handleTestNumChange}
-                    sx={{
-                      color: (theme) => theme.palette.primary.main,
-                      borderColor: (theme) => theme.palette.custom2.main,
-                    }}
-                  >
-                    {testNums.map((num) => (
-                      <MenuItem key={num} value={num}>
-                        {num}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-        }
-      </Box>
-
-      <Box>
-        <form encType='multipart/form-data'>
-          <input
-            type='file'
-            name='pdf'
-            accept='application/pdf'
-            style={{ color: 'gold', marginLeft: '8px' }}
-          />
-          <br />
-          <Button
-            variant='contained'
-            size='small'
-            color='secondary'
-            onClick={handleUpload}
-            type='submit'
-            sx={{ marginLeft: '8px', marginTop: '8px' }}
+      <Grid item xs={4}>
+        <FormControl
+          sx={{
+            minWidth: '100%',
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+              borderColor: (theme) => theme.palette.custom2.main,
+            },
+          }}
+          size='small'
+        >
+          <InputLabel
+            id='test-num-select-label'
+            sx={{ color: (theme) => theme.palette.secondary.main }}
           >
-            {loadingTest ? (
-              <CircularProgress
-                size='1.4rem'
-                sx={{ color: '#000', marginLeft: '2rem', marginRight: '2rem' }}
-              />
-            ) : (
-              'Submit Test'
-            )}
-          </Button>
-        </form>
-      </Box>
+            Number
+          </InputLabel>
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            value={testNum}
+            label='testNum'
+            onChange={handleTestNumChange}
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              borderColor: (theme) => theme.palette.custom2.main,
+            }}
+          >
+            {testNums.map((num) => (
+              <MenuItem key={num} value={num}>
+                {num}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {/* )} */}
+      </Grid>
 
-      <SubmittedTests candidate={candidate}></SubmittedTests>
+      <Grid item xs={4} />
+
+      <Grid item xs={4} mt={1}>
+        <FormControl
+          sx={{
+            minWidth: '100%',
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+              borderColor: (theme) => theme.palette.custom2.main,
+            },
+          }}
+          size='small'
+        >
+          <InputLabel
+            id='quarter-select-label'
+            sx={{ color: (theme) => theme.palette.secondary.main }}
+          >
+            Quarter
+          </InputLabel>
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            value={term.quarter}
+            label='Quarter'
+            onChange={(e) => {
+              setTerm({ ...term, quarter: e.target.value });
+            }}
+            sx={{
+              color: (theme) => theme.palette.primary.main,
+              borderColor: (theme) => theme.palette.custom2.main,
+            }}
+          >
+            {quarters.map((quarter) => (
+              <MenuItem key={quarter} value={quarter}>
+                {quarter}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Grid>
+
+      <Grid item xs={4} mt={1}>
+        <TextField
+          id='outlined-input'
+          label='Year'
+          size='small'
+          defaultValue=''
+          onChange={(e) => setTerm({ ...term, year: e.target.value })}
+          InputProps={{ placeholder: 'YYYY' }}
+          sx={{
+            '& .MuiInputLabel-root': {
+              color: (theme) => theme.palette.secondary.main,
+            },
+            '& input': {
+              color: (theme) => theme.palette.primary.main,
+            },
+            '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+              borderColor: (theme) => theme.palette.custom2.main,
+            },
+            paddingBottom: '10px',
+            minWidth: '100%',
+          }}
+        />
+      </Grid>
+
+      <Grid item xs={4} />
+
+      <Grid item xs={4} md={3} lg={2}>
+        <Typography sx={{ fontSize: '1rem' }} variant='p' color='secondary'>
+          Select PDF:
+        </Typography>
+      </Grid>
+
+      <Grid item xs={8} md={9} lg={10}>
+        <input
+          type='file'
+          name='pdf'
+          accept='application/pdf'
+          style={{ color: '#fff', marginBottom: '1rem' }}
+        />
+        <br />
+      </Grid>
+
+      <Grid item xs={12} pt={0}>
+        <Button
+          variant='contained'
+          size='small'
+          color='secondary'
+          onClick={handleUpload}
+        >
+          {loadingTest ? (
+            <CircularProgress
+              size='1.4rem'
+              sx={{ color: '#000', marginLeft: '2rem', marginRight: '2rem' }}
+            />
+          ) : (
+            'Submit Test'
+          )}
+        </Button>
+      </Grid>
+
+      <Grid item xs={12}>
+        <SubmittedTests candidate={candidate}></SubmittedTests>
+      </Grid>
 
       <Snackbar
         open={showSnackbar}
@@ -364,7 +454,7 @@ function UploadTest({ candidate, setCandidate }) {
           },
         }}
       />
-    </>
+    </Grid>
   );
 }
 
