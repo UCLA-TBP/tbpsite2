@@ -37,6 +37,9 @@ app.use('/user', userRouter);
 const PDFRouter = require('./routers/PDFRouter');
 app.use('/pdf', PDFRouter);
 
+const phraseRouter = require('./routers/PhraseRouter.js');
+app.use('/phrase', phraseRouter);
+
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, function () {

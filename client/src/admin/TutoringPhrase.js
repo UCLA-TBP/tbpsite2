@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -53,7 +53,7 @@ const TutoringPhrase = () => {
   const [weekOption, setWeekOption] = useState(2);
   function handleWeekOptionChange(event) {
     console.log(event.target.value);
-    setWeekOption((event.target.vale));
+    setWeekOption(event.target.value);
   }
 
   const [secretPhrase, setSecretPhrase] = useState('');
@@ -62,7 +62,12 @@ const TutoringPhrase = () => {
     setSecretPhrase(event.target.value);
   }
 
+  useEffect(()=> {
+	console.log(weekOption)
+  },[weekOption])
+
   const handleSubmit = () => {
+		console.log(weekOption)
 		axios
 			.post('/api/phrase/set-phrase',{
 				tutoringPhrase:
@@ -109,6 +114,7 @@ const TutoringPhrase = () => {
 				<TextField
 					label='Week'
 					onChange={handleWeekOptionChange}
+					value={weekOption}
 					select
 					sx={{
 					'& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
