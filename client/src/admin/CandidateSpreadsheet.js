@@ -25,7 +25,8 @@ function CandidateSpreadsheet() {
   useEffect(() => {
     async function fetchCandidates() {
       const response = await axios.get('/api/user/get-candidates');
-      setCandidates(response.data);
+      const sortedCandidates = response.data.sort((a, b) => (a.name.first + " " + a.name.last).localeCompare(b.name.first + " " + b.name.last));
+      setCandidates(sortedCandidates);
       setIsLoaded(true);
     }
     fetchCandidates();
@@ -43,26 +44,30 @@ function CandidateSpreadsheet() {
           <Table stickyHeader aria-label="sticky table" sx={{ minWidth: 650 }} size="small">
               <TableHead>
                   <TableRow>
+                      {/* The following are currently hard coded to match the order in which
+                          requirements are outputted from the backend. Ideally we would grab
+                          a candidate and just create a Cell for each requirement in the list and
+                          parse the requirement name to look pretty. I'm studying for midterms right
+                          now though, and I don't have time to implement it.*/}
                       <Cell>Name</Cell>
                       <Cell>Email</Cell>
-                      <Cell>Major</Cell>
                       <Cell>Graduation Year</Cell>
-                      <Cell>Academic Outreach</Cell>
-                      <Cell>Bent Polishing</Cell>
-                      <Cell>Candidate Quiz</Cell>
-                      <Cell>Chalking</Cell>
-                      <Cell>Coffee Chat</Cell>
-                      <Cell>Corporate</Cell>
-                      <Cell>General Social</Cell>
+                      <Cell>Major</Cell>
                       <Cell>General Social 1</Cell>
                       <Cell>General Social 2</Cell>
-                      <Cell>Initiation</Cell>
+                      <Cell>Tutoring</Cell>
+                      <Cell>Test Bank</Cell>
+                      <Cell>Corporate</Cell>
                       <Cell>Interview</Cell>
+                      <Cell>Candidate Quiz</Cell>
+                      <Cell>Bent Polishing</Cell>
+                      <Cell>Initiation</Cell>
                       <Cell>Membership Fee</Cell>
                       <Cell>New Member Form</Cell>
+                      <Cell>Coffee Chat</Cell>
+                      <Cell>Academic Outreach</Cell>
                       <Cell>Social Media Post</Cell>
-                      <Cell>Test Bank</Cell>
-                      <Cell>Tutoring</Cell>
+                      <Cell>Chalking</Cell>
                   </TableRow>
               </TableHead>
               <TableBody>
@@ -84,9 +89,11 @@ function CandidateSpreadsheet() {
                           {candidate.graduationYear}
                       </Cell>
                       {/*console.log(candidate.requirements*/}
-                      {Object.keys(candidate.requirements).map((requirement) => (
-                          <Cell key={requirement}>{candidate.requirements[requirement] ? "X" : ""}</Cell>
-                      ))}
+                      {Object.keys(candidate.requirements).map((requirement) => 
+                          (
+                            <Cell key={requirement}>{candidate.requirements[requirement] ? "X" : ""}</Cell>
+                          )
+                      )}
                       </TableRow>
 
                   ))}
