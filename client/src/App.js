@@ -21,6 +21,7 @@ import TestBank from './member-services/TestBank';
 import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
 import SignupForm from './signup/SignupForm';
+import CandidateSpreadsheet from './admin/CandidateSpreadsheet';
 
 import RouteProtection from './permissions/RouteProtection';
 import { positions } from './permissions/PermissionsUtils';
@@ -258,6 +259,17 @@ function App() {
                 }
               >
                 <Route path='' element={<CandidateTracker />} />
+              </Route>
+              <Route
+                path='candidate_spreadsheet'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.officer]}
+                  />
+                }
+              >
+                <Route path='' element={<CandidateSpreadsheet />} />
               </Route>
             </Route>
             <Route path='members'>
