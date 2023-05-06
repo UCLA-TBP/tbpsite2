@@ -71,7 +71,6 @@ PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
 
 // Get all PDFs
 PDFRouter.post('/get-all-pdfs', (req, res) => {
-  console.log('getting');
   PDF.find()
     .sort([
       ['subject', 1],
@@ -86,7 +85,6 @@ PDFRouter.post('/get-all-pdfs', (req, res) => {
     .skip(req.body.batchSize * (req.body.batchNum - 1))
     .limit(req.body.batchSize)
     .then((PDFs) => {
-      console.log('stuck');
       res.send(PDFs);
     })
     .catch((err) => {

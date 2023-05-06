@@ -12,10 +12,7 @@ const LazyExecutor = ({ func, enabled, show }) => {
       const boundingRect = executorRef.current.getBoundingClientRect();
       const windowHeight =
         window.innerHeight || document.documentElement.clientHeight;
-      if (
-        boundingRect.top >= 0 &&
-        boundingRect.bottom <= windowHeight + windowHeight * 0.2
-      ) {
+      if (boundingRect.top >= 0 && boundingRect.bottom <= windowHeight) {
         func();
       }
     };
