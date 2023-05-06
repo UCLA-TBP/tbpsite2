@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   alpha,
-  Autocomplete,
   Box,
   Table,
   TableBody,
@@ -10,7 +9,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   Typography,
   Paper,
   styled,
@@ -21,7 +19,9 @@ import TBPBackground from '../components/TBPBackground';
 
 function CandidateSpreadsheet() {
   const [candidates, setCandidates] = useState([]);
+  const [displayedCandidates, setDisplayedCandidates] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const HeaderCell = styled(TableCell)(({ theme }) => ({
     minWidth: '100px',
@@ -38,12 +38,8 @@ function CandidateSpreadsheet() {
   useEffect(() => {
     async function fetchCandidates() {
       const response = await axios.get('/api/user/get-candidates');
-      const sortedCandidates = response.data.sort((a, b) =>
-        (a.name.first + ' ' + a.name.last).localeCompare(
-          b.name.first + ' ' + b.name.last
-        )
-      );
-      setCandidates(sortedCandidates);
+      setDisplayedCandidates(response.data);
+      setCandidates(response.data);
       setIsLoaded(true);
     }
     fetchCandidates();
@@ -81,28 +77,33 @@ function CandidateSpreadsheet() {
           >
             Candidate Spreadsheet
           </Typography>
-          <Typography variant='h3' color='primary' mt={3} mb={1}>
-            Candidate Name
+          <Typography variant='h4' color='primary' mt={3} mb={1}>
+            Search Candidates
           </Typography>
-          <Autocomplete
-            disablePortal
-            // options={candidates.sort((a, b) => a.name?.last.localeCompare(b.name?.last))}
-            getOptionLabel={(candidate) =>
-              `${candidate.name?.first} ${candidate.name?.last}`
-            }
-            onChange={(e, val) => {
-              // setSelectedCandidate(val);
-            }}
-            sx={{
-              backgroundColor: (theme) => theme.palette.primary.main,
-              borderRadius: '0.2rem',
-            }}
-            // filterOptions={filterOptions}
-            isOptionEqualToValue={(option, value) =>
-              option.email === value.email
-            }
-            renderInput={(params) => {
-              return <TextField {...params} />;
+          <input
+            type='text'
+            style={{ fontSize: '1.2rem' }}
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              const query = e.target.value.toLowerCase();
+              setDisplayedCandidates(
+                candidates
+                  ?.map((candidate) => {
+                    if (
+                      (candidate.name?.first + ' ' + candidate.name?.last)
+                        .toLowerCase()
+                        .includes(query)
+                    ) {
+                      return candidate;
+                    }
+                    if (candidate.email.toLowerCase().includes(query)) {
+                      return candidate;
+                    }
+                    return -1;
+                  })
+                  .filter((val) => val !== -1)
+              );
             }}
           />
         </Box>
@@ -144,7 +145,7 @@ function CandidateSpreadsheet() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {candidates.map((candidate) => (
+              {displayedCandidates.map((candidate) => (
                 <TableRow
                   key={candidate.email}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -155,7 +156,6 @@ function CandidateSpreadsheet() {
                   <Cell>{candidate.email}</Cell>
                   <Cell>{candidate.major}</Cell>
                   <Cell>{candidate.graduationYear}</Cell>
-                  {/*console.log(candidate.requirements*/}
                   {Object.keys(candidate.requirements).map((requirement) => (
                     <Cell key={requirement}>
                       {candidate.requirements[requirement] ? (

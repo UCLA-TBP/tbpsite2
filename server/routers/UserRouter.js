@@ -133,6 +133,7 @@ userRouter.get('/get-candidates', (req, res) => {
 
 userRouter.get('/get-all-users', (req, res) => {
   User.find()
+    .sort('name.last')
     .then((users) => res.send(users))
     .catch((err) => {
       console.log(err);

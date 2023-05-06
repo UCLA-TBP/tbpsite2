@@ -88,9 +88,7 @@ const CandidateTracker = () => {
           </Typography>
           <Autocomplete
             disablePortal
-            options={candidates.sort((a, b) =>
-              a.name?.last.localeCompare(b.name?.last)
-            )}
+            options={candidates}
             getOptionLabel={(candidate) =>
               `${candidate.name?.first} ${candidate.name?.last}`
             }
