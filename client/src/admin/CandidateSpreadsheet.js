@@ -12,6 +12,7 @@ import {
   Typography,
   Paper,
   styled,
+  Button,
 } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { Container } from '@mui/material';
@@ -21,7 +22,6 @@ function CandidateSpreadsheet() {
   const [candidates, setCandidates] = useState([]);
   const [displayedCandidates, setDisplayedCandidates] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
 
   const HeaderCell = styled(TableCell)(({ theme }) => ({
     minWidth: '100px',
@@ -82,11 +82,22 @@ function CandidateSpreadsheet() {
           </Typography>
           <input
             type='text'
-            style={{ fontSize: '1.2rem' }}
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              const query = e.target.value.toLowerCase();
+            id='query-input'
+            style={{ fontSize: '1.2rem', marginRight: '12px' }}
+          />
+          <Button
+            color='secondary'
+            variant='contained'
+            sx={{
+              width: '100px',
+              height: '30px',
+              marginBottom: '4px',
+              marginRight: '12px',
+            }}
+            onClick={() => {
+              const query = document
+                .getElementById('query-input')
+                .value.toLowerCase();
               setDisplayedCandidates(
                 candidates
                   ?.map((candidate) => {
@@ -105,7 +116,9 @@ function CandidateSpreadsheet() {
                   .filter((val) => val !== -1)
               );
             }}
-          />
+          >
+            Search
+          </Button>
         </Box>
         <TableContainer component={Paper} sx={{ height: '50vh' }}>
           <Table

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   alpha,
-  Autocomplete,
   Box,
+  Button,
   Container,
   Link,
   Paper,
@@ -11,20 +11,18 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableFooter,
   TableHead,
-  TablePagination,
   TableRow,
-  TextField,
   Typography,
 } from '@mui/material';
 import axios from 'axios';
 import TBPBackground from '../components/TBPBackground';
 import LazyExecutor from '../components/LazyExecutor';
+import TestForm from '../components/TestForm';
 
 const HeaderCell = styled(TableCell)(({ theme }) => ({
-  minWidth: '10vw',
-  maxWidth: '12vw',
+  minWidth: 'calc(min(12vw, 175px))',
+  // maxWidth: '10rem',
   // width: '12vw',
   // maxWidth: '100px',
   align: 'right',
@@ -33,8 +31,8 @@ const HeaderCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const TitleCell = styled(TableCell)(({ theme }) => ({
-  minWidth: '10vw',
-  maxWidth: '12vw',
+  // minWidth: '10vw',
+  // maxWidth: '12vw',
   // width: '12vw',
   // maxWidth: '100px',
   align: 'right',
@@ -49,6 +47,16 @@ function TestBank() {
   const [batchNum, setBatchNum] = useState(1);
   const batchSize = 100;
 
+  const [testFormData, setTestFormData] = useState({
+    subject: '',
+    classNumber: '',
+    professor: '',
+    testType: '',
+    testNum: '',
+    termQuarter: '',
+    termYear: '',
+  });
+
   const addTest = (data, subject, classNum, test) => {
     if (!data[subject]) {
       data[subject] = {};
@@ -59,36 +67,38 @@ function TestBank() {
     data[subject][classNum].push(test);
   };
 
-  const getTestBatch = () => {
-    console.log('fetching batch');
+  const handleSearch = () => {
+    getTestBatch({}, 1);
+  };
+
+  const getTestBatch = (currentData, batchN) => {
     setLazyExecutorEnabled(false);
+    let retrievedData = { ...currentData };
     axios
-      .post('/api/pdf/get-all-pdfs', {
+      .post('/api/pdf/search-pdfs/', {
         batchSize: batchSize,
-        batchNum: batchNum,
+        batchNum: batchN,
+        queryData: { ...testFormData },
       })
       .then((res) => {
-        let retrievedData = { ...testData };
         res.data.forEach((test) => {
           if (test.subject && test.classNumber) {
             addTest(retrievedData, test.subject, test.classNumber, {
               cloudinaryURL: test.cloudinaryURL,
-              filename: test.filename,
               professor: test.professor,
               testType: test.testType,
               testNum: test.testNum,
+              term: test.term,
+              id: test._id,
             });
           }
         });
-        setBatchNum(batchNum + 1);
-        setTestData(retrievedData);
+        setBatchNum(batchN + 1);
+        setTestData({ ...retrievedData });
         if (res.data.length === batchSize) setLazyExecutorEnabled(true);
         else setShowLazyExecutor(false);
-        console.log('resolved');
       })
-      .catch((err) => {
-        console.log('Error fetching PDFs', err);
-      });
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -98,7 +108,6 @@ function TestBank() {
         sx={{
           padding: { xs: '85px 0', sm: '85px 35px 100px !important' },
           minHeight: '105vh',
-          // backgroundColor: (theme) => theme.palette.custom.main,
         }}
       >
         <Box
@@ -118,59 +127,51 @@ function TestBank() {
           >
             Test Bank
           </Typography>
-          <Typography variant='p' mb={2} color='custom2'>
-            Filter by key words, case insensitive. Can search with any
-            combination of test kind (eg. Midterm 1), professor, class name,
-            quarter, and year
+          <Typography variant='p' color='custom2'>
+            Feel free to leave any of the search paramters blank!
           </Typography>
-          <Autocomplete
-            disablePortal
-            // options={candidates.sort((a, b) => a.name?.last.localeCompare(b.name?.last))}
-            getOptionLabel={(candidate) =>
-              `${candidate.name?.first} ${candidate.name?.last}`
-            }
-            onChange={(e, val) => {
-              // setSelectedCandidate(val);
-            }}
-            sx={{
-              backgroundColor: (theme) => theme.palette.primary.main,
-              borderRadius: '0.2rem',
-            }}
-            // filterOptions={filterOptions}
-            isOptionEqualToValue={(option, value) =>
-              option.email === value.email
-            }
-            renderInput={(params) => {
-              return <TextField {...params} />;
-            }}
+          <TestForm
+            testFormData={testFormData}
+            setTestFormData={setTestFormData}
           />
+          <Button
+            color='secondary'
+            variant='contained'
+            sx={{
+              width: '100px',
+              height: '30px',
+              marginTop: '12px',
+              marginBottom: '4px',
+              marginRight: '12px',
+            }}
+            onClick={handleSearch}
+          >
+            Search
+          </Button>
+          <Button
+            color='secondary'
+            variant='outlined'
+            sx={{
+              width: '100px',
+              height: '30px',
+              marginTop: '12px',
+              marginBottom: '4px',
+            }}
+            onClick={() =>
+              setTestFormData({
+                subject: '',
+                classNumber: '',
+                professor: '',
+                testType: '',
+                testNum: '',
+                termQuarter: '',
+                termYear: '',
+              })
+            }
+          >
+            Clear
+          </Button>
         </Box>
-        {/* <Typography variant='h2'>Tests</Typography>
-        {Object.keys(testData).map((subject) => (
-          <div key={subject}>
-            <Typography variant='h2' color='primary'>
-              {subject}
-            </Typography>
-            {Object.keys(testData[subject]).map((classNum) => (
-              <div key={subject + classNum}>
-                <Typography variant='p' color='primary'>
-                  {subject} {classNum}
-                </Typography>
-                {testData[subject][classNum].map((test) => (
-                  <div key={test.cloudinaryURL + subject}>
-                    <Link
-                      color='secondary'
-                      target='_blank'
-                      href={test.cloudinaryURL}
-                    >
-                      {test.cloudinaryURL}
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        ))} */}
         <Box pt={3}>
           <TableContainer component={Paper} sx={{ height: '50vh' }}>
             <Table stickyHeader>
@@ -185,9 +186,9 @@ function TestBank() {
               </TableHead>
               <TableBody>
                 {Object.keys(testData).map((subject) => (
-                  <>
+                  <Fragment key={subject}>
                     {Object.keys(testData[subject]).map((classNum) => (
-                      <>
+                      <Fragment key={classNum}>
                         <TableRow>
                           <TitleCell>
                             {subject} {classNum}
@@ -198,12 +199,16 @@ function TestBank() {
                           <TitleCell></TitleCell>
                         </TableRow>
                         {testData[subject][classNum].map((test) => (
-                          <TableRow key={test.cloudinaryURL + subject}>
+                          <TableRow key={test.id}>
                             <TableCell component='th' scope='row'>
                               {test.testType || ''}
                             </TableCell>
                             <TableCell>{test.testNum || ''}</TableCell>
-                            <TableCell></TableCell>
+                            <TableCell>
+                              {test.term
+                                ? `${test.term.quarter} ${test.term.year}`
+                                : ''}
+                            </TableCell>
                             <TableCell>{test.professor || ''}</TableCell>
                             <TableCell>
                               <Link
@@ -211,14 +216,15 @@ function TestBank() {
                                 target='_blank'
                                 href={test.cloudinaryURL}
                               >
-                                {test.filename}
+                                {/* {test.filename} */}
+                                View
                               </Link>
                             </TableCell>
                           </TableRow>
                         ))}
-                      </>
+                      </Fragment>
                     ))}
-                  </>
+                  </Fragment>
                 ))}
                 {/* <TableRow>
                   <TablePagination
@@ -233,7 +239,7 @@ function TestBank() {
             </Table>
             <Box>
               <LazyExecutor
-                func={getTestBatch}
+                func={() => getTestBatch(testData, batchNum)}
                 enabled={lazyExecutorEnabled}
                 show={showLazyExecutor}
               />
