@@ -69,15 +69,36 @@ PDFRouter.post('/upload', upload.single('pdf'), (req, res) => {
   streamifier.createReadStream(req.file.buffer).pipe(cloudinaryUploadStream);
 });
 
-// Get all PDFs
-PDFRouter.get('/get-all-PDFs', (req, res) => {
-  PDF.find()
+//TODO DEAL WITH CS130 vs CS 130
+PDFRouter.post('/search-pdfs', (req, res) => {
+  const queryData = req.body.queryData;
+
+  const query = {};
+  Object.entries(queryData).forEach(([key, val]) => {
+    if (val !== '') {
+      if (key === 'termQuarter') {
+        query['term.quarter'] = val;
+      } else if (key === 'termYear') {
+        query['term.year'] = val;
+      } else {
+        query[key] = val;
+      }
+    }
+  });
+
+  PDF.find(query)
+    .sort([
+      ['subject', 1],
+      ['classNumber', 1],
+    ])
+    .skip(req.body.batchSize * (req.body.batchNum - 1))
+    .limit(req.body.batchSize)
     .then((PDFs) => {
       res.send(PDFs);
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).send('Could not retrieve PDFs');
+      res.status(500).send('Could not search pdfs in database');
     });
 });
 
@@ -89,7 +110,7 @@ PDFRouter.get('/get-pdf/:id', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).send('Could not retrieve user by id from database');
+      res.status(500).send('Could not retrieve pdf by id from database');
     });
 });
 
@@ -106,6 +127,24 @@ PDFRouter.get('/download/:id', async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
+});
+
+PDFRouter.get('/delete-bad-pdf', (req, res) => {
+  // PDF.findByIdAndRemove('6438f6268150e65ba49793c4')
+  // PDF.findByIdAndRemove('6438f62a8150e65ba49793ce')
+  // PDF.findByIdAndRemove('6438f62b8150e65ba49793d3')
+  // PDF.findByIdAndRemove('6438f6298150e65ba49793c8')
+  // PDF.findByIdAndRemove('6438f6288150e65ba49793c6')
+  // PDF.findByIdAndRemove('6438f6298150e65ba49793ca')
+  PDF.findByIdAndRemove('6438f62b8150e65ba49793d1')
+    .then((pdf) => {
+      console.log(pdf);
+      res.status(200).send('successful deletion');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not remove');
+    });
 });
 
 module.exports = PDFRouter;

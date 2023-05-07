@@ -133,6 +133,7 @@ userRouter.get('/get-candidates', (req, res) => {
 
 userRouter.get('/get-all-users', (req, res) => {
   User.find()
+    .sort('name.last')
     .then((users) => res.send(users))
     .catch((err) => {
       console.log(err);
@@ -157,6 +158,18 @@ userRouter.put(
       });
   }
 );
+
+userRouter.get('/delete-bad-user', (req, res) => {
+  User.findByIdAndRemove('6434bb4b4eb73e9772b85176')
+    .then((user) => {
+      console.log(user);
+      res.status(200).send('successful deletion');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not remove');
+    });
+});
 
 const memberEmails = new Set([
   'adrianlam0ho@gmail.com',
