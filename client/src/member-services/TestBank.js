@@ -150,9 +150,9 @@ function TestBank() {
           </Button>
           <Button
             color='secondary'
-            variant='outlined'
+            variant='text'
             sx={{
-              width: '100px',
+              width: '80px',
               height: '30px',
               marginTop: '12px',
               marginBottom: '4px',
@@ -169,7 +169,7 @@ function TestBank() {
               })
             }
           >
-            Clear
+            Reset
           </Button>
         </Box>
         <Box pt={3}>
