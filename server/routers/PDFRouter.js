@@ -102,6 +102,32 @@ PDFRouter.post('/search-pdfs', (req, res) => {
     });
 });
 
+PDFRouter.post('/update-pdf', (req, res) => {
+  const updatedData = req.body.updatedData;
+
+  const updates = {};
+  Object.entries(updatedData).forEach(([key, val]) => {
+    if (key !== 'id' && val !== '') {
+      if (key === 'termQuarter') {
+        updates['term.quarter'] = val;
+      } else if (key === 'termYear') {
+        updates['term.year'] = val;
+      } else {
+        updates[key] = val;
+      }
+    }
+  });
+
+  PDF.findByIdAndUpdate(updatedData.id, updates)
+    .then((updatedPDF) => {
+      res.send(updatedPDF);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not update pdf');
+    });
+});
+
 // Get PDF by ID
 PDFRouter.get('/get-pdf/:id', (req, res) => {
   PDF.findById(req.params.id)

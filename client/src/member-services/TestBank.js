@@ -51,6 +51,17 @@ function TestBank() {
     termYear: '',
   });
 
+  const [missingInfoModalOpen, setMissingInfoModalOpen] = useState(false);
+  const [missingTestData, setMissingTestData] = useState({
+    subject: '',
+    classNumber: '',
+    professor: '',
+    testType: '',
+    testNum: '',
+    termQuarter: '',
+    termYear: '',
+  });
+
   const addTest = (data, subject, classNum, test) => {
     if (!data[subject]) {
       data[subject] = {};
@@ -165,7 +176,12 @@ function TestBank() {
           >
             Reset
           </Button>
-          <MissingTestInfoModal />
+          <MissingTestInfoModal
+            open={missingInfoModalOpen}
+            setOpen={setMissingInfoModalOpen}
+            testData={missingTestData}
+            setTestData={setMissingTestData}
+          />
         </Box>
         <Box pt={3}>
           <TableContainer component={Paper} sx={{ height: '50vh' }}>
@@ -210,8 +226,22 @@ function TestBank() {
                                 color='secondary'
                                 target='_blank'
                                 href={test.cloudinaryURL}
+                                onClick={() => {
+                                  setMissingTestData({
+                                    id: test.id,
+                                    subject: subject,
+                                    classNumber: classNum,
+                                    professor: test.professor || '',
+                                    testType: test.testType || '',
+                                    testNum: test.testNum || '',
+                                    termQuarter: test.term?.quarter || '',
+                                    termYear: test.term?.year || '',
+                                  });
+                                  setTimeout(() => {
+                                    setMissingInfoModalOpen(true);
+                                  }, 100);
+                                }}
                               >
-                                {/* {test.filename} */}
                                 View
                               </Link>
                             </TableCell>
@@ -221,15 +251,6 @@ function TestBank() {
                     ))}
                   </Fragment>
                 ))}
-                {/* <TableRow>
-                  <TablePagination
-                    // count={totalRows}
-                    rowsPerPage={batchSize}
-                    page={batchNum}
-                    // onChangePage={handlePageChange}
-                    // onChangeRowsPerPage={handleRowsPerPageChange}
-                  />
-                </TableRow> */}
               </TableBody>
             </Table>
             <Box>
