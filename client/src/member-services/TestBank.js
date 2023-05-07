@@ -182,6 +182,7 @@ function TestBank() {
             setOpen={setMissingInfoModalOpen}
             testData={missingTestData}
             setTestData={setMissingTestData}
+            updateCallback={handleSearch}
           />
         </Box>
         <Box pt={3}>

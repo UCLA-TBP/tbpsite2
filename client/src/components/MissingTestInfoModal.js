@@ -9,7 +9,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import TestForm from './TestForm';
 import axios from 'axios';
 
-const MissingTestInfoModal = ({ open, setOpen, testData, setTestData }) => {
+const MissingTestInfoModal = ({
+  open,
+  setOpen,
+  testData,
+  setTestData,
+  updateCallback,
+}) => {
   const [loading, setLoading] = useState(false);
   const isOpen = useRef(false);
 
@@ -20,6 +26,7 @@ const MissingTestInfoModal = ({ open, setOpen, testData, setTestData }) => {
         updatedData: testData,
       })
       .then((res) => {
+        updateCallback();
         setOpen(false);
         setLoading(false);
       })
