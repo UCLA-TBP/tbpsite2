@@ -122,7 +122,7 @@ function TestBank() {
             Test Bank
           </Typography>
           <Typography variant='p' color='custom2'>
-            Feel free to leave any of the search paramters blank!
+            Feel free to leave any of the search parameters blank!
           </Typography>
           <TestForm
             testFormData={testFormData}
