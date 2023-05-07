@@ -57,6 +57,10 @@ function CandidateSpreadsheet() {
           paddingTop: '85px',
           paddingLeft: { xs: '0' },
           paddingRight: { xs: '0' },
+          paddingBottom: '55px',
+          height: '100vh',
+          display: 'flex',
+          flexFlow: 'column',
         }}
       >
         <Box
@@ -120,7 +124,7 @@ function CandidateSpreadsheet() {
             Search
           </Button>
         </Box>
-        <TableContainer component={Paper} sx={{ height: '50vh' }}>
+        <TableContainer component={Paper} sx={{ flex: '1 1 auto' }}>
           <Table
             stickyHeader
             aria-label='sticky table'

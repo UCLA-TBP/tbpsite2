@@ -112,8 +112,10 @@ function TestBank() {
       <TBPBackground />
       <Container
         sx={{
-          padding: { xs: '85px 0', sm: '85px 35px 100px !important' },
-          minHeight: '105vh',
+          padding: { xs: '85px 0 55px', sm: '85px 35px 55px !important' },
+          height: '100vh',
+          display: 'flex',
+          flexFlow: 'column',
         }}
       >
         <Box
@@ -185,93 +187,95 @@ function TestBank() {
             updateCallback={handleSearch}
           />
         </Box>
-        <Box pt={3}>
-          <TableContainer component={Paper} sx={{ height: '50vh' }}>
-            <Table stickyHeader>
-              <TableHead>
-                <TableRow>
-                  <HeaderCell>Type</HeaderCell>
-                  <HeaderCell>Number</HeaderCell>
-                  <HeaderCell>Term</HeaderCell>
-                  <HeaderCell>Professor</HeaderCell>
-                  <HeaderCell>File</HeaderCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Object.keys(testData).map((subject) => (
-                  <Fragment key={subject}>
-                    {Object.keys(testData[subject]).map((classNum) => (
-                      <Fragment key={classNum}>
-                        <TableRow>
-                          <TitleCell>
-                            {subject} {classNum}
-                          </TitleCell>
-                          <TitleCell></TitleCell>
-                          <TitleCell></TitleCell>
-                          <TitleCell></TitleCell>
-                          <TitleCell></TitleCell>
-                        </TableRow>
-                        {testData[subject][classNum].map((test) => (
-                          <Tooltip
-                            title='Click to fix missing/incorrect info'
-                            enterNextDelay={500}
-                            key={test.id}
+        <TableContainer
+          component={Paper}
+          mt={3}
+          sx={{ flex: '1 1 auto', marginTop: '1.5rem' }}
+        >
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <HeaderCell>Type</HeaderCell>
+                <HeaderCell>Number</HeaderCell>
+                <HeaderCell>Term</HeaderCell>
+                <HeaderCell>Professor</HeaderCell>
+                <HeaderCell>File</HeaderCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.keys(testData).map((subject) => (
+                <Fragment key={subject}>
+                  {Object.keys(testData[subject]).map((classNum) => (
+                    <Fragment key={classNum}>
+                      <TableRow>
+                        <TitleCell>
+                          {subject} {classNum}
+                        </TitleCell>
+                        <TitleCell></TitleCell>
+                        <TitleCell></TitleCell>
+                        <TitleCell></TitleCell>
+                        <TitleCell></TitleCell>
+                      </TableRow>
+                      {testData[subject][classNum].map((test) => (
+                        <Tooltip
+                          title='Click to fix missing/incorrect info'
+                          enterNextDelay={500}
+                          key={test.id}
+                        >
+                          <TableRow
+                            onClick={() => {
+                              setMissingTestData({
+                                id: test.id,
+                                subject: subject,
+                                classNumber: classNum,
+                                professor: test.professor || '',
+                                testType: test.testType || '',
+                                testNum: test.testNum || '',
+                                termQuarter: test.term?.quarter || '',
+                                termYear: test.term?.year || '',
+                              });
+                              setTimeout(() => {
+                                setMissingInfoModalOpen(true);
+                              }, 100);
+                            }}
+                            sx={{ cursor: 'pointer' }}
                           >
-                            <TableRow
-                              onClick={() => {
-                                setMissingTestData({
-                                  id: test.id,
-                                  subject: subject,
-                                  classNumber: classNum,
-                                  professor: test.professor || '',
-                                  testType: test.testType || '',
-                                  testNum: test.testNum || '',
-                                  termQuarter: test.term?.quarter || '',
-                                  termYear: test.term?.year || '',
-                                });
-                                setTimeout(() => {
-                                  setMissingInfoModalOpen(true);
-                                }, 100);
-                              }}
-                              sx={{ cursor: 'pointer' }}
-                            >
-                              <TableCell component='th' scope='row'>
-                                {test.testType || ''}
-                              </TableCell>
-                              <TableCell>{test.testNum || ''}</TableCell>
-                              <TableCell>
-                                {test.term
-                                  ? `${test.term.quarter} ${test.term.year}`
-                                  : ''}
-                              </TableCell>
-                              <TableCell>{test.professor || ''}</TableCell>
-                              <TableCell>
-                                <Link
-                                  color='secondary'
-                                  target='_blank'
-                                  href={test.cloudinaryURL}
-                                >
-                                  View
-                                </Link>
-                              </TableCell>
-                            </TableRow>
-                          </Tooltip>
-                        ))}
-                      </Fragment>
-                    ))}
-                  </Fragment>
-                ))}
-              </TableBody>
-            </Table>
-            <Box>
-              <LazyExecutor
-                func={() => getTestBatch(testData, batchNum)}
-                enabled={lazyExecutorEnabled}
-                show={showLazyExecutor}
-              />
-            </Box>
-          </TableContainer>
-        </Box>
+                            <TableCell component='th' scope='row'>
+                              {test.testType || ''}
+                            </TableCell>
+                            <TableCell>{test.testNum || ''}</TableCell>
+                            <TableCell>
+                              {test.term
+                                ? `${test.term.quarter} ${test.term.year}`
+                                : ''}
+                            </TableCell>
+                            <TableCell>{test.professor || ''}</TableCell>
+                            <TableCell>
+                              <Link
+                                color='secondary'
+                                target='_blank'
+                                href={test.cloudinaryURL}
+                              >
+                                View
+                              </Link>
+                            </TableCell>
+                          </TableRow>
+                        </Tooltip>
+                      ))}
+                    </Fragment>
+                  ))}
+                </Fragment>
+              ))}
+            </TableBody>
+          </Table>
+          <Box>
+            <LazyExecutor
+              func={() => getTestBatch(testData, batchNum)}
+              enabled={lazyExecutorEnabled}
+              show={showLazyExecutor}
+            />
+          </Box>
+        </TableContainer>
       </Container>
     </>
   );
