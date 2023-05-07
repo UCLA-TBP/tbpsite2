@@ -13,6 +13,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import axios from 'axios';
@@ -210,42 +211,50 @@ function TestBank() {
                           <TitleCell></TitleCell>
                         </TableRow>
                         {testData[subject][classNum].map((test) => (
-                          <TableRow key={test.id}>
-                            <TableCell component='th' scope='row'>
-                              {test.testType || ''}
-                            </TableCell>
-                            <TableCell>{test.testNum || ''}</TableCell>
-                            <TableCell>
-                              {test.term
-                                ? `${test.term.quarter} ${test.term.year}`
-                                : ''}
-                            </TableCell>
-                            <TableCell>{test.professor || ''}</TableCell>
-                            <TableCell>
-                              <Link
-                                color='secondary'
-                                target='_blank'
-                                href={test.cloudinaryURL}
-                                onClick={() => {
-                                  setMissingTestData({
-                                    id: test.id,
-                                    subject: subject,
-                                    classNumber: classNum,
-                                    professor: test.professor || '',
-                                    testType: test.testType || '',
-                                    testNum: test.testNum || '',
-                                    termQuarter: test.term?.quarter || '',
-                                    termYear: test.term?.year || '',
-                                  });
-                                  setTimeout(() => {
-                                    setMissingInfoModalOpen(true);
-                                  }, 100);
-                                }}
-                              >
-                                View
-                              </Link>
-                            </TableCell>
-                          </TableRow>
+                          <Tooltip
+                            title='Click to fix missing/incorrect info'
+                            enterNextDelay={500}
+                            key={test.id}
+                          >
+                            <TableRow
+                              onClick={() => {
+                                setMissingTestData({
+                                  id: test.id,
+                                  subject: subject,
+                                  classNumber: classNum,
+                                  professor: test.professor || '',
+                                  testType: test.testType || '',
+                                  testNum: test.testNum || '',
+                                  termQuarter: test.term?.quarter || '',
+                                  termYear: test.term?.year || '',
+                                });
+                                setTimeout(() => {
+                                  setMissingInfoModalOpen(true);
+                                }, 100);
+                              }}
+                              sx={{ cursor: 'pointer' }}
+                            >
+                              <TableCell component='th' scope='row'>
+                                {test.testType || ''}
+                              </TableCell>
+                              <TableCell>{test.testNum || ''}</TableCell>
+                              <TableCell>
+                                {test.term
+                                  ? `${test.term.quarter} ${test.term.year}`
+                                  : ''}
+                              </TableCell>
+                              <TableCell>{test.professor || ''}</TableCell>
+                              <TableCell>
+                                <Link
+                                  color='secondary'
+                                  target='_blank'
+                                  href={test.cloudinaryURL}
+                                >
+                                  View
+                                </Link>
+                              </TableCell>
+                            </TableRow>
+                          </Tooltip>
                         ))}
                       </Fragment>
                     ))}
