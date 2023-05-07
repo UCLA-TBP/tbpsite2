@@ -19,22 +19,16 @@ import axios from 'axios';
 import TBPBackground from '../components/TBPBackground';
 import LazyExecutor from '../components/LazyExecutor';
 import TestForm from '../components/TestForm';
+import MissingTestInfoModal from '../components/MissingTestInfoModal';
 
 const HeaderCell = styled(TableCell)(({ theme }) => ({
   minWidth: 'calc(min(12vw, 175px))',
-  // maxWidth: '10rem',
-  // width: '12vw',
-  // maxWidth: '100px',
   align: 'right',
   backgroundColor: theme.palette.custom.main,
   color: theme.palette.primary.main,
 }));
 
 const TitleCell = styled(TableCell)(({ theme }) => ({
-  // minWidth: '10vw',
-  // maxWidth: '12vw',
-  // width: '12vw',
-  // maxWidth: '100px',
   align: 'right',
   backgroundColor: alpha(theme.palette.custom2.main, 0.4),
   fontWeight: 'bold',
@@ -48,6 +42,17 @@ function TestBank() {
   const batchSize = 100;
 
   const [testFormData, setTestFormData] = useState({
+    subject: '',
+    classNumber: '',
+    professor: '',
+    testType: '',
+    testNum: '',
+    termQuarter: '',
+    termYear: '',
+  });
+
+  const [missingInfoModalOpen, setMissingInfoModalOpen] = useState(false);
+  const [missingTestData, setMissingTestData] = useState({
     subject: '',
     classNumber: '',
     professor: '',
@@ -171,6 +176,12 @@ function TestBank() {
           >
             Reset
           </Button>
+          <MissingTestInfoModal
+            open={missingInfoModalOpen}
+            setOpen={setMissingInfoModalOpen}
+            testData={missingTestData}
+            setTestData={setMissingTestData}
+          />
         </Box>
         <Box pt={3}>
           <TableContainer component={Paper} sx={{ height: '50vh' }}>
@@ -215,8 +226,22 @@ function TestBank() {
                                 color='secondary'
                                 target='_blank'
                                 href={test.cloudinaryURL}
+                                onClick={() => {
+                                  setMissingTestData({
+                                    id: test.id,
+                                    subject: subject,
+                                    classNumber: classNum,
+                                    professor: test.professor || '',
+                                    testType: test.testType || '',
+                                    testNum: test.testNum || '',
+                                    termQuarter: test.term?.quarter || '',
+                                    termYear: test.term?.year || '',
+                                  });
+                                  setTimeout(() => {
+                                    setMissingInfoModalOpen(true);
+                                  }, 100);
+                                }}
                               >
-                                {/* {test.filename} */}
                                 View
                               </Link>
                             </TableCell>
@@ -226,15 +251,6 @@ function TestBank() {
                     ))}
                   </Fragment>
                 ))}
-                {/* <TableRow>
-                  <TablePagination
-                    // count={totalRows}
-                    rowsPerPage={batchSize}
-                    page={batchNum}
-                    // onChangePage={handlePageChange}
-                    // onChangeRowsPerPage={handleRowsPerPageChange}
-                  />
-                </TableRow> */}
               </TableBody>
             </Table>
             <Box>

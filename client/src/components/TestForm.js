@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { subjects, testTypes, testNums, quarters } from '../utils/TestUtils';
 
-const TestForm = ({ testFormData, setTestFormData }) => {
+const TestForm = ({ testFormData, setTestFormData, fullWidth }) => {
   return (
     <Grid
       container
@@ -17,7 +17,9 @@ const TestForm = ({ testFormData, setTestFormData }) => {
       rowSpacing={1}
       pt={2}
       sx={{
-        width: { xs: '100%', sm: '75%', md: '65%', lg: '55%' },
+        width: fullWidth
+          ? '100%'
+          : { xs: '100%', sm: '75%', md: '65%', lg: '55%' },
       }}
     >
       <Grid item xs={4}>
