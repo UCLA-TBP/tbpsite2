@@ -19,22 +19,16 @@ import axios from 'axios';
 import TBPBackground from '../components/TBPBackground';
 import LazyExecutor from '../components/LazyExecutor';
 import TestForm from '../components/TestForm';
+import MissingTestInfoModal from '../components/MissingTestInfoModal';
 
 const HeaderCell = styled(TableCell)(({ theme }) => ({
   minWidth: 'calc(min(12vw, 175px))',
-  // maxWidth: '10rem',
-  // width: '12vw',
-  // maxWidth: '100px',
   align: 'right',
   backgroundColor: theme.palette.custom.main,
   color: theme.palette.primary.main,
 }));
 
 const TitleCell = styled(TableCell)(({ theme }) => ({
-  // minWidth: '10vw',
-  // maxWidth: '12vw',
-  // width: '12vw',
-  // maxWidth: '100px',
   align: 'right',
   backgroundColor: alpha(theme.palette.custom2.main, 0.4),
   fontWeight: 'bold',
@@ -171,6 +165,7 @@ function TestBank() {
           >
             Reset
           </Button>
+          <MissingTestInfoModal />
         </Box>
         <Box pt={3}>
           <TableContainer component={Paper} sx={{ height: '50vh' }}>
