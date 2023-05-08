@@ -123,7 +123,11 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
-    generalSocial: {
+    generalSocial1: {
+      type: Boolean,
+      default: false,
+    },
+    generalSocial2: {
       type: Boolean,
       default: false,
     },
@@ -177,6 +181,10 @@ UserSchema.pre('save', function (next) {
     this.password = hashedPassword;
     next();
   });
+});
+
+UserSchema.pre('remove', function (next) {
+  this.model('PDF').remove({ user: this._id }, next);
 });
 
 UserSchema.methods.comparePassword = function (password, callback) {

@@ -1,84 +1,334 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
+import {
+  alpha,
+  Box,
+  Button,
+  Container,
+  Link,
+  Paper,
+  styled,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import axios from 'axios';
+import TBPBackground from '../components/TBPBackground';
+import LazyExecutor from '../components/LazyExecutor';
+import TestForm from '../components/TestForm';
+import MissingTestInfoModal from '../components/MissingTestInfoModal';
 
-/*function TestBank() {
-  const [testList, setTestList] = useState([]);
-  useEffect(() => {
-    const getTests = async () => {
-      try {
-        const listOfTests = await axios.get('/api/pdf/get-all-PDFs');
-        const promises = listOfTests.data.map((test) => {
-           DOWNLOAD LINK FOR TEST 
-          console.log(test);
-          const downloadUrl = `/api/pdf/${test._id}/download`;
-          return (
-            <li key={test._id}>
-              <a href={downloadUrl} 
-              
-                 download= {test.data.subject + "_" +
-                 test.data.classNumber + "_" +
-                 test.data.professor + ".PDF"}>
+const HeaderCell = styled(TableCell)(({ theme }) => ({
+  minWidth: 'calc(min(12vw, 175px))',
+  align: 'right',
+  backgroundColor: theme.palette.custom.main,
+  color: theme.palette.primary.main,
+}));
 
-                {test.data.subject + "_" +
-                 test.data.classNumber + "_" +
-                 test.data.professor + ".PDF"}
-
-              </a>
-            </li>
-          );
-        });
-        const testItems = await Promise.all(promises);
-        setTestList(testItems);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    getTests();
-  }, []);
-
-  return (
-    <div>
-      <Typography variant='p' mt = {1}>
-          Test Bank
-      </Typography>
-      
-      <ul>
-          {testList}
-      </ul>
-    </div>
-  )
-}*/
+const TitleCell = styled(TableCell)(({ theme }) => ({
+  align: 'right',
+  backgroundColor: alpha(theme.palette.custom2.main, 0.4),
+  fontWeight: 'bold',
+}));
 
 function TestBank() {
-  const [tests, setTests] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [testData, setTestData] = useState({});
+  const [lazyExecutorEnabled, setLazyExecutorEnabled] = useState(true);
+  const [showLazyExecutor, setShowLazyExecutor] = useState(true);
+  const [batchNum, setBatchNum] = useState(1);
+  const batchSize = 100;
 
-  useEffect(() => {
-    async function fetchTests() {
-      const response = await axios.get('/api/pdf/get-all-PDFs');
-      const testList = response.data;
-      setTests(testList);
-      setIsLoaded(true);
+  const [testFormData, setTestFormData] = useState({
+    subject: '',
+    classNumber: '',
+    professor: '',
+    testType: '',
+    testNum: '',
+    termQuarter: '',
+    termYear: '',
+  });
+
+  const [missingInfoModalOpen, setMissingInfoModalOpen] = useState(false);
+  const [missingTestData, setMissingTestData] = useState({
+    subject: '',
+    classNumber: '',
+    professor: '',
+    testType: '',
+    testNum: '',
+    termQuarter: '',
+    termYear: '',
+  });
+
+  const addTest = (data, subject, classNum, test) => {
+    if (!data[subject]) {
+      data[subject] = {};
     }
-    fetchTests();
-  }, []);
+    if (!data[subject][classNum]) {
+      data[subject][classNum] = [];
+    }
+    data[subject][classNum].push(test);
+  };
 
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
+  const handleSearch = () => {
+    getTestBatch({}, 1);
+  };
+
+  const getTestBatch = (currentData, batchN) => {
+    setLazyExecutorEnabled(false);
+    let retrievedData = { ...currentData };
+    axios
+      .post('/api/pdf/search-pdfs/', {
+        batchSize: batchSize,
+        batchNum: batchN,
+        queryData: { ...testFormData },
+      })
+      .then((res) => {
+        res.data.forEach((test) => {
+          if (test.subject && test.classNumber) {
+            addTest(retrievedData, test.subject, test.classNumber, {
+              cloudinaryURL: test.cloudinaryURL,
+              professor: test.professor,
+              testType: test.testType,
+              testNum: test.testNum,
+              term: test.term,
+              id: test._id,
+            });
+          }
+        });
+        setBatchNum(batchN + 1);
+        setTestData({ ...retrievedData });
+        if (res.data.length === batchSize) setLazyExecutorEnabled(true);
+        else setShowLazyExecutor(false);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
-    <div>
-      <h2>Tests</h2>
-      <ul>
-        {tests.map((test) => (
-          <li key={test._id} style={{ color: 'white' }}>
-            {test.subject}, {test.classNumber}, {test.professor}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <TBPBackground />
+      <Container
+        sx={{
+          padding: { xs: '85px 0 24px', sm: '85px 35px 24px' },
+          height: '100vh',
+          display: 'flex',
+          flexFlow: 'column',
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: (theme) => alpha(theme.palette.custom.main, 0.95),
+            borderRadius: '12px',
+            position: 'relative',
+          }}
+          p={5}
+        >
+          <Typography
+            variant='h2'
+            color='primary'
+            sx={{
+              fontWeight: 'bold',
+            }}
+            mb={2}
+          >
+            Test Bank
+          </Typography>
+          <Typography variant='p' color='custom2'>
+            {collapsed
+              ? 'Expand to search for tests!'
+              : 'Feel free to leave any of the search parameters blank!'}
+          </Typography>
+          {!collapsed && (
+            <>
+              <TestForm
+                testFormData={testFormData}
+                setTestFormData={setTestFormData}
+              />
+              <Button
+                color='secondary'
+                variant='contained'
+                sx={{
+                  width: '100px',
+                  height: '30px',
+                  marginTop: '12px',
+                  marginBottom: '4px',
+                  marginRight: '12px',
+                }}
+                onClick={() => {
+                  handleSearch();
+                  setCollapsed(true);
+                }}
+              >
+                Search
+              </Button>
+              <Button
+                color='secondary'
+                variant='text'
+                sx={{
+                  width: '80px',
+                  height: '30px',
+                  marginTop: '12px',
+                  marginBottom: '4px',
+                }}
+                onClick={() =>
+                  setTestFormData({
+                    subject: '',
+                    classNumber: '',
+                    professor: '',
+                    testType: '',
+                    testNum: '',
+                    termQuarter: '',
+                    termYear: '',
+                  })
+                }
+              >
+                Reset
+              </Button>
+            </>
+          )}
+          <Button
+            variant='contained'
+            color='secondary'
+            sx={{
+              position: 'absolute',
+              bottom: -2,
+              boxShadow: 8,
+              left: '50%',
+              transform: 'translate(-50%, 0)',
+              borderRadius: '24px 24px 0 0',
+              borderBottom: '0',
+              height: '24px',
+            }}
+            onClick={() => setCollapsed(!collapsed)}
+          >
+            {collapsed ? (
+              <KeyboardDoubleArrowDownIcon
+                sx={{
+                  position: 'relative',
+                  top: '2px',
+                  fontSize: 12,
+                  transform: 'scale(250%, 150%)',
+                  color: (theme) => alpha(theme.palette.custom.main, 0.85),
+                }}
+              />
+            ) : (
+              <KeyboardDoubleArrowUpIcon
+                sx={{
+                  fontSize: 12,
+                  transform: 'scale(250%, 150%)',
+                  color: (theme) => alpha(theme.palette.custom.main, 0.85),
+                }}
+              />
+            )}
+          </Button>
+          <MissingTestInfoModal
+            open={missingInfoModalOpen}
+            setOpen={setMissingInfoModalOpen}
+            testData={missingTestData}
+            setTestData={setMissingTestData}
+            updateCallback={handleSearch}
+          />
+        </Box>
+        <TableContainer
+          component={Paper}
+          mt={3}
+          sx={{
+            flex: '1 1 auto',
+            marginTop: '1.5rem',
+          }}
+        >
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <HeaderCell>Type</HeaderCell>
+                <HeaderCell>Number</HeaderCell>
+                <HeaderCell>Term</HeaderCell>
+                <HeaderCell>Professor</HeaderCell>
+                <HeaderCell>File</HeaderCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.keys(testData).map((subject) => (
+                <Fragment key={subject}>
+                  {Object.keys(testData[subject]).map((classNum) => (
+                    <Fragment key={classNum}>
+                      <TableRow>
+                        <TitleCell>
+                          {subject} {classNum}
+                        </TitleCell>
+                        <TitleCell></TitleCell>
+                        <TitleCell></TitleCell>
+                        <TitleCell></TitleCell>
+                        <TitleCell></TitleCell>
+                      </TableRow>
+                      {testData[subject][classNum].map((test) => (
+                        <Tooltip
+                          title='Click to fix missing/incorrect info'
+                          enterNextDelay={500}
+                          key={test.id}
+                        >
+                          <TableRow
+                            onClick={() => {
+                              setMissingTestData({
+                                id: test.id,
+                                subject: subject,
+                                classNumber: classNum,
+                                professor: test.professor || '',
+                                testType: test.testType || '',
+                                testNum: test.testNum || '',
+                                termQuarter: test.term?.quarter || '',
+                                termYear: test.term?.year || '',
+                              });
+                              setTimeout(() => {
+                                setMissingInfoModalOpen(true);
+                              }, 100);
+                            }}
+                            sx={{ cursor: 'pointer' }}
+                          >
+                            <TableCell component='th' scope='row'>
+                              {test.testType || ''}
+                            </TableCell>
+                            <TableCell>{test.testNum || ''}</TableCell>
+                            <TableCell>
+                              {test.term
+                                ? `${test.term.quarter} ${test.term.year}`
+                                : ''}
+                            </TableCell>
+                            <TableCell>{test.professor || ''}</TableCell>
+                            <TableCell>
+                              <Link
+                                color='secondary'
+                                target='_blank'
+                                href={test.cloudinaryURL}
+                              >
+                                View
+                              </Link>
+                            </TableCell>
+                          </TableRow>
+                        </Tooltip>
+                      ))}
+                    </Fragment>
+                  ))}
+                </Fragment>
+              ))}
+            </TableBody>
+          </Table>
+          <Box>
+            <LazyExecutor
+              func={() => getTestBatch(testData, batchNum)}
+              enabled={lazyExecutorEnabled}
+              show={showLazyExecutor}
+            />
+          </Box>
+        </TableContainer>
+      </Container>
+    </>
   );
 }
 
