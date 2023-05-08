@@ -189,8 +189,8 @@ function CandidateSpreadsheet() {
                   >
                     {candidate.name.first + ' ' + candidate.name.last}
                   </Cell>
-                  <Cell>{candidate.email}</Cell>
                   <Cell>{candidate.major}</Cell>
+                  <Cell>{candidate.email}</Cell>
                   <Cell>{candidate.graduationYear}</Cell>
                   {Object.keys(candidate.requirements).map(
                     (requirement, idx) =>
