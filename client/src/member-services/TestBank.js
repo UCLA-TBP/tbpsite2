@@ -142,7 +142,7 @@ function TestBank() {
           <Typography
             variant='p'
             color='custom2'
-            sx={{ marginBottom: '-20px' }}
+            sx={collapsed ? {} : { marginBottom: '-20px' }}
           >
             {collapsed
               ? 'Expand to search for tests!'

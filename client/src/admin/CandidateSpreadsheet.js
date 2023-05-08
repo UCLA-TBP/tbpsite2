@@ -88,7 +88,8 @@ function CandidateSpreadsheet() {
             style={{
               fontSize: '1.2rem',
               marginRight: '12px',
-              maxWidth: { xs: '150px', sm: '1000px' },
+              // maxWidth: { xs: '160px', sm: 'auto' },
+              maxWidth: '54%',
             }}
           />
           <Button
@@ -131,7 +132,6 @@ function CandidateSpreadsheet() {
           component={Paper}
           sx={{
             flex: '1 1 auto',
-            minWidth: 650,
           }}
           size='small'
         >
