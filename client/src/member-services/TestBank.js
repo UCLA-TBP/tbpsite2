@@ -16,6 +16,8 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import axios from 'axios';
 import TBPBackground from '../components/TBPBackground';
 import LazyExecutor from '../components/LazyExecutor';
@@ -36,6 +38,7 @@ const TitleCell = styled(TableCell)(({ theme }) => ({
 }));
 
 function TestBank() {
+  const [collapsed, setCollapsed] = useState(false);
   const [testData, setTestData] = useState({});
   const [lazyExecutorEnabled, setLazyExecutorEnabled] = useState(true);
   const [showLazyExecutor, setShowLazyExecutor] = useState(true);
@@ -112,7 +115,7 @@ function TestBank() {
       <TBPBackground />
       <Container
         sx={{
-          padding: { xs: '85px 0 55px', sm: '85px 35px 55px !important' },
+          padding: { xs: '85px 0 24px', sm: '85px 35px 24px' },
           height: '100vh',
           display: 'flex',
           flexFlow: 'column',
@@ -122,6 +125,7 @@ function TestBank() {
           sx={{
             backgroundColor: (theme) => alpha(theme.palette.custom.main, 0.95),
             borderRadius: '12px',
+            position: 'relative',
           }}
           p={5}
         >
@@ -136,48 +140,92 @@ function TestBank() {
             Test Bank
           </Typography>
           <Typography variant='p' color='custom2'>
-            Feel free to leave any of the search parameters blank!
+            {collapsed
+              ? 'Expand to search for tests!'
+              : 'Feel free to leave any of the search parameters blank!'}
           </Typography>
-          <TestForm
-            testFormData={testFormData}
-            setTestFormData={setTestFormData}
-          />
+          {!collapsed && (
+            <>
+              <TestForm
+                testFormData={testFormData}
+                setTestFormData={setTestFormData}
+              />
+              <Button
+                color='secondary'
+                variant='contained'
+                sx={{
+                  width: '100px',
+                  height: '30px',
+                  marginTop: '12px',
+                  marginBottom: '4px',
+                  marginRight: '12px',
+                }}
+                onClick={() => {
+                  handleSearch();
+                  setCollapsed(true);
+                }}
+              >
+                Search
+              </Button>
+              <Button
+                color='secondary'
+                variant='text'
+                sx={{
+                  width: '80px',
+                  height: '30px',
+                  marginTop: '12px',
+                  marginBottom: '4px',
+                }}
+                onClick={() =>
+                  setTestFormData({
+                    subject: '',
+                    classNumber: '',
+                    professor: '',
+                    testType: '',
+                    testNum: '',
+                    termQuarter: '',
+                    termYear: '',
+                  })
+                }
+              >
+                Reset
+              </Button>
+            </>
+          )}
           <Button
-            color='secondary'
             variant='contained'
-            sx={{
-              width: '100px',
-              height: '30px',
-              marginTop: '12px',
-              marginBottom: '4px',
-              marginRight: '12px',
-            }}
-            onClick={handleSearch}
-          >
-            Search
-          </Button>
-          <Button
             color='secondary'
-            variant='text'
             sx={{
-              width: '80px',
-              height: '30px',
-              marginTop: '12px',
-              marginBottom: '4px',
+              position: 'absolute',
+              bottom: -2,
+              boxShadow: 8,
+              left: '50%',
+              transform: 'translate(-50%, 0)',
+              borderRadius: '24px 24px 0 0',
+              borderBottom: '0',
+              height: '24px',
             }}
-            onClick={() =>
-              setTestFormData({
-                subject: '',
-                classNumber: '',
-                professor: '',
-                testType: '',
-                testNum: '',
-                termQuarter: '',
-                termYear: '',
-              })
-            }
+            onClick={() => setCollapsed(!collapsed)}
           >
-            Reset
+            {collapsed ? (
+              <KeyboardDoubleArrowDownIcon
+                sx={{
+                  position: 'relative',
+                  top: '2px',
+                  fontSize: 12,
+                  transform: 'scale(250%, 150%)',
+                  color: (theme) => alpha(theme.palette.custom.main, 0.85),
+                }}
+              />
+            ) : (
+              <KeyboardDoubleArrowUpIcon
+                sx={{
+                  fontSize: 12,
+                  transform: 'scale(250%, 150%)',
+                  color: (theme) => alpha(theme.palette.custom.main, 0.85),
+                }}
+              />
+            )}
           </Button>
           <MissingTestInfoModal
             open={missingInfoModalOpen}
@@ -190,7 +238,10 @@ function TestBank() {
         <TableContainer
           component={Paper}
           mt={3}
-          sx={{ flex: '1 1 auto', marginTop: '1.5rem' }}
+          sx={{
+            flex: '1 1 auto',
+            marginTop: '1.5rem',
+          }}
         >
           <Table stickyHeader>
             <TableHead>

@@ -54,11 +54,9 @@ function CandidateSpreadsheet() {
       <TBPBackground />
       <Container
         sx={{
-          paddingTop: '85px',
-          paddingLeft: { xs: '0' },
-          paddingRight: { xs: '0' },
-          paddingBottom: '55px',
+          padding: { xs: '85px 0 24px', sm: '85px 35px 24px' },
           height: '100vh',
+          width: '100vw',
           display: 'flex',
           flexFlow: 'column',
         }}
@@ -87,7 +85,11 @@ function CandidateSpreadsheet() {
           <input
             type='text'
             id='query-input'
-            style={{ fontSize: '1.2rem', marginRight: '12px' }}
+            style={{
+              fontSize: '1.2rem',
+              marginRight: '12px',
+              maxWidth: { xs: '150px', sm: '1000px' },
+            }}
           />
           <Button
             color='secondary'
@@ -124,23 +126,29 @@ function CandidateSpreadsheet() {
             Search
           </Button>
         </Box>
-        <TableContainer component={Paper} sx={{ flex: '1 1 auto' }}>
-          <Table
-            stickyHeader
-            aria-label='sticky table'
-            sx={{
-              minWidth: 650,
-            }}
-            size='small'
-          >
+        <TableContainer
+          aria-label='sticky table'
+          component={Paper}
+          sx={{
+            flex: '1 1 auto',
+            minWidth: 650,
+          }}
+          size='small'
+        >
+          <Table stickyHeader>
             <TableHead>
               <TableRow>
-                {/* The following are currently hard coded to match the order in which
-                          requirements are outputted from the backend. Ideally we would grab
-                          a candidate and just create a Cell for each requirement in the list and
-                          parse the requirement name to look pretty. I'm studying for midterms right
-                          now though, and I don't have time to implement it.*/}
-                <HeaderCell>Name</HeaderCell>
+                <HeaderCell
+                  sx={{
+                    left: 0,
+                    position: 'sticky',
+                    zIndex: '4',
+                    borderRight: (theme) =>
+                      '1px dashed ' + alpha(theme.palette.custom2.main, 0.5),
+                  }}
+                >
+                  Name
+                </HeaderCell>
                 <HeaderCell>Email</HeaderCell>
                 <HeaderCell>Graduation Year</HeaderCell>
                 <HeaderCell>Major</HeaderCell>
@@ -167,21 +175,35 @@ function CandidateSpreadsheet() {
                   key={candidate.email}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <Cell component='th' scope='row'>
+                  <Cell
+                    component='th'
+                    scope='row'
+                    sx={{
+                      left: 0,
+                      position: 'sticky',
+                      zIndex: '3',
+                      backgroundColor: 'white',
+                      borderRight: (theme) =>
+                        '1px dashed ' + alpha(theme.palette.custom2.main, 0.5),
+                    }}
+                  >
                     {candidate.name.first + ' ' + candidate.name.last}
                   </Cell>
                   <Cell>{candidate.email}</Cell>
                   <Cell>{candidate.major}</Cell>
                   <Cell>{candidate.graduationYear}</Cell>
-                  {Object.keys(candidate.requirements).map((requirement) => (
-                    <Cell key={requirement}>
-                      {candidate.requirements[requirement] ? (
-                        <CheckIcon color='secondary' />
-                      ) : (
-                        ''
-                      )}
-                    </Cell>
-                  ))}
+                  {Object.keys(candidate.requirements).map(
+                    (requirement, idx) =>
+                      idx < 15 && (
+                        <Cell key={requirement}>
+                          {candidate.requirements[requirement] ? (
+                            <CheckIcon color='secondary' />
+                          ) : (
+                            ''
+                          )}
+                        </Cell>
+                      )
+                  )}
                 </TableRow>
               ))}
             </TableBody>
