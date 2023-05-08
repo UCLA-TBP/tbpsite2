@@ -115,7 +115,7 @@ function TestBank() {
       <TBPBackground />
       <Container
         sx={{
-          padding: { xs: '85px 0 24px', sm: '85px 35px 24px' },
+          padding: { xs: '80px 0 24px', sm: '80px 35px 24px' },
           height: '100vh',
           display: 'flex',
           flexFlow: 'column',
@@ -126,8 +126,8 @@ function TestBank() {
             backgroundColor: (theme) => alpha(theme.palette.custom.main, 0.95),
             borderRadius: '12px',
             position: 'relative',
+            padding: '24px 32px 32px',
           }}
-          p={5}
         >
           <Typography
             variant='h2'
@@ -135,11 +135,15 @@ function TestBank() {
             sx={{
               fontWeight: 'bold',
             }}
-            mb={2}
+            mb={1}
           >
             Test Bank
           </Typography>
-          <Typography variant='p' color='custom2'>
+          <Typography
+            variant='p'
+            color='custom2'
+            sx={{ marginBottom: '-20px' }}
+          >
             {collapsed
               ? 'Expand to search for tests!'
               : 'Feel free to leave any of the search parameters blank!'}
@@ -156,7 +160,7 @@ function TestBank() {
                 sx={{
                   width: '100px',
                   height: '30px',
-                  marginTop: '12px',
+                  marginTop: '8px',
                   marginBottom: '4px',
                   marginRight: '12px',
                 }}
@@ -173,7 +177,7 @@ function TestBank() {
                 sx={{
                   width: '80px',
                   height: '30px',
-                  marginTop: '12px',
+                  marginTop: '8px',
                   marginBottom: '4px',
                 }}
                 onClick={() =>

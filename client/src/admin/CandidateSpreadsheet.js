@@ -54,7 +54,7 @@ function CandidateSpreadsheet() {
       <TBPBackground />
       <Container
         sx={{
-          padding: { xs: '85px 0 24px', sm: '85px 35px 24px' },
+          padding: { xs: '80px 0 24px', sm: '80px 35px 24px' },
           height: '100vh',
           width: '100vw',
           display: 'flex',
@@ -65,8 +65,8 @@ function CandidateSpreadsheet() {
           sx={{
             backgroundColor: (theme) => alpha(theme.palette.custom.main, 0.95),
             borderRadius: '12px',
+            padding: '24px 32px 32px',
           }}
-          p={5}
           mb={3}
         >
           <Typography
@@ -75,12 +75,12 @@ function CandidateSpreadsheet() {
             sx={{
               fontWeight: 'bold',
             }}
-            mb={3}
+            mb={1.5}
           >
             Candidate Spreadsheet
           </Typography>
-          <Typography variant='h4' color='primary' mt={3} mb={1}>
-            Search Candidates
+          <Typography variant='p' color='custom2' mb={1}>
+            Filter by email, name, major, or grad year
           </Typography>
           <input
             type='text'
@@ -150,8 +150,8 @@ function CandidateSpreadsheet() {
                   Name
                 </HeaderCell>
                 <HeaderCell>Email</HeaderCell>
-                <HeaderCell>Graduation Year</HeaderCell>
                 <HeaderCell>Major</HeaderCell>
+                <HeaderCell>Graduation Year</HeaderCell>
                 <HeaderCell>General Social 1</HeaderCell>
                 <HeaderCell>General Social 2</HeaderCell>
                 <HeaderCell>Tutoring</HeaderCell>
@@ -189,8 +189,8 @@ function CandidateSpreadsheet() {
                   >
                     {candidate.name.first + ' ' + candidate.name.last}
                   </Cell>
-                  <Cell>{candidate.major}</Cell>
                   <Cell>{candidate.email}</Cell>
+                  <Cell>{candidate.major}</Cell>
                   <Cell>{candidate.graduationYear}</Cell>
                   {Object.keys(candidate.requirements).map(
                     (requirement, idx) =>
