@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 
 function UploadTest({ candidate }) {
   const [testList, setTestList] = useState([]);
@@ -11,32 +11,19 @@ function UploadTest({ candidate }) {
           const response = await axios.get('/api/pdf/get-pdf/' + testId);
           return (
             <li key={testId} style={{ color: 'white' }}>
-              {response.data.testType === undefined ? 
-                <div>
-                  {response.data.subject +
-                    '_' +
-                    response.data.classNumber +
-                    '_' +
-                    response.data.professor +
-                    '.PDF'
-                  }
-                </div>
-                : 
-                <div>
-                  {response.data.subject +
-                    '_' +
-                    response.data.classNumber +
-                    '_' +
-                    response.data.professor +
-                    '_' +
-                    response.data.testType +
-                    '_' +
-                    response.data.testNum +
-                    '.PDF'
-                  }
-                </div>
-              }
-              
+              <Link href={response.data.cloudinaryURL} target='_blank'>
+                {response.data.subject +
+                  response.data.classNumber +
+                  '_' +
+                  response.data.professor +
+                  (response.data.testType ? '_' + response.data.testType : '') +
+                  (response.data.testNum ?? '') +
+                  (response.data.term?.quarter
+                    ? '_' + response.data.term?.quarter
+                    : '') +
+                  (response.data.term?.year ?? '') +
+                  '.PDF'}
+              </Link>
             </li>
           );
         });
@@ -54,7 +41,7 @@ function UploadTest({ candidate }) {
     <div>
       {testList.length > 0 ? (
         <>
-          {candidate.requirements.testBank = true}
+          {(candidate.requirements.testBank = true)}
           <ul>{testList}</ul>
         </>
       ) : (

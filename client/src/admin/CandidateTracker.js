@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  alpha,
   Autocomplete,
   Box,
   Button,
@@ -64,40 +65,49 @@ const CandidateTracker = () => {
   return (
     <>
       <TBPBackground />
-      <Container>
-        <Typography
-          variant='h2'
-          mt={15}
-          mb={3}
-          color='primary'
+      <Container sx={{ paddingTop: '85px !important' }}>
+        <Box
           sx={{
-            fontWeight: 'bold',
+            backgroundColor: (theme) => alpha(theme.palette.custom.main, 0.95),
+            borderRadius: '12px',
           }}
+          p={5}
         >
-          Candidate Tracker
-        </Typography>
-        <Typography variant='h3' color='primary' mt={3} mb={1}>
-          Candidate Name
-        </Typography>
-        <Autocomplete
-          disablePortal
-          options={candidates.sort((a, b) => a.name?.last.localeCompare(b.name?.last))}
-          getOptionLabel={(candidate) =>
-            `${candidate.name?.first} ${candidate.name?.last}`
-          }
-          onChange={(e, val) => {
-            setSelectedCandidate(val);
-          }}
-          sx={{
-            backgroundColor: (theme) => theme.palette.primary.main,
-            borderRadius: '0.2rem',
-          }}
-          filterOptions={filterOptions}
-          isOptionEqualToValue={(option, value) => option.email === value.email}
-          renderInput={(params) => {
-            return <TextField {...params} />;
-          }}
-        />
+          <Typography
+            variant='h2'
+            mb={3}
+            color='primary'
+            sx={{
+              fontWeight: 'bold',
+            }}
+          >
+            Candidate Tracker
+          </Typography>
+          <Typography variant='h3' color='primary' mt={3} mb={1}>
+            Candidate Name
+          </Typography>
+          <Autocomplete
+            disablePortal
+            options={candidates}
+            getOptionLabel={(candidate) =>
+              `${candidate.name?.first} ${candidate.name?.last}`
+            }
+            onChange={(e, val) => {
+              setSelectedCandidate(val);
+            }}
+            sx={{
+              backgroundColor: (theme) => theme.palette.primary.main,
+              borderRadius: '0.2rem',
+            }}
+            filterOptions={filterOptions}
+            isOptionEqualToValue={(option, value) =>
+              option.email === value.email
+            }
+            renderInput={(params) => {
+              return <TextField {...params} />;
+            }}
+          />
+        </Box>
         {selectedCandidate && (
           <Box
             mt={4}

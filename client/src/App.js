@@ -16,12 +16,13 @@ import TutoringSchedule from './tutoring/TutoringSchedule';
 // import LogHours from './tutoring/LogHours';
 import Officers from './officers/Officers';
 import Faculty from './officers/Faculty';
-//import TestBank from './member-services/TestBank';
+import TestBank from './member-services/TestBank';
 // import Corporate from './member-services/Corporate';
 import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
 import TutoringPhrase from './admin/TutoringPhrase';
 import SignupForm from './signup/SignupForm';
+import CandidateSpreadsheet from './admin/CandidateSpreadsheet';
 
 import RouteProtection from './permissions/RouteProtection';
 import { positions } from './permissions/PermissionsUtils';
@@ -215,10 +216,6 @@ function App() {
               <Route path='' element={<Officers />} />
             </Route>
             <Route path='faculty' element={<Faculty />} />
-            {/* <Route path='member_services'>
-              <Route path='testbank' element={<TestBank />} />
-              <Route path='corporate' element={<Corporate />} />
-            </Route> */}
             <Route path='candidates'>
               <Route
                 path='requirements'
@@ -275,6 +272,30 @@ function App() {
               >
                 <Route path='' element={<TutoringPhrase />} />
               </Route> 
+              <Route
+                path='candidate_spreadsheet'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.officer]}
+                  />
+                }
+              >
+                <Route path='' element={<CandidateSpreadsheet />} />
+              </Route>
+            </Route>
+            <Route path='members'>
+              <Route
+                path='testbank'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.member, positions.officer]}
+                  />
+                }
+              >
+                <Route path='' element={<TestBank />} />
+              </Route>
             </Route>
             <Route path='in-progress' element={<FeatureInProgress />} />
           </Routes>

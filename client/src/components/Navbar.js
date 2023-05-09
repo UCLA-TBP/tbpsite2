@@ -83,7 +83,8 @@ const MoreDropDownEntries = [
 const OfficerDropDownEntries = [
   new DropDownItemData('OFFICER'),
   new DropDownItemData('Candidate Tracker', 'admin/candidate_tracker'),
-  new DropDownItemData('Set Tutoring Phrase', 'admin/tutoring_phrase')
+  new DropDownItemData('Set Tutoring Phrase', 'admin/tutoring_phrase'),
+  new DropDownItemData('Candidate Spreadsheet', 'admin/candidate_spreadsheet'),
   // new DropDownItemData('Admin Panel', '#!'),
   // new DropDownItemData('Candidates', '#!'),
   // new DropDownItemData('Active members', '#!'),
@@ -100,7 +101,7 @@ const OfficerDropDownEntries = [
 
 const MemberDropDownEntries = [
   new DropDownItemData('MEMBER SERVICES'),
-  new DropDownItemData('Testbank', 'in-progress'),
+  new DropDownItemData('Testbank', 'members/testbank'),
 ];
 
 const CandidateDropDownEntries = [

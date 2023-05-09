@@ -4,7 +4,7 @@ const passport = require('passport');
 const passportConfig = require('../passport.js');
 const JWT = require('jsonwebtoken');
 const User = require('../schemas/UserSchema.js');
-//import { memberEmails } from '../memberEmails.mjs'; 
+//import { memberEmails } from '../memberEmails.mjs';
 
 const signToken = (userID) => {
   return JWT.sign(
@@ -36,7 +36,7 @@ userRouter.get(
 );
 
 userRouter.post('/register', (req, res) => {
-  const { email } = req.body;
+  const email = req.body.email.toLowerCase();
   User.findOne({ email })
     .then((user) => {
       if (user)
@@ -45,8 +45,7 @@ userRouter.post('/register', (req, res) => {
         });
       else {
         const newUser = User(req.body);
-        if(memberEmails.has(email))
-          newUser.position = 'member'; 
+        if (memberEmails.has(email)) newUser.position = 'member';
         newUser
           .save()
           .then((savedUser) => {
@@ -62,7 +61,7 @@ userRouter.post('/register', (req, res) => {
             res.status(500).json({
               message: { msgBody: 'Error saving user', msgError: true },
             });
-          }); 
+          });
       }
     })
     .catch((err) => {
@@ -83,11 +82,10 @@ userRouter.post(
         isAuthenticated: true,
         user: req.user,
       });
-    }
-    else {
+    } else {
       res.status(400).json({
-        message: {msgBody: 'Unable to sign in', msgError: true},
-      }); 
+        message: { msgBody: 'Unable to sign in', msgError: true },
+      });
     }
   }
 );
@@ -135,6 +133,7 @@ userRouter.get('/get-candidates', (req, res) => {
 
 userRouter.get('/get-all-users', (req, res) => {
   User.find()
+    .sort('name.last')
     .then((users) => res.send(users))
     .catch((err) => {
       console.log(err);
@@ -149,10 +148,10 @@ userRouter.put(
     //console.log(req.body);
     User.findByIdAndUpdate(req.params.id, { $set: req.body })
       .then((user) => {
-          //console.log(user)
-          res.status(200)
-          res.send("successfully updated user")}
-        )
+        //console.log(user)
+        res.status(200);
+        res.send('successfully updated user');
+      })
       .catch((err) => {
         console.log(err);
         res.status(500).send('Could not update user');
@@ -160,16 +159,27 @@ userRouter.put(
   }
 );
 
+userRouter.get('/delete-bad-user', (req, res) => {
+  User.findByIdAndRemove('6434bb4b4eb73e9772b85176')
+    .then((user) => {
+      console.log(user);
+      res.status(200).send('successful deletion');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not remove');
+    });
+});
+
 const memberEmails = new Set([
   'adrianlam0ho@gmail.com',
   'aryan1801@g.ucla.edu',
   'lama.1421@gmail.com',
   'hana_1421@hotmail.com',
   'nikobahm@gmail.com',
-  'KAI.BECRAFT@GMAIL.COM',
+  'kai.becraft@gmail.com',
   'ronanbennett@ucla.edu',
   'cboixo@ucla.edu',
-  'josiahjchang@gmail.com',
   'josiahjchang@gmail.com',
   'kylejchen@g.ucla.edu',
   'achen2001@g.ucla.edu',
@@ -213,7 +223,7 @@ const memberEmails = new Set([
   'scshen19@g.ucla.edu',
   'esimas@g.ucla.edu',
   'noahpsmall@gmail.com',
-  'KIMSTAHOV@GMAIL.COM',
+  'kimstahov@gmail.com',
   'juliusowen28@g.ucla.edu',
   'akit2129@gmail.com',
   'sharon.tam.gm@gmail.com',
@@ -267,7 +277,7 @@ const memberEmails = new Set([
   'ethantjackson44@gmail.com',
   'triciajain@ucla.edu',
   'linakafadarian@ucla.edu',
-  'neilkardan@g.UCLA.edu',
+  'neilkardan@g.ucla.edu',
   'katerinak429@gmail.com',
   'elonakhoshaba@ucla.edu',
   'hjkim747@g.ucla.edu',
@@ -278,10 +288,10 @@ const memberEmails = new Set([
   'korayethan@gmail.com',
   'samanthamossuto@ucla.edu',
   'kevinmmoy0@ucla.edu',
-  'YUI.NADALIN2222@GMAIL.COM',
-  'Ranavarro2@g.ucla.edu',
+  'yui.nadalin2222@gmail.com',
+  'ranavarro2@g.ucla.edu',
   'chadnish13@gmail.com',
-  'Rahulpal321@g.ucla.edu',
+  'rahulpal321@g.ucla.edu',
   'jaiparera@g.ucla.edu',
   'alexavanh03@ucla.edu',
   'arushramtek@gmail.com',
@@ -307,7 +317,6 @@ const memberEmails = new Set([
   'mcapetz17@g.ucla.edu',
   'mithilchakraborty1@gmail.com',
   'apchaps73@gmail.com',
-  'apchaps73@gmail.com',
   'tchen073@gmail.com',
   'cadendavis@ucla.edu',
   'boranerol@ucla.edu',
@@ -316,18 +325,18 @@ const memberEmails = new Set([
   'cho851@g.ucla.edu',
   'ehoff1126@gmail.com',
   'nickidrogo@g.ucla.edu',
-  'akhandpur@g.UCLA.edu',
+  'akhandpur@g.ucla.edu',
   'yashkothari1000@g.ucla.edu',
   'nikikrocken@g.ucla.edu',
   'ellenlarson@ucla.edu',
-  'Jasonle493@gmail.com',
+  'jasonle493@gmail.com',
   'shinyoung.m.lee@gmail.com',
   'jinjaejinjae@gmail.com',
   'morganmason0606@gmail.com',
   'kendallm2201@gmail.com',
   'eugene.min.2003@gmail.com',
   'arathinair@g.ucla.edu',
-  'Ngdana42@gmail.com',
+  'ngdana42@gmail.com',
   'nikki423n@gmail.com',
   'miriam.k.nygren@gmail.com',
   'ninaofitserova@ucla.edu',
@@ -335,16 +344,16 @@ const memberEmails = new Set([
   'mpayne6@g.ucla.edu',
   'colinskinner@g.ucla.edu',
   'satyensubramaniam@gmail.com',
-  'SURIYENSUBRAMANIAM@GMAIL.COM',
+  'suriyensubramaniam@gmail.com',
   'andrewtr03@g.ucla.edu',
   'natsubamoto@g.ucla.edu',
   'miavdh@g.ucla.edu',
   'txue25@g.ucla.edu',
   'arthury1207@gmail.com',
   'danieldanyang@gmail.com',
-  'Jyap26@g.ucla.edu',
+  'jyap26@g.ucla.edu',
   'eyoon1131@gmail.com',
-  'alanyu111@g.ucla.edu',  
+  'alanyu111@g.ucla.edu',
 ]);
 
 module.exports = userRouter;

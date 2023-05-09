@@ -70,9 +70,8 @@ const TutoringPhrase = () => {
 		console.log(weekOption)
 		axios
 			.post('/api/phrase/set-phrase',{
-				tutoringPhrase:
-				{week: weekOption, 
-				secretPhrase: secretPhrase},
+				week: weekOption, 
+				secretPhrase: secretPhrase,
 			})
 			.then((res) => {
 				console.log(res);

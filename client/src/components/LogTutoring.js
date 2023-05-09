@@ -66,7 +66,7 @@ function LogTutoring({ candidate, setCandidate }) {
       });
 
     setNumHours(0);
-    setWeekOption(2);
+    setWeekOption(3);
     setSecretPhrase('');
   }
 
