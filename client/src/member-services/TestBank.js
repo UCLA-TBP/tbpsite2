@@ -79,6 +79,7 @@ function TestBank() {
   };
 
   const handleSearch = () => {
+    setTestData({});
     setShowLazyExecutor(true);
     setNoTestsFound(false);
     getTestBatch({}, 1);
