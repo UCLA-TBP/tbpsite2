@@ -20,6 +20,7 @@ import TestBank from './member-services/TestBank';
 // import Corporate from './member-services/Corporate';
 import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
+import TutoringPhrase from './admin/TutoringPhrase';
 import SignupForm from './signup/SignupForm';
 import CandidateSpreadsheet from './admin/CandidateSpreadsheet';
 
@@ -260,6 +261,17 @@ function App() {
               >
                 <Route path='' element={<CandidateTracker />} />
               </Route>
+              <Route
+                path='tutoring_phrase'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.officer]}
+                  />
+                }
+              >
+                <Route path='' element={<TutoringPhrase />} />
+              </Route> 
               <Route
                 path='candidate_spreadsheet'
                 element={

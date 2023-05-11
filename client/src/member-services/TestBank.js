@@ -66,6 +66,8 @@ function TestBank() {
     termYear: '',
   });
 
+  const [noTestsFound, setNoTestsFound] = useState(false);
+
   const addTest = (data, subject, classNum, test) => {
     if (!data[subject]) {
       data[subject] = {};
@@ -77,6 +79,8 @@ function TestBank() {
   };
 
   const handleSearch = () => {
+    setShowLazyExecutor(true);
+    setNoTestsFound(false);
     getTestBatch({}, 1);
   };
 
@@ -102,10 +106,13 @@ function TestBank() {
             });
           }
         });
-        setBatchNum(batchN + 1);
-        setTestData({ ...retrievedData });
         if (res.data.length === batchSize) setLazyExecutorEnabled(true);
         else setShowLazyExecutor(false);
+        if (Object.keys(retrievedData).length === 0 && batchN === 1) {
+          setNoTestsFound(true);
+        }
+        setTestData({ ...retrievedData });
+        setBatchNum(batchN + 1);
       })
       .catch((err) => console.log(err));
   };
@@ -323,21 +330,19 @@ function TestBank() {
               ))}
             </TableBody>
           </Table>
-          {document.getElementById('lazy-executor') &&
-            Object.keys(testData).length === 0 && (
-              <Typography
-                variant='h3'
-                sx={{
-                  textAlign: 'center',
-                }}
-                mt={3}
-              >
-                No tests found ...
-              </Typography>
-            )}
+          {noTestsFound && (
+            <Typography
+              variant='h3'
+              sx={{
+                textAlign: 'center',
+              }}
+              mt={3}
+            >
+              No tests found ...
+            </Typography>
+          )}
           <Box>
             <LazyExecutor
-              id='lazy-executor'
               func={() => getTestBatch(testData, batchNum)}
               enabled={lazyExecutorEnabled}
               show={showLazyExecutor}
