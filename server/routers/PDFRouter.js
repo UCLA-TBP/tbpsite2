@@ -80,6 +80,8 @@ PDFRouter.post('/search-pdfs', (req, res) => {
         query['term.quarter'] = val;
       } else if (key === 'termYear') {
         query['term.year'] = val;
+      } else if (key === 'professor') {
+        query['professor'] = { $regex: val, $options: 'i' };
       } else {
         query[key] = val;
       }

@@ -323,8 +323,21 @@ function TestBank() {
               ))}
             </TableBody>
           </Table>
+          {document.getElementById('lazy-executor') &&
+            Object.keys(testData).length === 0 && (
+              <Typography
+                variant='h3'
+                sx={{
+                  textAlign: 'center',
+                }}
+                mt={3}
+              >
+                No tests found ...
+              </Typography>
+            )}
           <Box>
             <LazyExecutor
+              id='lazy-executor'
               func={() => getTestBatch(testData, batchNum)}
               enabled={lazyExecutorEnabled}
               show={showLazyExecutor}
