@@ -434,13 +434,13 @@ function Home() {
                   <CardContent className='card-background'>
                     <h2 className='card-title'>EMCC</h2>
                     <p className='card-text'>
-                      Engineering Minds Cultivating Creativity (EMCC) is a
-                      weekly science program catered to students at Nora Sterry
-                      Elementary School. The main goal of this program is to
-                      cultivate a love of math and science in young
-                      schoolchildren, preparing them for careers in STEM fields.
-                      We have centered the EMCC curriculum on higher level math
-                      and science concepts paired with hands-on projects.
+                      In EMCC, we aim to inspire younger students to follow a
+                      career path in STEM. We do this by putting together
+                      hands-on science experiments to promote STEM engagement.
+                      Recently, we have been partnering with Brawerman
+                      elementary to host spring science fairs. For the 2023-2024
+                      school year, we hope to expand our reach to serve
+                      underserved elementary schools in our community.
                     </p>
                   </CardContent>
                 </CardActionArea>
