@@ -122,6 +122,7 @@ userRouter.get('/get-user/:id', (req, res) => {
 
 userRouter.get('/get-candidates', (req, res) => {
   User.find({ position: 'candidate' })
+    .sort('name.last')
     .then((candidates) => {
       res.send(candidates);
     })
