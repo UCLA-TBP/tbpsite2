@@ -52,22 +52,33 @@ function LogTutoring({ candidate, setCandidate }) {
     };
 
     axios
-      .put('/api/user/update-user/' + candidate._id, updatedCandidate)
-      .then((res) => {
-        setCandidate(updatedCandidate);
-        console.log(updatedCandidate);
-        setSnackbarMessage('Log submitted!');
-        setShowSnackbar(true);
+      .get('/api/phrase/get-phrase/' +weekOption )
+      .then((res) =>{
+        console.log(res.data.secretPhrase)
+        if(res.data.secretPhrase.toLowerCase() !== secretPhrase.toLowerCase()){
+          setShowSnackbar(true);
+          setSnackbarMessage('Incorrect secret phrase');
+        }
+        else {
+          axios 
+            .put('/api/user/update-user/' + candidate._id, updatedCandidate)
+            .then((res) => {
+            setCandidate(updatedCandidate);
+            console.log(updatedCandidate);
+            setSnackbarMessage('Log submitted!');
+            setShowSnackbar(true);
+          })
+          .catch((err) => {
+            setSnackbarMessage('Submission error!');
+            setShowSnackbar(true);
+          });
+        }
       })
-      .catch((err) => {
+      .catch((err) =>{
         console.log(err);
-        setSnackbarMessage('Submission error!');
-        setShowSnackbar(true);
-      });
-
-    setNumHours(0);
-    setWeekOption(3);
-    setSecretPhrase('');
+          setSnackbarMessage('Submission error!');
+          setShowSnackbar(true);
+        });
   }
 
   return (

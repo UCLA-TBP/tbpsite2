@@ -1,7 +1,9 @@
 const express = require('express'); 
 const phraseRouter = express.Router();
 const Phrase = require('../schemas/PhraseSchema');
-{
+const bodyParser = require('body-parser')
+const app = express()
+
 phraseRouter.post('/set-phrase', (req, res) => {
 		const { week, secretPhrase } = req.body; 
     console.log(week, secretPhrase);
@@ -16,7 +18,6 @@ phraseRouter.post('/set-phrase', (req, res) => {
         		res.send("Successfully updated phrase")
 					})
 					.catch(() => {
-            console.log('here');
 						res.status(500).json({
 							message: { msgBody: 'Cannot set phrase', msgError: true },
 						});
@@ -40,11 +41,21 @@ phraseRouter.post('/set-phrase', (req, res) => {
 					}
 				})
 			.catch((err) => {
-        console.log('here3');
 				res.status(500).json({
 					message: { msgBody: 'Cannot set phrase', msgError: true },
 				});
 			});
+	});	
+
+phraseRouter.get('/get-phrase/:week', (req, res) => {
+	Phrase.findOne({week:req.params.week},{_id:0, secretPhrase:1})
+	.then((phrase) => {
+		console.log(phrase)
+		res.send(phrase)
+	})
+	.catch((err) => {
+		console.log(err);
+		res.status(500).send('Could not retrieve phrase by id from database');
 	});
-}
+});
 module.exports = phraseRouter;
