@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TBPBackground from '../components/TBPBackground';
 import {
   Button,
+  CircularProgress,
   Container,
   Grid,
   Snackbar,
@@ -12,10 +13,12 @@ import axios from 'axios';
 
 const PasswordReset = () => {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const handleSendLink = () => {
+    setLoading(true);
     axios
       .get('/api/user/get-user-by-email/' + email)
       .then((res) => {
@@ -23,15 +26,18 @@ const PasswordReset = () => {
           axios
             .post('/api/user/send-reset-password-email/' + res.data._id)
             .then((res) => {
+              setLoading(false);
               setSnackbarMessage('Reset link sent!');
               setShowSnackbar(true);
             });
         } else {
+          setLoading(false);
           setSnackbarMessage('This email is not in use');
           setShowSnackbar(true);
         }
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err);
         setSnackbarMessage('Failed to send reset link');
         setShowSnackbar(true);
@@ -101,7 +107,18 @@ const PasswordReset = () => {
           sx={{ marginTop: '14px' }}
           onClick={handleSendLink}
         >
-          SEND LINK
+          {loading ? (
+            <CircularProgress
+              size='1.5rem'
+              sx={{
+                color: '#000',
+                marginLeft: '1.5rem',
+                marginRight: '1.5rem',
+              }}
+            />
+          ) : (
+            'SEND LINK'
+          )}
         </Button>
       </Container>
       <Snackbar
