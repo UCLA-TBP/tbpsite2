@@ -247,8 +247,6 @@ userRouter.post('/clear-reset-password-req-time/:id', (req, res) => {
 });
 
 userRouter.put('/update-password/:id', (req, res) => {
-  console.log(req.params.id);
-  console.log(req.body);
   User.findById(req.params.id)
     .then((user) => {
       user.password = req.body.newPassword;
