@@ -4,7 +4,51 @@ const passport = require('passport');
 const passportConfig = require('../passport.js');
 const JWT = require('jsonwebtoken');
 const User = require('../schemas/UserSchema.js');
+const mailjet = require('node-mailjet');
+const mailjetClient = new mailjet({
+  apiKey: process.env.MAILJET_API_KEY,
+  apiSecret: process.env.MAILJET_SECRET_KEY,
+});
 //import { memberEmails } from '../memberEmails.mjs';
+
+const sendPasswordResetEmail = (recipient) => {
+  return mailjetClient.post('send', { version: 'v3.1' }).request({
+    Messages: [
+      {
+        From: {
+          Email: 'uclatbp.webmaster@gmail.com',
+          Name: 'TBP Webmasters',
+        },
+        To: [
+          {
+            Email: recipient.email,
+            Name: recipient.name.first + ' ' + recipient.name.last,
+          },
+        ],
+        Subject: 'Tau Beta Pi - Reset Account Password',
+        TextPart: '',
+        HTMLPart: `<p>
+          Hello ${recipient.name.first} ${recipient.name.last},<br/><br/>
+          You have requested a password reset for your Tau Beta Pi account. Follow the link below to create a new password:<br/><br/>
+          <a href="${
+            process.env.CLIENT_URL || 'http://localhost:3000'
+          }/reset-password/${
+          recipient.id
+        }" target="_blank">Reset Password</a><br/><br/>
+          If the above link does not work, please copy and paste this link into your browser:<br/><br/>
+          <a href="${
+            process.env.CLIENT_URL || 'http://localhost:3000'
+          }/reset-password/${recipient.id}" target="_blank">
+${process.env.CLIENT_URL || 'http://localhost:3000'}/reset-password/${
+          recipient.id
+        }</a><br/><br/>
+        If you no longer wish to reset your password, you may disregard this email.<br/><br/>
+        Best,<br/>TBP Webmasters
+        </p>`,
+      },
+    ],
+  });
+};
 
 const signToken = (userID) => {
   return JWT.sign(
@@ -120,6 +164,17 @@ userRouter.get('/get-user/:id', (req, res) => {
     });
 });
 
+userRouter.get('/get-user-by-email/:email', (req, res) => {
+  User.findOne({ email: req.params.email })
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not retrieve user by email from database');
+    });
+});
+
 userRouter.get('/get-candidates', (req, res) => {
   User.find({ position: 'candidate' })
     .sort('name.last')
@@ -159,6 +214,66 @@ userRouter.put(
       });
   }
 );
+
+userRouter.post('/send-reset-password-email/:id', (req, res) => {
+  User.findByIdAndUpdate(req.params.id, { lastPasswordResetReq: new Date() })
+    .then((user) => {
+      sendPasswordResetEmail(user)
+        .then((result) => {
+          res.status(200);
+          res.send('Successfully sent password reset email');
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).send('Could not send password reset email');
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not update reset password request time');
+    });
+});
+
+userRouter.post('/clear-reset-password-req-time/:id', (req, res) => {
+  User.findByIdAndUpdate(req.params.id, { $unset: { lastPasswordResetReq: 1 } })
+    .then((user) => {
+      res.status(200);
+      res.send('successfully cleared reset password request time');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not clear reset password request time');
+    });
+});
+
+userRouter.put('/update-password/:id', (req, res) => {
+  console.log(req.params.id);
+  console.log(req.body);
+  User.findById(req.params.id)
+    .then((user) => {
+      user.password = req.body.newPassword;
+      user
+        .save()
+        .then((savedUser) => {
+          res.status(201).json({
+            message: {
+              msgBody: 'Password change successful',
+              msgError: false,
+            },
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).json({
+            message: { msgBody: 'Error changing password', msgError: true },
+          });
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not get user for password change');
+    });
+});
 
 userRouter.get('/delete-bad-user', (req, res) => {
   User.findByIdAndRemove('6434bb4b4eb73e9772b85176')
