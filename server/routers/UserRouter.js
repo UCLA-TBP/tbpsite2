@@ -5,6 +5,7 @@ const passportConfig = require('../passport.js');
 const JWT = require('jsonwebtoken');
 const User = require('../schemas/UserSchema.js');
 const mailjet = require('node-mailjet');
+var dotenv = require('dotenv').config({ path: `${__dirname}/.env` });
 const mailjetClient = new mailjet({
   apiKey: process.env.MAILJET_API_KEY,
   apiSecret: process.env.MAILJET_SECRET_KEY,
