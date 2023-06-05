@@ -110,6 +110,23 @@ const LoginForm = ({ loginCallback }) => {
       >
         {loadingLogIn ? <CircularProgress size='1.4rem' /> : 'LOG IN'}
       </Button>
+      <Button
+        color='secondary'
+        variant='text'
+        sx={{
+          '&:hover': {
+            opacity: '1',
+          },
+          opacity: '0.8',
+          width: '100%',
+          mt: '5px',
+          mb: '-10px',
+          fontSize: '11px',
+        }}
+        onClick={() => (window.location = '/reset-password')}
+      >
+        Forgot Password?
+      </Button>
       {/* <Button
         variant='text'
         color='secondary'

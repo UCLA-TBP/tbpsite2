@@ -164,6 +164,9 @@ const UserSchema = new mongoose.Schema({
 
     default: [],
   },
+  lastPasswordResetReq: {
+    type: Date,
+  },
 
   // add resume, submitted tests field, other profile information (name, etc.)
 });

@@ -29,6 +29,8 @@ import { positions } from './permissions/PermissionsUtils';
 
 import './App.css';
 import FeatureInProgress from './FeatureInProgress';
+import PasswordReset from './password-reset/PasswordReset';
+import ChooseNewPassword from './password-reset/ChooseNewPassword';
 
 const navTheme = createTheme({
   palette: {
@@ -197,6 +199,8 @@ function App() {
         <Router>
           <Routes>
             <Route path='' element={<Home />} />
+            <Route path='reset-password' element={<PasswordReset />} />
+            <Route path='reset-password/:id' element={<ChooseNewPassword />} />
             <Route path='spicybroccoli5000' element={<SignupForm />} />
             <Route path='profile'>
               <Route path='' element={<Profile />} />
@@ -271,7 +275,7 @@ function App() {
                 }
               >
                 <Route path='' element={<TutoringPhrase />} />
-              </Route> 
+              </Route>
               <Route
                 path='candidate_spreadsheet'
                 element={
