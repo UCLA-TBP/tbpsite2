@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import TBPBackground from '../components/TBPBackground';
 import {
   Button,
+  CircularProgress,
   Container,
   Grid,
   Snackbar,
@@ -19,6 +20,7 @@ const ChooseNewPassword = () => {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -53,6 +55,7 @@ const ChooseNewPassword = () => {
       setShowSnackbar(true);
       return;
     }
+    setLoading(true);
     axios
       .put('/api/user/update-password/' + user._id, {
         newPassword: newPassword,
@@ -63,15 +66,18 @@ const ChooseNewPassword = () => {
           .then((res) => {
             setSnackbarMessage('Password reset successfully!');
             setShowSnackbar(true);
+            setLoading(false);
           })
           .catch((err) => {
             console.log(err);
+            setLoading(false);
           });
       })
       .catch((err) => {
         setSnackbarMessage('Could not reset password');
         setShowSnackbar(true);
         console.log(err);
+        setLoading(false);
       });
   };
 
@@ -174,7 +180,18 @@ const ChooseNewPassword = () => {
               sx={{ marginTop: '12px' }}
               onClick={handleReset}
             >
-              Reset
+              {loading ? (
+                <CircularProgress
+                  size='1.5rem'
+                  sx={{
+                    color: '#000',
+                    marginLeft: '0.6rem',
+                    marginRight: '0.6rem',
+                  }}
+                />
+              ) : (
+                'RESET'
+              )}
             </Button>
           </>
         )}
