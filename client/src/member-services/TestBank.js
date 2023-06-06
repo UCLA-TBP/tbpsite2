@@ -154,7 +154,7 @@ function TestBank() {
           >
             {collapsed
               ? 'Expand to search for tests!'
-              : 'Feel free to leave any of the search parameters blank!'}
+              : 'Feel free to leave any of the search parameters blank! Note that some test details are still missing. However, all tests are correctly assigned a subject and class code.'}
           </Typography>
           {!collapsed && (
             <>
