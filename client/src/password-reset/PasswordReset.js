@@ -27,7 +27,7 @@ const PasswordReset = () => {
             .post('/api/user/send-reset-password-email/' + res.data._id)
             .then((res) => {
               setLoading(false);
-              setSnackbarMessage('Reset link sent!');
+              setSnackbarMessage('Reset link requested!');
               setShowSnackbar(true);
             });
         } else {
@@ -68,7 +68,8 @@ const PasswordReset = () => {
           Reset Password
         </Typography>
         <Typography mb={1} variant='p' color='custom2'>
-          A password reset link will be sent to the following address.
+          A password reset link will be sent to the following address. Please
+          allow up to 45 minutes for the email to arrive in your inbox.
         </Typography>
         <Grid
           container
