@@ -201,7 +201,7 @@ function App() {
             <Route path='' element={<Home />} />
             <Route path='reset-password' element={<PasswordReset />} />
             <Route path='reset-password/:id' element={<ChooseNewPassword />} />
-            <Route path='spicybroccoli5000' element={<SignupForm />} />
+            <Route path='mildcarrot3600' element={<SignupForm />} />
             <Route path='profile'>
               <Route path='' element={<Profile />} />
               <Route path='requirements' element={<ProfileRequirements />} />
