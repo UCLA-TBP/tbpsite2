@@ -37,6 +37,8 @@ const TitleCell = styled(TableCell)(({ theme }) => ({
   fontWeight: 'bold',
 }));
 
+const MissingInfoPlaceHolder = 'N/A';
+
 function TestBank() {
   const [collapsed, setCollapsed] = useState(false);
   const [testData, setTestData] = useState({});
@@ -244,7 +246,21 @@ function TestBank() {
             setOpen={setMissingInfoModalOpen}
             testData={missingTestData}
             setTestData={setMissingTestData}
-            updateCallback={handleSearch}
+            updateCallback={(updatedTest) => {
+              updatedTest.term = {
+                quarter: updatedTest.termQuarter,
+                year: updatedTest.termYear,
+              };
+              const newTestData = testData;
+              newTestData[updatedTest.subject][updatedTest.classNumber] =
+                testData[updatedTest.subject][updatedTest.classNumber].map(
+                  (test) =>
+                    test.id === updatedTest.id
+                      ? { ...test, ...updatedTest }
+                      : test
+                );
+              setTestData(newTestData);
+            }}
           />
         </Box>
         <TableContainer
@@ -282,7 +298,7 @@ function TestBank() {
                       {testData[subject][classNum].map((test) => (
                         <Tooltip
                           title='Click to fix missing/incorrect info'
-                          enterNextDelay={500}
+                          enterNextDelay={100}
                           key={test.id}
                         >
                           <TableRow
@@ -303,16 +319,54 @@ function TestBank() {
                             }}
                             sx={{ cursor: 'pointer' }}
                           >
-                            <TableCell component='th' scope='row'>
-                              {test.testType || ''}
+                            <TableCell
+                              component='th'
+                              scope='row'
+                              sx={
+                                !test.testType
+                                  ? {
+                                      color: '#dddddd',
+                                    }
+                                  : {}
+                              }
+                            >
+                              {test.testType || MissingInfoPlaceHolder}
                             </TableCell>
-                            <TableCell>{test.testNum || ''}</TableCell>
-                            <TableCell>
+                            <TableCell
+                              sx={
+                                !test.testNum
+                                  ? {
+                                      color: '#dddddd',
+                                    }
+                                  : {}
+                              }
+                            >
+                              {test.testNum || MissingInfoPlaceHolder}
+                            </TableCell>
+                            <TableCell
+                              sx={
+                                !test.term
+                                  ? {
+                                      color: '#dddddd',
+                                    }
+                                  : {}
+                              }
+                            >
                               {test.term
                                 ? `${test.term.quarter} ${test.term.year}`
-                                : ''}
+                                : MissingInfoPlaceHolder}
                             </TableCell>
-                            <TableCell>{test.professor || ''}</TableCell>
+                            <TableCell
+                              sx={
+                                !test.professor
+                                  ? {
+                                      color: '#dddddd',
+                                    }
+                                  : {}
+                              }
+                            >
+                              {test.professor || MissingInfoPlaceHolder}
+                            </TableCell>
                             <TableCell>
                               <Link
                                 color='secondary'

@@ -26,7 +26,7 @@ const MissingTestInfoModal = ({
         updatedData: testData,
       })
       .then((res) => {
-        updateCallback();
+        updateCallback(testData);
         setOpen(false);
         setLoading(false);
       })
