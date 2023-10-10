@@ -300,6 +300,7 @@ function TestBank() {
                           title='Click to fix missing/incorrect info'
                           enterNextDelay={100}
                           key={test.id}
+                          arrow
                         >
                           <TableRow
                             onClick={() => {

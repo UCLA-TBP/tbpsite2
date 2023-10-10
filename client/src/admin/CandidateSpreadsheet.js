@@ -17,6 +17,7 @@ import {
 import CheckIcon from '@mui/icons-material/Check';
 import { Container } from '@mui/material';
 import TBPBackground from '../components/TBPBackground';
+import _ from 'lodash';
 
 function CandidateSpreadsheet() {
   const [candidates, setCandidates] = useState([]);
@@ -24,15 +25,18 @@ function CandidateSpreadsheet() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const HeaderCell = styled(TableCell)(({ theme }) => ({
-    minWidth: '100px',
+    padding: '10px',
     align: 'right',
+    textAlign: 'center',
     backgroundColor: theme.palette.custom.main,
     color: theme.palette.primary.main,
+    borderRight: '1px dashed ' + alpha(theme.palette.custom2.main, 0.5),
   }));
 
   const Cell = styled(TableCell)(({ theme }) => ({
-    minWidth: '100px',
+    padding: '0',
     align: 'right',
+    borderRight: '1px dashed ' + alpha(theme.palette.custom2.main, 0.5),
   }));
 
   useEffect(() => {
@@ -54,9 +58,9 @@ function CandidateSpreadsheet() {
       <TBPBackground />
       <Container
         sx={{
-          padding: { xs: '80px 0 24px', sm: '80px 35px 24px' },
+          padding: { xs: '80px 0 24px' },
           height: '100vh',
-          width: '100vw',
+          minWidth: '95vw',
           display: 'flex',
           flexFlow: 'column',
         }}
@@ -80,7 +84,8 @@ function CandidateSpreadsheet() {
             Candidate Spreadsheet
           </Typography>
           <Typography variant='p' color='custom2' mb={1}>
-            Filter by email, name, major, or grad year
+            Filter by email, name, major, or initiation quarter (e.g. "spring
+            2023")
           </Typography>
           <input
             type='text'
@@ -106,21 +111,44 @@ function CandidateSpreadsheet() {
                 .getElementById('query-input')
                 .value.toLowerCase();
               setDisplayedCandidates(
-                candidates
-                  ?.map((candidate) => {
-                    if (
-                      (candidate.name?.first + ' ' + candidate.name?.last)
-                        .toLowerCase()
-                        .includes(query)
-                    ) {
-                      return candidate;
-                    }
-                    if (candidate.email.toLowerCase().includes(query)) {
-                      return candidate;
-                    }
-                    return -1;
-                  })
-                  .filter((val) => val !== -1)
+                candidates?.filter((candidate) => {
+                  if (
+                    (candidate.name?.first + ' ' + candidate.name?.last)
+                      .toLowerCase()
+                      .includes(query)
+                  ) {
+                    return true;
+                  }
+                  if (candidate.email.toLowerCase().includes(query)) {
+                    return true;
+                  }
+
+                  let queryInitiationQuarter = query.match(/^[a-zA-Z]+/);
+                  if (queryInitiationQuarter) {
+                    queryInitiationQuarter = _.capitalize(
+                      queryInitiationQuarter[0]
+                    );
+                  }
+                  let queryInitiationYear = query.match(/[0-9]+$/);
+                  if (queryInitiationYear) {
+                    queryInitiationYear = parseInt(queryInitiationYear[0]);
+                  }
+                  console.log('compare');
+                  console.log(queryInitiationQuarter, queryInitiationYear);
+                  console.log(
+                    candidate.initiationQuarter.quarter,
+                    candidate.initiationQuarter.year
+                  );
+                  if (
+                    candidate.initiationQuarter.quarter ===
+                      queryInitiationQuarter &&
+                    candidate.initiationQuarter.year === queryInitiationYear
+                  ) {
+                    return true;
+                  }
+
+                  return false;
+                })
               );
             }}
           >
@@ -144,14 +172,14 @@ function CandidateSpreadsheet() {
                     position: 'sticky',
                     zIndex: '4',
                     borderRight: (theme) =>
-                      '1px dashed ' + alpha(theme.palette.custom2.main, 0.5),
+                      '1px solid ' + theme.palette.custom2.main,
                   }}
                 >
                   Name
                 </HeaderCell>
                 <HeaderCell>Email</HeaderCell>
                 <HeaderCell>Major</HeaderCell>
-                <HeaderCell>Graduation Year</HeaderCell>
+                <HeaderCell>Initiation Quarter</HeaderCell>
                 <HeaderCell>General Social 1</HeaderCell>
                 <HeaderCell>General Social 2</HeaderCell>
                 <HeaderCell>Tutoring</HeaderCell>
@@ -184,14 +212,18 @@ function CandidateSpreadsheet() {
                       zIndex: '3',
                       backgroundColor: 'white',
                       borderRight: (theme) =>
-                        '1px dashed ' + alpha(theme.palette.custom2.main, 0.5),
+                        '1px solid ' + theme.palette.custom2.main,
                     }}
                   >
                     {candidate.name.first + ' ' + candidate.name.last}
                   </Cell>
                   <Cell>{candidate.email}</Cell>
                   <Cell>{candidate.major}</Cell>
-                  <Cell>{candidate.graduationYear}</Cell>
+                  <Cell>
+                    {candidate.initiationQuarter?.quarter +
+                      ' ' +
+                      candidate.initiationQuarter?.year}
+                  </Cell>
                   {Object.keys(candidate.requirements).map(
                     (requirement, idx) =>
                       idx < 15 && (
@@ -206,6 +238,7 @@ function CandidateSpreadsheet() {
                   )}
                 </TableRow>
               ))}
+              <TableRow />
             </TableBody>
           </Table>
         </TableContainer>
