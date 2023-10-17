@@ -191,7 +191,7 @@ function CandidateSpreadsheet() {
             sx={{ fontSize: '1rem' }}
           >
             Filter by email, name, major, or initiation quarter (e.g. "spring
-            2023")
+            2023"). Click or drag along requirements to make changes.
           </Typography>
           <input
             type='text'
