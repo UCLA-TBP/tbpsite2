@@ -81,7 +81,8 @@ userRouter.get(
 );
 
 userRouter.post('/register', (req, res) => {
-  const email = req.body.email.toLowerCase();
+  req.body.email = req.body.email.toLowerCase();
+  const email = req.body.email;
   User.findOne({ email })
     .then((user) => {
       if (user)
