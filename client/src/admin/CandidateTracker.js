@@ -163,6 +163,7 @@ const CandidateTracker = () => {
                   )}
               </>
             )}
+
             <Typography variant='h4' color='secondary' mt={3} mb={1}>
               Membership Status
             </Typography>
@@ -181,6 +182,76 @@ const CandidateTracker = () => {
                 </option>
               ))}
             </select>
+
+
+            {selectedCandidate.position === 'member' ? (
+                <div>
+                    <Typography variant='h4' color='secondary' mt={3} mb={1}>
+                        Distinguished Active Member Progress
+                    </Typography>
+
+                    <Typography
+                        variant='p'
+                        sx={{
+                            color: (theme) => theme.palette.primary.main,
+                            fontSize: '1rem',
+                    }}>
+                        Quarter 1
+                    </Typography>
+                    
+                    <Typography
+                    variant='p'
+                    mb={1}
+                    sx={{
+                        fontSize: '1rem',
+                    }}
+                    >
+                        AO/Tutoring/EMCC: {selectedCandidate.distinguishedActiveMember.quarterOneEducation}
+                    </Typography>
+
+                    <Typography
+                    variant='p'
+                    mb={1}
+                    sx={{
+                        fontSize: '1rem',
+                    }}
+                    >
+                        Social Event: {selectedCandidate.distinguishedActiveMember.quarterOneSocial}
+                    </Typography>
+
+                    <Typography
+                        variant='p'
+                        sx={{
+                            color: (theme) => theme.palette.primary.main,
+                            fontSize: '1rem',
+                    }}>
+                        Quarter 2
+                    </Typography>
+
+                    <Typography
+                    variant='p'
+                    mb={1}
+                    sx={{
+                        fontSize: '1rem',
+                    }}
+                    >
+                        AO/Tutoring/EMCC: {selectedCandidate.distinguishedActiveMember.quarterTwoEducation}
+                    </Typography>
+
+                    <Typography
+                    variant='p'
+                    mb={1}
+                    sx={{
+                        fontSize: '1rem',
+                    }}
+                    >
+                        Social Event: {selectedCandidate.distinguishedActiveMember.quarterTwoSocial}
+                    </Typography>
+                </div>
+
+                
+            ) : null}
+
             <Grid
               container
               pt={3}
