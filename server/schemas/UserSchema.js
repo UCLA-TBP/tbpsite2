@@ -168,27 +168,43 @@ const UserSchema = new mongoose.Schema({
     type: Date,
   },
   distinguishedActiveMember: {
-    quarterOneEducation: {
-        type: String,
-        enum: ['AO', 'Tutoring', 'EMCC', 'Incomplete'],
-        required: true,
-        default: 'Incomplete',
+    quarterOneRequirements: {
+        AO: {
+            type: Boolean,
+            default: false,
+        },
+        Tutoring: {
+            type: Boolean,
+            default: false,
+        },
+        EMCC: {
+            type: Boolean,
+            default: false,
+        },
+        social: {
+            type: String,
+            required: true,
+            default: 'Incomplete',
+        },
     },
-    quarterOneSocial: {
-        type: String,
-        required: true,
-        default: 'Incomplete',
-    },
-    quarterTwoEducation: {
-        type: String,
-        enum: ['AO', 'Tutoring', 'EMCC', 'Incomplete'],
-        required: true,
-        default: 'Incomplete',
-    },
-    quarterTwoSocial: {
-        type: String,
-        required: true,
-        default: 'Incomplete',
+    quarterTwoRequirements: {
+        AO: {
+            type: Boolean,
+            default: false,
+        },
+        Tutoring: {
+            type: Boolean,
+            default: false,
+        },
+        EMCC: {
+            type: Boolean,
+            default: false,
+        },
+        social: {
+            type: String,
+            required: true,
+            default: 'Incomplete',
+        },
     }
   },
   // add resume, submitted tests field, other profile information (name, etc.)

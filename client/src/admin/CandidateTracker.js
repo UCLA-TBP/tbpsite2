@@ -184,7 +184,7 @@ const CandidateTracker = () => {
             </select>
 
 
-            {selectedCandidate.position === 'member' ? (
+            {selectedCandidate.position === positions.member ? (
                 <div>
                     <Typography variant='h4' color='secondary' mt={3} mb={1}>
                         Distinguished Active Member Progress
@@ -198,26 +198,49 @@ const CandidateTracker = () => {
                     }}>
                         Quarter 1
                     </Typography>
-                    
-                    <Typography
-                    variant='p'
-                    mb={1}
-                    sx={{
-                        fontSize: '1rem',
-                    }}
-                    >
-                        AO/Tutoring/EMCC: {selectedCandidate.distinguishedActiveMember.quarterOneEducation}
-                    </Typography>
 
-                    <Typography
-                    variant='p'
-                    mb={1}
-                    sx={{
-                        fontSize: '1rem',
-                    }}
-                    >
-                        Social Event: {selectedCandidate.distinguishedActiveMember.quarterOneSocial}
-                    </Typography>
+                    {selectedCandidate.distinguishedActiveMember.quarterOneRequirements &&
+                    Object.entries(selectedCandidate.distinguishedActiveMember.quarterOneRequirements).map(
+                        ([requirement, status]) => {
+                        return (
+                            <Grid container key={requirement}>
+                            <Grid item xs={9} md={2}>
+                                <Typography
+                                variant='p'
+                                color='primary'
+                                sm={3}
+                                sx={{
+                                    fontSize: '1rem',
+                                    width: '15rem',
+                                }}
+                                >
+                                {_.startCase(requirement)}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <input
+                                id={requirement}
+                                type='checkbox'
+                                checked={status}
+                                onChange={(e) => {
+                                  setSelectedCandidate({
+                                    ...selectedCandidate,
+                                    distinguishedActiveMember: {
+                                        ...selectedCandidate.distinguishedActiveMember,
+                                        quarterOneRequirements: {
+                                            ...selectedCandidate.distinguishedActiveMember.quarterOneRequirements,
+                                            [e.target.id]: e.target.checked,
+                                        }
+                                    }
+                                  });
+                                }}
+                              />
+                            </Grid>
+                          </Grid>
+                        );
+                        }
+                    )}
+                    
 
                     <Typography
                         variant='p'
@@ -228,25 +251,6 @@ const CandidateTracker = () => {
                         Quarter 2
                     </Typography>
 
-                    <Typography
-                    variant='p'
-                    mb={1}
-                    sx={{
-                        fontSize: '1rem',
-                    }}
-                    >
-                        AO/Tutoring/EMCC: {selectedCandidate.distinguishedActiveMember.quarterTwoEducation}
-                    </Typography>
-
-                    <Typography
-                    variant='p'
-                    mb={1}
-                    sx={{
-                        fontSize: '1rem',
-                    }}
-                    >
-                        Social Event: {selectedCandidate.distinguishedActiveMember.quarterTwoSocial}
-                    </Typography>
                 </div>
 
                 
