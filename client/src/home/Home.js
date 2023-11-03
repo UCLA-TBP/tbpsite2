@@ -246,7 +246,7 @@ function Home() {
               <Button
                 color='secondary'
                 variant='outlined'
-                href='https://docs.google.com/document/d/1w567a8c_GJnN9DrAKqqTTo_hjs1esScIGITWK5NK7DY/edit?usp=sharing'
+                href='https://docs.google.com/document/d/1t1796RIZrXh7yJmIeSQ4lMdsVNo1kbZGjuxT5Xcwlrk/edit?usp=sharing'
                 size='large'
               >
                 Candidate Packet
