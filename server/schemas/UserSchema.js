@@ -182,9 +182,8 @@ const UserSchema = new mongoose.Schema({
             default: false,
         },
         social: {
-            type: String,
-            required: true,
-            default: 'Incomplete',
+            type: Boolean,
+            default: false,
         },
     },
     quarterTwoRequirements: {
@@ -201,9 +200,8 @@ const UserSchema = new mongoose.Schema({
             default: false,
         },
         social: {
-            type: String,
-            required: true,
-            default: 'Incomplete',
+            type: Boolean,
+            default: false,
         },
     }
   },

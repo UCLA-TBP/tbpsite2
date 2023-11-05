@@ -16,6 +16,7 @@ import { positions } from '../permissions/PermissionsUtils';
 import axios from 'axios';
 import _ from 'lodash';
 import TBPBackground from '../components/TBPBackground';
+import DistinguishedActiveMemberReqs from '../components/DistinguishedActiveMemberReqs';
 
 const filterOptions = createFilterOptions({
   ignorecase: true,
@@ -199,48 +200,13 @@ const CandidateTracker = () => {
                         Quarter 1
                     </Typography>
 
-                    {selectedCandidate.distinguishedActiveMember.quarterOneRequirements &&
-                    Object.entries(selectedCandidate.distinguishedActiveMember.quarterOneRequirements).map(
-                        ([requirement, status]) => {
-                        return (
-                            <Grid container key={requirement}>
-                            <Grid item xs={9} md={2}>
-                                <Typography
-                                variant='p'
-                                color='primary'
-                                sm={3}
-                                sx={{
-                                    fontSize: '1rem',
-                                    width: '15rem',
-                                }}
-                                >
-                                {_.startCase(requirement)}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={2}>
-                                <input
-                                id={requirement}
-                                type='checkbox'
-                                checked={status}
-                                onChange={(e) => {
-                                  setSelectedCandidate({
-                                    ...selectedCandidate,
-                                    distinguishedActiveMember: {
-                                        ...selectedCandidate.distinguishedActiveMember,
-                                        quarterOneRequirements: {
-                                            ...selectedCandidate.distinguishedActiveMember.quarterOneRequirements,
-                                            [e.target.id]: e.target.checked,
-                                        }
-                                    }
-                                  });
-                                }}
-                              />
-                            </Grid>
-                          </Grid>
-                        );
-                        }
-                    )}
+                    <DistinguishedActiveMemberReqs 
+                        requirements = {selectedCandidate.distinguishedActiveMember.quarterOneRequirements}
+                        selectedCandidate = {selectedCandidate}
+                        setSelectedCandidate = {setSelectedCandidate}
+                    />
                     
+                    <br />
 
                     <Typography
                         variant='p'
@@ -250,6 +216,12 @@ const CandidateTracker = () => {
                     }}>
                         Quarter 2
                     </Typography>
+
+                    <DistinguishedActiveMemberReqs 
+                        requirements = {selectedCandidate.distinguishedActiveMember.quarterTwoRequirements}
+                        selectedCandidate = {selectedCandidate}
+                        setSelectedCandidate = {setSelectedCandidate}
+                    />
 
                 </div>
 
