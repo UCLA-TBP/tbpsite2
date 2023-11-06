@@ -167,7 +167,44 @@ const UserSchema = new mongoose.Schema({
   lastPasswordResetReq: {
     type: Date,
   },
-
+  distinguishedActiveMember: {
+    quarterOneRequirements: {
+        AO: {
+            type: Boolean,
+            default: false,
+        },
+        Tutoring: {
+            type: Boolean,
+            default: false,
+        },
+        EMCC: {
+            type: Boolean,
+            default: false,
+        },
+        social: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    quarterTwoRequirements: {
+        AO: {
+            type: Boolean,
+            default: false,
+        },
+        Tutoring: {
+            type: Boolean,
+            default: false,
+        },
+        EMCC: {
+            type: Boolean,
+            default: false,
+        },
+        social: {
+            type: Boolean,
+            default: false,
+        },
+    }
+  },
   // add resume, submitted tests field, other profile information (name, etc.)
 });
 

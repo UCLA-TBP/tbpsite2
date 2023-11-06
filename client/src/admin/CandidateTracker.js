@@ -16,6 +16,7 @@ import { positions } from '../permissions/PermissionsUtils';
 import axios from 'axios';
 import _ from 'lodash';
 import TBPBackground from '../components/TBPBackground';
+import DistinguishedActiveMemberReqs from '../components/DistinguishedActiveMemberReqs';
 
 const filterOptions = createFilterOptions({
   ignorecase: true,
@@ -163,6 +164,7 @@ const CandidateTracker = () => {
                   )}
               </>
             )}
+
             <Typography variant='h4' color='secondary' mt={3} mb={1}>
               Membership Status
             </Typography>
@@ -181,6 +183,51 @@ const CandidateTracker = () => {
                 </option>
               ))}
             </select>
+
+
+            {selectedCandidate.position === positions.member ? (
+                <div>
+                    <Typography variant='h4' color='secondary' mt={3} mb={1}>
+                        Distinguished Active Member Progress
+                    </Typography>
+
+                    <Typography
+                        variant='p'
+                        sx={{
+                            color: (theme) => theme.palette.primary.main,
+                            fontSize: '1rem',
+                    }}>
+                        Quarter 1
+                    </Typography>
+
+                    <DistinguishedActiveMemberReqs 
+                        requirements = {selectedCandidate.distinguishedActiveMember.quarterOneRequirements}
+                        selectedCandidate = {selectedCandidate}
+                        setSelectedCandidate = {setSelectedCandidate}
+                    />
+                    
+                    <br />
+
+                    <Typography
+                        variant='p'
+                        sx={{
+                            color: (theme) => theme.palette.primary.main,
+                            fontSize: '1rem',
+                    }}>
+                        Quarter 2
+                    </Typography>
+
+                    <DistinguishedActiveMemberReqs 
+                        requirements = {selectedCandidate.distinguishedActiveMember.quarterTwoRequirements}
+                        selectedCandidate = {selectedCandidate}
+                        setSelectedCandidate = {setSelectedCandidate}
+                    />
+
+                </div>
+
+                
+            ) : null}
+
             <Grid
               container
               pt={3}
