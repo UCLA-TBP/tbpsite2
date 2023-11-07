@@ -1,13 +1,9 @@
 import {
   Box,
-  Button,
-  CircularProgress,
   Modal,
-  Typography,
 } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import UploadTest from './UploadTest';
-import axios from 'axios';
 
 const SubmitTestModal = ({
   open,
@@ -15,7 +11,6 @@ const SubmitTestModal = ({
   user,
   setUser
 }) => {
-  const [loading, setLoading] = useState(false);
   const isOpen = useRef(false);
 
   useEffect(() => {
