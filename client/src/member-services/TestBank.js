@@ -40,7 +40,10 @@ const TitleCell = styled(TableCell)(({ theme }) => ({
 
 const MissingInfoPlaceHolder = 'N/A';
 
-function TestBank() {
+function TestBank({
+  user,
+  setUser,
+}) {
   const [collapsed, setCollapsed] = useState(false);
   const [testData, setTestData] = useState({});
   const [lazyExecutorEnabled, setLazyExecutorEnabled] = useState(true);
@@ -287,6 +290,8 @@ function TestBank() {
           <SubmitTestModal
             open={submitTestModalOpen}
             setOpen={setSubmitTestModalOpen}
+            user={user}
+            setUser={setUser}
           />
         </Box>
         <TableContainer
