@@ -12,6 +12,8 @@ import axios from 'axios';
 const SubmitTestModal = ({
   open,
   setOpen,
+  user,
+  setUser
 }) => {
   const [loading, setLoading] = useState(false);
   const isOpen = useRef(false);
@@ -56,6 +58,10 @@ const SubmitTestModal = ({
           backgroundColor: (theme) => theme.palette.custom.main,
         }}
       >
+        <UploadTest
+            candidate={user}
+            setCandidate={setUser}
+        />
       </Box>
     </Modal>
   );

@@ -298,7 +298,15 @@ function App() {
                   />
                 }
               >
-                <Route path='' element={<TestBank />} />
+                <Route 
+                  path='' 
+                  element={
+                    <TestBank 
+                        user={authenticatedUser}
+                        setUser={setAuthenticatedUser}
+                    />
+                  } 
+                />
               </Route>
             </Route>
             <Route path='in-progress' element={<FeatureInProgress />} />
