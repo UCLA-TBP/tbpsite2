@@ -23,6 +23,7 @@ import TBPBackground from '../components/TBPBackground';
 import LazyExecutor from '../components/LazyExecutor';
 import TestForm from '../components/TestForm';
 import MissingTestInfoModal from '../components/MissingTestInfoModal';
+import SubmitTestModal from '../components/SubmitTestModal';
 
 const HeaderCell = styled(TableCell)(({ theme }) => ({
   minWidth: 'calc(min(12vw, 175px))',
@@ -56,6 +57,8 @@ function TestBank() {
     termQuarter: '',
     termYear: '',
   });
+
+  const [submitTestModalOpen, setSubmitTestModalOpen] = useState(false);
 
   const [missingInfoModalOpen, setMissingInfoModalOpen] = useState(false);
   const [missingTestData, setMissingTestData] = useState({
@@ -204,6 +207,25 @@ function TestBank() {
               >
                 Reset
               </Button>
+              <Button
+                color='secondary'
+                variant='contained'
+                sx={{
+                  width: '150px',
+                  height: '30px',
+                  marginTop: '8px',
+                  marginBottom: '4px',
+                  marginRight: '12px',
+                  float: 'right'
+                }}
+                onClick={() => {
+                    setTimeout(() => {
+                    setSubmitTestModalOpen(true);
+                    }, 100);
+                }}
+              >
+                Submit Test
+              </Button>
             </>
           )}
           <Button
@@ -261,6 +283,10 @@ function TestBank() {
                 );
               setTestData(newTestData);
             }}
+          />
+          <SubmitTestModal
+            open={submitTestModalOpen}
+            setOpen={setSubmitTestModalOpen}
           />
         </Box>
         <TableContainer
