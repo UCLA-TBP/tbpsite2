@@ -161,7 +161,7 @@ function TestBank({
             sx={collapsed ? {} : { marginBottom: '-20px' }}
           >
             {collapsed
-              ? 'Expand to search for tests!'
+              ? 'Expand to search for and submit tests!'
               : 'Feel free to leave any of the search parameters blank! Note that some test details are still missing. However, all tests are correctly assigned a subject and class code.'}
           </Typography>
           {!collapsed && (
