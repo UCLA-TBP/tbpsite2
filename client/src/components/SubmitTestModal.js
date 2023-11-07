@@ -2,7 +2,7 @@ import {
   Box,
   Modal,
 } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import UploadTest from './UploadTest';
 
 const SubmitTestModal = ({
