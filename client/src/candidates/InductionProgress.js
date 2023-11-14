@@ -160,7 +160,7 @@ const InductionProgress = ({ candidate, setCandidate }) => {
           />
         </Box>
 
-        <Box mt={5}>
+        {/* <Box mt={5}>
           <Typography variant='h3' color='primary'>
             Interview
           </Typography>
@@ -172,7 +172,7 @@ const InductionProgress = ({ candidate, setCandidate }) => {
               'Take part in a low-stakes interview in a friendly environment!'
             }
           />
-        </Box>
+        </Box> */}
 
         <Box mt={5}>
           <Typography variant='h3' color='primary'>
