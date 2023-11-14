@@ -33,10 +33,10 @@ function TutoringSchedule() {
         Weeks 3 through 9<br />
       </Typography>
 
-      {/* <Typography variant='p' mt={5}>
+      {/*<Typography variant='p' mt={5}>
         Our tutoring starts <Typography variant='highlight'> Week 3</Typography>
         . Check back later for this quarter's schedule!
-      </Typography> */}
+      </Typography>*/}
       <br></br>
       <iframe
         title='tutoringSchedule'
