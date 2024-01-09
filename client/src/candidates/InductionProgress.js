@@ -122,41 +122,41 @@ const InductionProgress = ({ candidate, setCandidate }) => {
         </Box>
 
         <Box mt={5}>
-            <Typography variant='h4' color='secondary' mt={3} mb={1}>
-              Tutoring Logs
-            </Typography>
+          <Typography variant='h4' color='secondary' mt={3} mb={1}>
+            Tutoring Logs
+          </Typography>
 
-            {candidate.tutoringLog?.length ? (
-              candidate.tutoringLog.map((entry, index) => (
-                <Grid
-                  key={index}
-                  container
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 15, sm: 2, md: 3 }}
-                >
-                  <Grid style={{ color: 'white' }} item xs={2}>
-                    Week: {entry.week}
-                  </Grid>
-                  <Grid style={{ color: 'white' }} item xs={2}>
-                    Hours: {entry.hours}
-                  </Grid>
-                  <Grid style={{ color: 'white' }} item xs={3}>
-                    Secret Phrase: {entry.secretPhrase}
-                  </Grid>
-                </Grid>
-              ))
-            ) : (
-              <Typography
-                variant='p'
-                mt={1}
-                sx={{
-                  color: (theme) => theme.palette.primary.main,
-                  fontSize: '1rem',
-                }}
+          {candidate.tutoringLog?.length ? (
+            candidate.tutoringLog.map((entry, index) => (
+              <Grid
+                key={index}
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 15, sm: 2, md: 3 }}
               >
-                None
-              </Typography>
-            )}
+                <Grid style={{ color: 'white' }} item xs={2}>
+                  Week: {entry.week}
+                </Grid>
+                <Grid style={{ color: 'white' }} item xs={2}>
+                  Hours: {entry.hours}
+                </Grid>
+                <Grid style={{ color: 'white' }} item xs={3}>
+                  Secret Phrase: {entry.secretPhrase}
+                </Grid>
+              </Grid>
+            ))
+          ) : (
+            <Typography
+              variant='p'
+              mt={1}
+              sx={{
+                color: (theme) => theme.palette.primary.main,
+                fontSize: '1rem',
+              }}
+            >
+              None
+            </Typography>
+          )}
         </Box>
 
         <Box mt={5}>

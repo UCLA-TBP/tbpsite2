@@ -200,6 +200,23 @@ userRouter.get('/get-all-users', (req, res) => {
 });
 
 userRouter.put(
+  '/delete-user/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    //console.log(req.body);
+    User.findByIdAndRemove(req.params.id)
+      .then(() => {
+        // console.log(user);
+        res.status(200).send('successful deletion');
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send('Could not delete');
+      });
+  }
+);
+
+userRouter.put(
   '/update-user/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {

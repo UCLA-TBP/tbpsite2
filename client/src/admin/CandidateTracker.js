@@ -59,6 +59,32 @@ const CandidateTracker = () => {
       .catch((err) => console.log(err));
   };
 
+  const handleDelete = (e) => {
+    axios
+      .put('/api/user/delete-user/' + selectedCandidate._id, selectedCandidate)
+      .then((res) => {
+        axios
+          .get('/api/user/get-all-users')
+          .then((res) => {
+            setCandidates(res.data);
+            setSelectedCandidate(null);
+            let newCandidates = candidates.filter(
+              (candidate) => candidate._id !== selectedCandidate._id
+            );
+            setCandidates(newCandidates);
+
+            setSnackbarMessage('Deletion successful!');
+            setShowSnackbar(true);
+          })
+          .catch((err) => {
+            console.log(err);
+            setSnackbarMessage('Deletion error!');
+            setShowSnackbar(true);
+          });
+      })
+      .catch((err) => console.log(err));
+  };
+
   const handleSnackbarClose = (event, reason) => {
     setShowSnackbar(false);
   };
@@ -96,6 +122,7 @@ const CandidateTracker = () => {
             onChange={(e, val) => {
               setSelectedCandidate(val);
             }}
+            value={selectedCandidate}
             sx={{
               backgroundColor: (theme) => theme.palette.primary.main,
               borderRadius: '0.2rem',
@@ -184,48 +211,52 @@ const CandidateTracker = () => {
               ))}
             </select>
 
-
             {selectedCandidate.position === positions.member ? (
-                <div>
-                    <Typography variant='h4' color='secondary' mt={3} mb={1}>
-                        Distinguished Active Member Progress
-                    </Typography>
+              <div>
+                <Typography variant='h4' color='secondary' mt={3} mb={1}>
+                  Distinguished Active Member Progress
+                </Typography>
 
-                    <Typography
-                        variant='p'
-                        sx={{
-                            color: (theme) => theme.palette.primary.main,
-                            fontSize: '1rem',
-                    }}>
-                        Quarter 1
-                    </Typography>
+                <Typography
+                  variant='p'
+                  sx={{
+                    color: (theme) => theme.palette.primary.main,
+                    fontSize: '1rem',
+                  }}
+                >
+                  Quarter 1
+                </Typography>
 
-                    <DistinguishedActiveMemberReqs 
-                        requirements = {selectedCandidate.distinguishedActiveMember.quarterOneRequirements}
-                        selectedCandidate = {selectedCandidate}
-                        setSelectedCandidate = {setSelectedCandidate}
-                    />
-                    
-                    <br />
+                <DistinguishedActiveMemberReqs
+                  requirements={
+                    selectedCandidate.distinguishedActiveMember
+                      .quarterOneRequirements
+                  }
+                  selectedCandidate={selectedCandidate}
+                  setSelectedCandidate={setSelectedCandidate}
+                />
 
-                    <Typography
-                        variant='p'
-                        sx={{
-                            color: (theme) => theme.palette.primary.main,
-                            fontSize: '1rem',
-                    }}>
-                        Quarter 2
-                    </Typography>
+                <br />
 
-                    <DistinguishedActiveMemberReqs 
-                        requirements = {selectedCandidate.distinguishedActiveMember.quarterTwoRequirements}
-                        selectedCandidate = {selectedCandidate}
-                        setSelectedCandidate = {setSelectedCandidate}
-                    />
+                <Typography
+                  variant='p'
+                  sx={{
+                    color: (theme) => theme.palette.primary.main,
+                    fontSize: '1rem',
+                  }}
+                >
+                  Quarter 2
+                </Typography>
 
-                </div>
-
-                
+                <DistinguishedActiveMemberReqs
+                  requirements={
+                    selectedCandidate.distinguishedActiveMember
+                      .quarterTwoRequirements
+                  }
+                  selectedCandidate={selectedCandidate}
+                  setSelectedCandidate={setSelectedCandidate}
+                />
+              </div>
             ) : null}
 
             <Grid
@@ -378,6 +409,27 @@ const CandidateTracker = () => {
               {selectedCandidate.initiationQuarter?.year}{' '}
               {selectedCandidate.initiationQuarter?.quarter}
             </Typography>
+
+            <Typography variant='h4' color='secondary' mt={3}>
+              Manage Candidate
+            </Typography>
+
+            <Grid
+              container
+              pt={3}
+              sx={{ display: 'flex', justifyContent: 'left' }}
+            >
+              <Grid item xs={12} sm={3} lg={2} mb={2}>
+                <Button
+                  color='secondary'
+                  variant='contained'
+                  onClick={handleDelete}
+                  sx={{ width: '100%' }}
+                >
+                  Delete Candidate
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
         )}
 
