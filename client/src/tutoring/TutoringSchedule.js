@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 
 function TutoringSchedule() {
@@ -8,7 +8,34 @@ function TutoringSchedule() {
       <Typography variant='h2' mt={10}>
         Tutoring Schedule
       </Typography>
-      <Typography variant='p' mt={5}>
+      <Typography variant='p' mt={3}>
+        <span style={{ fontWeight: 'bold', color: 'white' }}>IMPORTANT: </span>
+        On Monday, February 5th, tutoring will be online due to the weather.
+        Please join us at Zoom link below!
+      </Typography>
+      <Box
+        sx={{
+          backgroundColor: 'black',
+          borderRadius: '12px',
+          display: 'inline-block',
+        }}
+        p={2}
+        mt={2}
+      >
+        <Typography variant='p' color='white'>
+          Zoom:{' '}
+          <a href='https://ucla.zoom.us/j/92528113754?pwd=SXpTUmUrbjBYOFQ3em9odjNjOTRBQT09'>
+            https://ucla.zoom.us/j/92528113754?pwd=SXpTUmUrbjBYOFQ3em9odjNjOTRBQT09
+          </a>
+        </Typography>
+        <Typography variant='p' color='white'>
+          Meeting ID: 925 2811 3754
+        </Typography>
+        <Typography variant='p' color='white'>
+          Passcode: tbp2024
+        </Typography>
+      </Box>
+      <Typography variant='p' mt={2}>
         Direct any questions or concerns to TBP's tutoring chairs at{' '}
         <a href='mailto:uclatbp.tutoring@gmail.com'>
           uclatbp.tutoring@gmail.com
