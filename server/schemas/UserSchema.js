@@ -205,6 +205,60 @@ const UserSchema = new mongoose.Schema({
         },
     }
   },
+  committees: {
+    President: {
+      type: Boolean,
+      default: false,
+    },
+    VP: {
+      type: Boolean,
+      default: false,
+    },
+    AO: {
+      type: Boolean,
+      default: false,
+    },
+    Corporate: {
+      type: Boolean,
+      default: false,
+    },
+    EMCC: {
+      type: Boolean,
+      default: false,
+    },
+    MC: {
+      type: Boolean,
+      default: false,
+    },
+    Projects: {
+      type: Boolean,
+      default: false,
+    },
+    Publicity: {
+      type: Boolean,
+      default: false,
+    },
+    Secretary: {
+      type: Boolean,
+      default: false,
+    },
+    Social: {
+      type: Boolean,
+      default: false,
+    },
+    Treasurer: {
+      type: Boolean,
+      default: false,
+    },
+    Tutoring: {
+      type: Boolean,
+      default: false,
+    },
+    Webmaster: {
+      type: Boolean,
+      default: false,
+    },
+  }
   // add resume, submitted tests field, other profile information (name, etc.)
 });
 
