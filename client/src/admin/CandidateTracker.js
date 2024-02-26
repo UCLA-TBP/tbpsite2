@@ -17,6 +17,8 @@ import axios from 'axios';
 import _ from 'lodash';
 import TBPBackground from '../components/TBPBackground';
 import DistinguishedActiveMemberReqs from '../components/DistinguishedActiveMemberReqs';
+import { OfficerCommitteeSelector, CommitteeList } from '../components/OfficerCommitteeHelpers';
+
 
 const filterOptions = createFilterOptions({
   ignorecase: true,
@@ -210,6 +212,22 @@ const CandidateTracker = () => {
                 </option>
               ))}
             </select>
+
+            {selectedCandidate.position === positions.officer ? (
+              <div>
+                <Typography variant='h4' color='secondary' mt={3} mb={1}>
+                  Officer Committees
+                </Typography>
+
+                <OfficerCommitteeSelector
+                  committeeOptions={
+                    selectedCandidate.committees
+                  }
+                  selectedCandidate={selectedCandidate}
+                  setSelectedCandidate={setSelectedCandidate}
+                />
+              </div>
+            ) : null}
 
             {selectedCandidate.position === positions.member ? (
               <div>
@@ -409,7 +427,20 @@ const CandidateTracker = () => {
               {selectedCandidate.initiationQuarter?.year}{' '}
               {selectedCandidate.initiationQuarter?.quarter}
             </Typography>
-
+            {selectedCandidate.position === positions.officer ? (
+              <div>
+                <Typography
+                  variant='p'
+                  sx={{
+                    color: (theme) => theme.palette.primary.main,
+                    fontSize: '1rem',
+                  }}
+                >
+                  Committees
+                </Typography>
+                <CommitteeList committees={selectedCandidate.committees}/>
+              </div>
+            ) : null}
             <Typography variant='h4' color='secondary' mt={3}>
               Manage Candidate
             </Typography>
