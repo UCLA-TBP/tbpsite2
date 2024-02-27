@@ -3,17 +3,10 @@ import axios from 'axios';
 import {
   Button,
   CircularProgress,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
   Snackbar,
   Grid,
   Typography,
 } from '@mui/material';
-import _ from 'lodash';
-import SubmittedTests from './SubmittedTests';
 
 function UploadHeadshot({ candidate, setCandidate }) {
   const [showSnackbar, setShowSnackbar] = useState(false);
