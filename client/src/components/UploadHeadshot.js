@@ -54,6 +54,18 @@ function UploadHeadshot({ candidate, setCandidate }) {
       .then((response) => {
         const user = response.data; // get the user object from the response
 
+        // User has already uploaded a headshot, delete file in cloudinary
+        if (user.headshot?.url) {
+            axios
+              .post('/api/user/delete-headshot-by-id', { public_id: user.headshot.public_id })
+              .then((response) => {
+                console.log("Succesfully deleted headshot")
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+        }
+
         // Create a new FormData object to send the file data and user reference to the server
         const formData = new FormData();
         formData.append('img', file);
@@ -64,9 +76,12 @@ function UploadHeadshot({ candidate, setCandidate }) {
           .then((response) => {
             const updatedCandidate = {
               ...candidate,
-              headshotURL: response.data.imageUrl,
+                headshot: {
+                  ...candidate.headshot,
+                  url: response.data.imageUrl,
+                  public_id: response.data.publicId,
+                }
             };
-            console.log(response.data.imageUrl);
             // Associate the newly uploaded PDF's id with the current user
             axios
               .put('/api/user/update-user/' + candidate._id, updatedCandidate)

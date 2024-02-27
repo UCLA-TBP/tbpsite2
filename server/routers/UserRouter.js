@@ -185,15 +185,30 @@ userRouter.post('/upload-headshot', upload.single('img'), (req, res) => {
       }
 
       const imageUrl = result.secure_url;
+      const publicId = result.public_id;
       res.status(200).json({
         message: { msgBody: 'Image uploaded successfully', msgError: false },
         imageUrl: imageUrl,
+        publicId: publicId,
       });
     }
   );
 
   streamifier.createReadStream(req.file.buffer).pipe(cloudinaryUploadStream);
 });
+
+userRouter.post('/delete-headshot-by-id', (req, res) => {
+  console.log(req.body.public_id);
+  cloudinary.uploader
+    .destroy(req.body.public_id)
+    .then((result) => {
+        res.status(200).send('Successful deletion');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not delete headshot');
+    })
+})
 
 
 // get user by id

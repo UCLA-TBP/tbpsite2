@@ -260,10 +260,16 @@ const UserSchema = new mongoose.Schema({
       default: false,
     },
   },
-  headshotURL: {
-    type: mongoose.SchemaTypes.Url,
-    trim: true,
-    required: false,
+  headshot: {
+    url: {
+      type: mongoose.SchemaTypes.Url,
+      trim: true,
+      required: false,
+    },
+    public_id: {
+      type: String,
+      required: false,
+    },
   }
   // add resume, submitted tests field, other profile information (name, etc.)
 });
