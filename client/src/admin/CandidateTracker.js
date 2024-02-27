@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import SubmittedTests from '../components/SubmittedTests';
 import { positions } from '../permissions/PermissionsUtils';
+import UploadHeadshot from '../components/UploadHeadshot.js';
 import axios from 'axios';
 import _ from 'lodash';
 import TBPBackground from '../components/TBPBackground';
@@ -444,6 +445,16 @@ const CandidateTracker = () => {
             <Typography variant='h4' color='secondary' mt={3}>
               Manage Candidate
             </Typography>
+
+            <Typography variant='h4' color='secondary' mt={3}>
+              Upload Headshot
+            </Typography>
+
+            <UploadHeadshot
+                candidate={selectedCandidate}
+                setCandidate={setSelectedCandidate}
+            />
+
 
             <Grid
               container

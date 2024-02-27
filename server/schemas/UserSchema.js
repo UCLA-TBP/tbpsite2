@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('mongoose-type-url');
 const bcrypt = require('bcrypt');
 const findOrCreate = require('mongoose-findorcreate');
 const PDFSchema = require('./PDFSchema');
@@ -257,6 +258,17 @@ const UserSchema = new mongoose.Schema({
     Webmaster: {
       type: Boolean,
       default: false,
+    },
+  },
+  headshot: {
+    url: {
+      type: mongoose.SchemaTypes.Url,
+      trim: true,
+      required: false,
+    },
+    public_id: {
+      type: String,
+      required: false,
     },
   }
   // add resume, submitted tests field, other profile information (name, etc.)

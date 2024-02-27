@@ -1,5 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
+const multer = require('multer');
 const passport = require('passport');
 const passportConfig = require('../passport.js');
 const JWT = require('jsonwebtoken');
@@ -11,6 +12,22 @@ const mailjetClient = new mailjet({
   apiSecret: process.env.MAILJET_SECRET_KEY,
 });
 //import { memberEmails } from '../memberEmails.mjs';
+
+// Set up multer storage options
+// ------------ NEW ------------------------
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+const cloudinary = require('cloudinary').v2;
+let streamifier = require('streamifier');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// -----------------------------------------
 
 const sendPasswordResetEmail = (recipient) => {
   return mailjetClient.post('send', { version: 'v3.1' }).request({
@@ -153,6 +170,46 @@ userRouter.get(
     res.status(200).json({ isAuthenticated: true, user: req.user });
   }
 );
+
+// Upload user headshot from form submission
+userRouter.post('/upload-headshot', upload.single('img'), (req, res) => {
+  let cloudinaryUploadStream = cloudinary.uploader.upload_stream(
+    { folder: 'Headshots' },
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(500).json({
+          message: { msgBody: 'Error uploading image', msgError: true },
+        });
+        return;
+      }
+
+      const imageUrl = result.secure_url;
+      const publicId = result.public_id;
+      res.status(200).json({
+        message: { msgBody: 'Image uploaded successfully', msgError: false },
+        imageUrl: imageUrl,
+        publicId: publicId,
+      });
+    }
+  );
+
+  streamifier.createReadStream(req.file.buffer).pipe(cloudinaryUploadStream);
+});
+
+userRouter.post('/delete-headshot-by-id', (req, res) => {
+  console.log(req.body.public_id);
+  cloudinary.uploader
+    .destroy(req.body.public_id)
+    .then((result) => {
+        res.status(200).send('Successful deletion');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Could not delete headshot');
+    })
+})
+
 
 // get user by id
 userRouter.get('/get-user/:id', (req, res) => {
