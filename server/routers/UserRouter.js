@@ -198,7 +198,6 @@ userRouter.post('/upload-headshot', upload.single('img'), (req, res) => {
 });
 
 userRouter.post('/delete-headshot-by-id', (req, res) => {
-  console.log(req.body.public_id);
   cloudinary.uploader
     .destroy(req.body.public_id)
     .then((result) => {
@@ -254,6 +253,20 @@ userRouter.get('/get-all-users', (req, res) => {
       console.log(err);
       res.status(500).send('Could not retrieve users');
     });
+});
+
+userRouter.get('/get-officers-by-committee/:committee', (req, res) => {
+    const committee = req.params.committee;
+    const query = "committees." + committee;
+    User.find(
+        {[query]: true}
+    )
+      .sort('name.last')
+      .then((officers) => res.send(officers))
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send('Could not retrieve officers');
+      })
 });
 
 userRouter.put(
