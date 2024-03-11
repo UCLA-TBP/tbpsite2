@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Grid, Typography, alpha } from "@mui/material";
 import { Container } from "@mui/system";
 import Table from "@mui/material/Table";
@@ -127,6 +127,20 @@ const rows = [
 ];
 
 function Officers() {
+	const [officers, setOfficers] = useState([]);
+
+	useEffect(() => {
+		function getOfficers() {
+			fetch("/api/user/get-officers")
+				.then((res) => res.json())
+				.then((data) => {
+					console.log(data);
+					setOfficers(data);
+				});
+		}
+		getOfficers();
+	}, []);
+
 	return (
 		<Container sx={{ paddingBottom: "100px" }}>
 			<Typography variant="h2" mt={10}>
@@ -199,7 +213,7 @@ function Officers() {
 				spacing={4}
 				mt={5}
 			>
-				{TESTING_HEADSHOTS.map((person, index) => {
+				{officers.map((person, index) => {
 					return (
 						<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
 							<Box
@@ -210,7 +224,7 @@ function Officers() {
 								p={1}
 							>
 								<img
-									src={person.headshot}
+									src={HEADSHOT_LINK}
 									alt="headshot"
 									style={{
 										width: "100%",
@@ -239,7 +253,7 @@ function Officers() {
 											fontSize: "1.5rem",
 										}}
 									>
-										{person.name}
+										{person?.name?.first} {person?.name?.last}
 									</Typography>
 
 									<Typography
