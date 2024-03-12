@@ -6,7 +6,11 @@ import {
   Snackbar,
   Grid,
   Typography,
+  Box
 } from '@mui/material';
+
+const HEADSHOT_LINK =
+	"https://res.cloudinary.com/dp7hitkpy/image/upload/f_auto,q_auto/v1/Headshots/bvls0rg0ttfb9bzb7nhi";
 
 function UploadHeadshot({ candidate, setCandidate }) {
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -116,7 +120,7 @@ function UploadHeadshot({ candidate, setCandidate }) {
     >
 
       <Grid item xs={4} md={3} lg={2}>
-        <Typography sx={{ fontSize: '1rem' }} variant='p' color='secondary'>
+        <Typography sx={{ fontSize: '1rem' }} variant='p' color='primary'>
           Select Headshot:
         </Typography>
       </Grid>
@@ -130,6 +134,34 @@ function UploadHeadshot({ candidate, setCandidate }) {
         />
         <br />
       </Grid>
+
+      <Grid item xs={4} md={3} lg={2}>
+        <Typography sx={{ fontSize: '1rem' }} variant='p' color='primary'>
+          Current Headshot:
+        </Typography>
+      </Grid>
+
+      <Grid item xs={4} md={3} lg={2}>
+        {
+        candidate?.headshot
+            ?
+            <img
+                src={candidate?.headshot.url || HEADSHOT_LINK}
+                alt="headshot"
+                style={{
+                    width: "100%",
+                    aspectRatio: "1/1",
+                    objectFit: "cover",
+                    borderRadius: "0px",
+                }}
+            />
+            :      
+            <Typography sx={{ fontSize: '1rem' }} variant='p1' color='primary'>
+                Not submitted
+            </Typography>
+        }
+      </Grid>
+
 
       <Grid item xs={12} pt={0}>
         <Button
