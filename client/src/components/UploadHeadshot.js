@@ -6,7 +6,6 @@ import {
   Snackbar,
   Grid,
   Typography,
-  Box
 } from '@mui/material';
 
 const HEADSHOT_LINK =
