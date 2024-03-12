@@ -1,74 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Box, Grid, Typography, alpha } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { Container } from "@mui/system";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-
-function createData(position, email) {
-	return { position, email };
-}
+import React, { useEffect, useState } from "react";
 
 const HEADSHOT_LINK =
 	"https://res.cloudinary.com/dp7hitkpy/image/upload/f_auto,q_auto/v1/Headshots/bvls0rg0ttfb9bzb7nhi";
 // "https://www.seas.ucla.edu/bmesociety/photos/UCLA%20Photos/images/Tau%20Beta%20Pi%20Bent%20(1)_JPG.jpg";
 // "https://media.licdn.com/dms/image/D5603AQH4oejoODZa1g/profile-displayphoto-shrink_800_800/0/1671194852878?e=2147483647&v=beta&t=akMT2ttozjF3arWJXFQCBZDnNa989eRIgnlu2mJE7f4";
-
-const rows = [
-	createData(
-		"President",
-		<a href="mailto:uclatbp.president@gmail.com">uclatbp.president@gmail.com</a>
-	),
-	createData(
-		"VP (Vice president)",
-		<a href="mailto:uclatbp.vp@gmail.com">uclatbp.vp@gmail.com</a>
-	),
-	createData(
-		"AO (Academic outreach)",
-		<a href="mailto:uclatbp.ao@gmail.com">uclatbp.ao@gmail.com</a>
-	),
-	createData(
-		"Corporate",
-		<a href="mailto:uclatbp.corporate@gmail.com">uclatbp.corporate@gmail.com</a>
-	),
-	createData(
-		"EMCC (Education outreach)",
-		<a href="mailto:uclatbp.educoutreach@gmail.com">
-			uclatbp.educoutreach@gmail.com
-		</a>
-	),
-	createData(
-		"MC (Member coordinator)",
-		<a href="mailto:uclatbp.mc@gmail.com">uclatbp.mc@gmail.com</a>
-	),
-	createData(
-		"Publicity",
-		<a href="mailto:uclatbp.publicity@gmail.com">uclatbp.publicity@gmail.com</a>
-	),
-	createData(
-		"Secretary",
-		<a href="mailto:uclatbp.secretary@gmail.com">uclatbp.secretary@gmail.com</a>
-	),
-	createData(
-		"Social",
-		<a href="mailto:uclatbp.social@gmail.com">uclatbp.social@gmail.com</a>
-	),
-	createData(
-		"Treasurer",
-		<a href="mailto:uclatbp.treasurer@gmail.com">uclatbp.treasurer@gmail.com</a>
-	),
-	createData(
-		"Tutoring",
-		<a href="mailto:uclatbp.tutoring@gmail.com">uclatbp.tutoring@gmail.com</a>
-	),
-	createData(
-		"Webmaster",
-		<a href="mailto:uclatbp.webmaster@gmail.com">uclatbp.webmaster@gmail.com</a>
-	),
-];
 
 const COMMITTEES = [
 	"President",
