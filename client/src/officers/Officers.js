@@ -63,7 +63,6 @@ function Officers() {
 			fetch("/api/user/get-officers")
 				.then((res) => res.json())
 				.then((data) => {
-					console.log(data);
 					setOfficers(data);
 				});
 		}
@@ -95,13 +94,19 @@ function Officers() {
 			</div>
 
 			{COMMITTEES.map((committee) => {
-				return CommitteeMembersSection(officers, committee);
+				return (
+					<CommitteeMembersSection
+						officers={officers}
+						committee={committee}
+						key={committee}
+					/>
+				);
 			})}
 		</Container>
 	);
 }
 
-function CommitteeMembersSection(officers, committee) {
+function CommitteeMembersSection({ officers, committee }) {
 	let committeeMembers = officers.filter((person) => {
 		return person.committees[committee];
 	});
