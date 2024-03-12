@@ -13,65 +13,9 @@ function createData(position, email) {
 }
 
 const HEADSHOT_LINK =
-	"https://media.licdn.com/dms/image/D5603AQH4oejoODZa1g/profile-displayphoto-shrink_800_800/0/1671194852878?e=2147483647&v=beta&t=akMT2ttozjF3arWJXFQCBZDnNa989eRIgnlu2mJE7f4";
-
-const TESTING_HEADSHOTS = [
-	{
-		name: "John Doe",
-		position: "President",
-		headshot: HEADSHOT_LINK,
-	},
-	{
-		name: "Jane Doe",
-		position: "Vice President",
-		headshot: HEADSHOT_LINK,
-	},
-	{
-		name: "Jane Doe",
-		position: "Vice President",
-		headshot: HEADSHOT_LINK,
-	},
-	{
-		name: "Jane Doe",
-		position: "Vice President",
-		headshot: HEADSHOT_LINK,
-	},
-	{
-		name: "Jane Doe",
-		position: "Vice President",
-		headshot: HEADSHOT_LINK,
-	},
-	{
-		name: "Jane Doe",
-		position: "Vice President",
-		headshot: HEADSHOT_LINK,
-	},
-	{
-		name: "Jane Doe",
-		position: "Vice President",
-		headshot: HEADSHOT_LINK,
-	},
-	{
-		name: "Jane Doe",
-		position: "Vice President",
-		headshot: HEADSHOT_LINK,
-	},
-	{
-		name: "Jane Doe",
-		position: "Vice President",
-		headshot: HEADSHOT_LINK,
-	},
-	{
-		name: "Jane Doe",
-		position: "Vice President",
-		headshot: HEADSHOT_LINK,
-	},
-	{
-		name: "Jane Doe",
-		position: "Vice President",
-		headshot: HEADSHOT_LINK,
-	},
-];
+	"https://res.cloudinary.com/dp7hitkpy/image/upload/f_auto,q_auto/v1/Headshots/bvls0rg0ttfb9bzb7nhi";
+// "https://www.seas.ucla.edu/bmesociety/photos/UCLA%20Photos/images/Tau%20Beta%20Pi%20Bent%20(1)_JPG.jpg";
+// "https://media.licdn.com/dms/image/D5603AQH4oejoODZa1g/profile-displayphoto-shrink_800_800/0/1671194852878?e=2147483647&v=beta&t=akMT2ttozjF3arWJXFQCBZDnNa989eRIgnlu2mJE7f4";
 
 const rows = [
 	createData(
@@ -126,6 +70,54 @@ const rows = [
 	),
 ];
 
+const COMMITTEES = [
+	"President",
+	"VP",
+	"AO",
+	"Corporate",
+	"EMCC",
+	"MC",
+	"Projects",
+	"Publicity",
+	"Secretary",
+	"Social",
+	"Treasurer",
+	"Tutoring",
+	"Webmaster",
+];
+
+const COMMITTEE_NAMES = {
+	President: "President",
+	VP: "Vice President",
+	AO: "Academic Outreach",
+	Corporate: "Corporate",
+	EMCC: "Education Outreach",
+	MC: "Member Coordinator",
+	Projects: "Projects",
+	Publicity: "Publicity",
+	Secretary: "Secretary",
+	Social: "Social",
+	Treasurer: "Treasurer",
+	Tutoring: "Tutoring",
+	Webmaster: "Webmaster",
+};
+
+const COMMITTEE_EMAILS = {
+	President: "uclatbp.president@gmail.com",
+	VP: "uclatbp.vp@gmail.com",
+	AO: "uclatbp.ao@gmail.com",
+	Corporate: "uclatbp.corporate@gmail.com",
+	EMCC: "uclatbp.educoutreach@gmail.com",
+	MC: "uclatbp.mc@gmail.com",
+	Projects: null,
+	Publicity: "uclatbp.publicity@gmail.com",
+	Secretary: "uclatbp.secretary@gmail.com",
+	Social: "uclatbp.social@gmail.com",
+	Treasurer: "uclatbp.treasurer@gmail.com",
+	Tutoring: "uclatbp.tutoring@gmail.com",
+	Webmaster: "uclatbp.webmaster@gmail.com",
+};
+
 function Officers() {
 	const [officers, setOfficers] = useState([]);
 
@@ -143,12 +135,12 @@ function Officers() {
 
 	return (
 		<Container sx={{ paddingBottom: "100px" }}>
-			<Typography variant="h2" mt={10}>
+			<Typography variant="h1" mt={10} mb={0}>
 				Officers
 			</Typography>
 
 			<div>
-				<Typography variant="p" mt={5}>
+				<Typography variant="p" mt={2}>
 					For any questions or comments, feel free to email us at{" "}
 					<a href="mailto:ucla.tbp@gmail.com">ucla.tbp@gmail.com</a>.
 				</Typography>
@@ -164,67 +156,69 @@ function Officers() {
 					Boelter (Room 6266) if you want to say hi!
 				</Typography>
 			</div>
-			<br></br>
 
-			<Typography variant="p" mt={5}>
-				Need to contact a specific officer?
+			{COMMITTEES.map((committee) => {
+				return CommitteeMembersSection(officers, committee);
+			})}
+		</Container>
+	);
+}
+
+function CommitteeMembersSection(officers, committee) {
+	let committeeMembers = officers.filter((person) => {
+		return person.committees[committee];
+	});
+
+	if (committeeMembers.length === 0) {
+		return null;
+	}
+
+	let committeeName = COMMITTEE_NAMES[committee];
+	let committeeEmail = COMMITTEE_EMAILS[committee];
+
+	return (
+		<>
+			<Typography variant="h2" mt={3} mb={0}>
+				{committeeName}
 			</Typography>
-			<br></br>
+			{committeeEmail ? (
+				<Typography variant="p" mb={2}>
+					Contact: <a href={"mailto:" + committeeEmail}>{committeeEmail}</a>
+				</Typography>
+			) : null}
+			<Grid container spacing={4}>
+				{committeeMembers.map((person, index) => {
+					let postions = [];
+					for (let key in person.committees) {
+						if (person.committees[key]) {
+							postions.push(key);
+						}
+					}
 
-			<TableContainer style={{ background: "#5b5b5b" }}>
-				<Table aria-label="simple table">
-					<TableHead>
-						<TableRow>
-							<TableCell>
-								<Typography variant="highlight" style={{ fontSize: "150%" }}>
-									<b>Position</b>
-								</Typography>
-							</TableCell>
-							<TableCell align="left">
-								<Typography variant="highlight" style={{ fontSize: "150%" }}>
-									<b>Email</b>
-								</Typography>
-							</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{rows.map((row) => (
-							<TableRow
-								key={row.position}
-								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-							>
-								<TableCell
-									component="th"
-									scope="row"
-									style={{ color: "white", fontSize: "100%" }}
-								>
-									{row.position}
-								</TableCell>
-								<TableCell align="left">{row.email}</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</TableContainer>
+					let positionsString = postions.join(", ") || "Officer";
 
-			<Grid
-				// 4 columns, 16px of space between each item
-				container
-				spacing={4}
-				mt={5}
-			>
-				{officers.map((person, index) => {
 					return (
-						<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+						<Grid
+							item
+							xs={12}
+							sm={6}
+							md={4}
+							lg={3}
+							key={index}
+							mt={0}
+							pt={0}
+							p={0}
+						>
 							<Box
 								sx={{
 									borderRadius: "20px",
 									backgroundColor: "black",
+									marginTop: "10px",
 								}}
 								p={1}
 							>
 								<img
-									src={HEADSHOT_LINK}
+									src={person?.headshot?.url || HEADSHOT_LINK}
 									alt="headshot"
 									style={{
 										width: "100%",
@@ -234,15 +228,7 @@ function Officers() {
 									}}
 								/>
 
-								<Box
-									sx={
-										{
-											// backgroundColor: "black",
-										}
-									}
-									p={1}
-									pt={1}
-								>
+								<Box p={1}>
 									<Typography
 										variant="h3"
 										mt={0}
@@ -260,11 +246,10 @@ function Officers() {
 										variant="h6"
 										color="secondary"
 										sx={{
-											// fontWeight: "bold",
 											fontSize: "1rem",
 										}}
 									>
-										{person.position}
+										{positionsString}
 									</Typography>
 								</Box>
 							</Box>
@@ -272,7 +257,7 @@ function Officers() {
 					);
 				})}
 			</Grid>
-		</Container>
+		</>
 	);
 }
 
