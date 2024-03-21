@@ -17,6 +17,7 @@ const MissingTestInfoModal = ({
   updateCallback,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
   const isOpen = useRef(false);
 
   const handleSubmit = () => {
@@ -36,6 +37,21 @@ const MissingTestInfoModal = ({
         setLoading(false);
       });
   };
+
+  const handleDelete = () => {
+    setLoadingDelete(true);
+    axios
+      .post('/api/pdf/delete-pdf-by-id', { pdfId: testData.id })
+      .then((res) => {
+        setOpen(false);
+        setLoadingDelete(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setOpen(false);
+        setLoadingDelete(false);
+      });
+  }
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -126,6 +142,26 @@ const MissingTestInfoModal = ({
         >
           Reset
         </Button>
+
+        <Button
+          color='secondary'
+          variant='contained'
+          sx={{
+            marginTop: '12px',
+            float: 'right',
+          }}
+          onClick={handleDelete}
+        >
+          {loadingDelete ? (
+            <CircularProgress
+              size='1.4rem'
+              sx={{ color: '#000', marginLeft: '2rem', marginRight: '2rem' }}
+            />
+          ) : (
+            'Delete'
+          )}
+        </Button>
+
       </Box>
     </Modal>
   );

@@ -9,6 +9,7 @@ const upload = multer({ storage: storage });
 
 const cloudinary = require('cloudinary').v2;
 let streamifier = require('streamifier');
+const { default: mongoose } = require('mongoose');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -157,21 +158,20 @@ PDFRouter.get('/download/:id', async (req, res) => {
   }
 });
 
-PDFRouter.get('/delete-bad-pdf', (req, res) => {
-  // PDF.findByIdAndRemove('6438f6268150e65ba49793c4')
-  // PDF.findByIdAndRemove('6438f62a8150e65ba49793ce')
-  // PDF.findByIdAndRemove('6438f62b8150e65ba49793d3')
-  // PDF.findByIdAndRemove('6438f6298150e65ba49793c8')
-  // PDF.findByIdAndRemove('6438f6288150e65ba49793c6')
-  // PDF.findByIdAndRemove('6438f6298150e65ba49793ca')
-  PDF.findByIdAndRemove('6438f62b8150e65ba49793d1')
+// When we delete a PDF by ID, the underlying Cloudinary file is not being deleted.
+// I tried doing what we did in UserRouter, but I was having trouble figuring
+// out how to delete the pdf from Mongo and Cloudinary atomically
+// Since we don't have a million PDFs, deleting the pdf just from Mongo should be
+// fine for now
+PDFRouter.post('/delete-pdf-by-id', (req, res) => {  
+    PDF.findByIdAndRemove(req.body.pdfId)
     .then((pdf) => {
-      console.log(pdf);
-      res.status(200).send('successful deletion');
+        console.log(pdf);
+        res.status(200).send('successful deletion');
     })
     .catch((err) => {
-      console.log(err);
-      res.status(500).send('Could not remove');
+        console.log(err);
+        res.status(500).send('Could not remove');
     });
 });
 
