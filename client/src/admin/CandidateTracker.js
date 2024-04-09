@@ -18,6 +18,7 @@ import axios from "axios";
 import _ from "lodash";
 import TBPBackground from "../components/TBPBackground";
 import DistinguishedActiveMemberReqs from "../components/DistinguishedActiveMemberReqs";
+import UserInfo from "../components/UserInfo";
 import {
 	OfficerCommitteeSelector,
 	CommitteeList,
@@ -337,123 +338,9 @@ const CandidateTracker = () => {
 						<Typography variant="h4" color="secondary" mt={3} mb={1}>
 							Candidate Info
 						</Typography>
-						<Typography
-							variant="p"
-							sx={{
-								color: (theme) => theme.palette.primary.main,
-								fontSize: "1rem",
-							}}
-						>
-							Name
-						</Typography>
-						<Typography
-							variant="p"
-							mb={1}
-							sx={{
-								fontSize: "1rem",
-							}}
-						>
-							{selectedCandidate.name?.first} {selectedCandidate.name?.last}
-						</Typography>
-						<Typography
-							variant="p"
-							sx={{
-								color: (theme) => theme.palette.primary.main,
-								fontSize: "1rem",
-							}}
-						>
-							Email
-						</Typography>
-						<Typography
-							variant="p"
-							mb={1}
-							sx={{
-								fontSize: "1rem",
-							}}
-						>
-							{selectedCandidate.email}
-						</Typography>
-						<Typography
-							variant="p"
-							sx={{
-								color: (theme) => theme.palette.primary.main,
-								fontSize: "1rem",
-							}}
-						>
-							Major
-						</Typography>
-						<Typography
-							variant="p"
-							mb={1}
-							sx={{
-								fontSize: "1rem",
-							}}
-						>
-							{selectedCandidate.major}
-						</Typography>
-						<Typography
-							variant="p"
-							sx={{
-								color: (theme) => theme.palette.primary.main,
-								fontSize: "1rem",
-							}}
-						>
-							Graduation Year
-						</Typography>
-						<Typography
-							variant="p"
-							mb={1}
-							sx={{
-								fontSize: "1rem",
-							}}
-						>
-							{selectedCandidate.graduationYear}
-						</Typography>
-						<Typography
-							variant="p"
-							sx={{
-								color: (theme) => theme.palette.primary.main,
-								fontSize: "1rem",
-							}}
-						>
-							Initiation Quarter
-						</Typography>
-						<Typography
-							variant="p"
-							mb={1}
-							sx={{
-								fontSize: "1rem",
-							}}
-						>
-							{selectedCandidate.initiationQuarter?.year}{" "}
-							{selectedCandidate.initiationQuarter?.quarter}
-						</Typography>
-						{selectedCandidate.position === positions.officer ? (
-							<div>
-								<Typography
-									variant="p"
-									sx={{
-										color: (theme) => theme.palette.primary.main,
-										fontSize: "1rem",
-									}}
-								>
-									Committees
-								</Typography>
-								<CommitteeList committees={selectedCandidate.committees} />
-							</div>
-						) : null}
-						<Typography variant="h4" color="secondary" mt={3}>
-							Manage Candidate
-						</Typography>
-
-						<Typography variant="h4" color="secondary" mt={3}>
-							Upload Headshot
-						</Typography>
-
-						<UploadHeadshot
-							candidate={selectedCandidate}
-							setCandidate={setSelectedCandidate}
-						/>
+						<UserInfo
+                            selectedUser={selectedCandidate}
+                        />
 
 						<Grid
 							container

@@ -14,13 +14,13 @@ import {
 import SubmittedTests from "../components/SubmittedTests";
 import { positions } from "../permissions/PermissionsUtils";
 import UploadHeadshot from "../components/UploadHeadshot.js";
+import UserInfo from "../components/UserInfo.js";
 import axios from "axios";
 import _ from "lodash";
 import TBPBackground from "../components/TBPBackground";
 import DistinguishedActiveMemberReqs from "../components/DistinguishedActiveMemberReqs";
 import {
 	OfficerCommitteeSelector,
-	CommitteeList,
 } from "../components/OfficerCommitteeHelpers";
 
 const filterOptions = createFilterOptions({
@@ -28,16 +28,16 @@ const filterOptions = createFilterOptions({
 });
 
 const ManageUsers = () => {
-	const [candidates, setCandidates] = useState([]);
-	const [selectedCandidate, setSelectedCandidate] = useState(null);
+	const [users, setUsers] = useState([]);
+	const [selectedUser, setSelectedUser] = useState(null);
 	const [showSnackbar, setShowSnackbar] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState("");
 
 	useEffect(() => {
 		axios
-			.get("/api/user/get-candidates")
+			.get("/api/user/get-non-candidates")
 			.then((res) => {
-				setCandidates(res.data);
+				setUsers(res.data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -46,12 +46,12 @@ const ManageUsers = () => {
 
 	const handleSave = (e) => {
 		axios
-			.put("/api/user/update-user/" + selectedCandidate._id, selectedCandidate)
+			.put("/api/user/update-user/" + selectedUser._id, selectedUser)
 			.then((res) => {
 				axios
-					.get("/api/user/get-candidates")
+					.get("/api/user/get-non-candidates")
 					.then((res) => {
-						setCandidates(res.data);
+						setUsers(res.data);
 						setSnackbarMessage("Save successful!");
 						setShowSnackbar(true);
 					})
@@ -66,17 +66,17 @@ const ManageUsers = () => {
 
 	const handleDelete = (e) => {
 		axios
-			.put("/api/user/delete-user/" + selectedCandidate._id, selectedCandidate)
+			.put("/api/user/delete-user/" + selectedUser._id, selectedUser)
 			.then((res) => {
 				axios
-					.get("/api/user/get-candidates")
+					.get("/api/user/get-non-candidates")
 					.then((res) => {
-						setCandidates(res.data);
-						setSelectedCandidate(null);
-						let newCandidates = candidates.filter(
-							(candidate) => candidate._id !== selectedCandidate._id
+						setUsers(res.data);
+						setSelectedUser(null);
+						let newUsers = users.filter(
+							(user) => user._id !== selectedUser._id
 						);
-						setCandidates(newCandidates);
+						setUsers(newUsers);
 
 						setSnackbarMessage("Deletion successful!");
 						setShowSnackbar(true);
@@ -113,21 +113,21 @@ const ManageUsers = () => {
 							fontWeight: "bold",
 						}}
 					>
-						Candidate Tracker
+						Manage Users
 					</Typography>
 					<Typography variant="h3" color="primary" mt={3} mb={1}>
-						Candidate Name
+						User Name
 					</Typography>
 					<Autocomplete
 						disablePortal
-						options={candidates}
-						getOptionLabel={(candidate) =>
-							`${candidate.name?.first} ${candidate.name?.last}`
+						options={users}
+						getOptionLabel={(user) =>
+							`${user.name?.first} ${user.name?.last}`
 						}
 						onChange={(e, val) => {
-							setSelectedCandidate(val);
+							setSelectedUser(val);
 						}}
-						value={selectedCandidate}
+						value={selectedUser}
 						sx={{
 							backgroundColor: (theme) => theme.palette.primary.main,
 							borderRadius: "0.2rem",
@@ -141,7 +141,7 @@ const ManageUsers = () => {
 						}}
 					/>
 				</Box>
-				{selectedCandidate && (
+				{selectedUser && (
 					<Box
 						mt={4}
 						mb={4}
@@ -151,60 +151,15 @@ const ManageUsers = () => {
 							borderRadius: "12px",
 						}}
 					>
-						{selectedCandidate.position === positions.candidate && (
-							<>
-								<Typography variant="h4" color="secondary" mt={3} mb={1}>
-									Candidate Requirements
-								</Typography>
-								{selectedCandidate.requirements &&
-									Object.entries(selectedCandidate.requirements).map(
-										([requirement, status]) => {
-											return (
-												<Grid container key={requirement}>
-													<Grid item xs={9} md={2}>
-														<Typography
-															variant="p"
-															color="primary"
-															sm={3}
-															sx={{
-																fontSize: "1rem",
-																width: "15rem",
-															}}
-														>
-															{_.startCase(requirement)}
-														</Typography>
-													</Grid>
-													<Grid item xs={2}>
-														<input
-															id={requirement}
-															type="checkbox"
-															checked={status}
-															onChange={(e) => {
-																setSelectedCandidate({
-																	...selectedCandidate,
-																	requirements: {
-																		...selectedCandidate.requirements,
-																		[e.target.id]: e.target.checked,
-																	},
-																});
-															}}
-														/>
-													</Grid>
-												</Grid>
-											);
-										}
-									)}
-							</>
-						)}
 
 						<Typography variant="h4" color="secondary" mt={3} mb={1}>
 							Membership Status
 						</Typography>
 						<select
-							value={selectedCandidate.position}
+							value={selectedUser.position}
 							onChange={(e) => {
-								setSelectedCandidate({
-									...selectedCandidate,
+								setSelectedUser({
+									...selectedUser,
 									position: e.target.value,
 								});
 							}}
@@ -216,21 +171,21 @@ const ManageUsers = () => {
 							))}
 						</select>
 
-						{selectedCandidate.position === positions.officer ? (
+						{selectedUser.position === positions.officer || selectedUser.position === positions.admin ? (
 							<div>
 								<Typography variant="h4" color="secondary" mt={3} mb={1}>
 									Officer Committees
 								</Typography>
 
 								<OfficerCommitteeSelector
-									committeeOptions={selectedCandidate.committees}
-									selectedCandidate={selectedCandidate}
-									setSelectedCandidate={setSelectedCandidate}
+									committeeOptions={selectedUser.committees}
+									selectedUser={selectedUser}
+									setSelectedUser={setSelectedUser}
 								/>
 							</div>
 						) : null}
 
-						{selectedCandidate.position === positions.member ? (
+						{selectedUser.position === positions.member ? (
 							<div>
 								<Typography variant="h4" color="secondary" mt={3} mb={1}>
 									Distinguished Active Member Progress
@@ -248,11 +203,11 @@ const ManageUsers = () => {
 
 								<DistinguishedActiveMemberReqs
 									requirements={
-										selectedCandidate.distinguishedActiveMember
+										selectedUser.distinguishedActiveMember
 											.quarterOneRequirements
 									}
-									selectedCandidate={selectedCandidate}
-									setSelectedCandidate={setSelectedCandidate}
+									selectedUser={selectedUser}
+									setSelectedUser={setSelectedUser}
 								/>
 
 								<br />
@@ -269,11 +224,11 @@ const ManageUsers = () => {
 
 								<DistinguishedActiveMemberReqs
 									requirements={
-										selectedCandidate.distinguishedActiveMember
+										selectedUser.distinguishedActiveMember
 											.quarterTwoRequirements
 									}
-									selectedCandidate={selectedCandidate}
-									setSelectedCandidate={setSelectedCandidate}
+									selectedUser={selectedUser}
+									setSelectedUser={setSelectedUser}
 								/>
 							</div>
 						) : null}
@@ -294,165 +249,26 @@ const ManageUsers = () => {
 								</Button>
 							</Grid>
 						</Grid>
-						<Typography variant="h4" color="secondary" mt={3} mb={1}>
-							Tutoring Logs
-						</Typography>
 
-						{selectedCandidate.tutoringLog?.length ? (
-							selectedCandidate.tutoringLog.map((entry, index) => (
-								<Grid
-									key={index}
-									container
-									rowSpacing={1}
-									columnSpacing={{ xs: 15, sm: 2, md: 3 }}
-								>
-									<Grid style={{ color: "white" }} item xs={2}>
-										Week: {entry.week}
-									</Grid>
-									<Grid style={{ color: "white" }} item xs={2}>
-										Hours: {entry.hours}
-									</Grid>
-									<Grid style={{ color: "white" }} item xs={3}>
-										Secret Phrase: {entry.secretPhrase}
-									</Grid>
-								</Grid>
-							))
-						) : (
-							<Typography
-								variant="p"
-								mt={1}
-								sx={{
-									color: (theme) => theme.palette.primary.main,
-									fontSize: "1rem",
-								}}
-							>
-								None
-							</Typography>
-						)}
 						<Typography variant="h4" color="secondary" mt={3} mb={1}>
 							Submitted Tests
 						</Typography>
-						<SubmittedTests candidate={selectedCandidate} />
+						<SubmittedTests candidate={selectedUser} />
 
 						<Typography variant="h4" color="secondary" mt={3} mb={1}>
-							Candidate Info
+							User Info
 						</Typography>
-						<Typography
-							variant="p"
-							sx={{
-								color: (theme) => theme.palette.primary.main,
-								fontSize: "1rem",
-							}}
-						>
-							Name
-						</Typography>
-						<Typography
-							variant="p"
-							mb={1}
-							sx={{
-								fontSize: "1rem",
-							}}
-						>
-							{selectedCandidate.name?.first} {selectedCandidate.name?.last}
-						</Typography>
-						<Typography
-							variant="p"
-							sx={{
-								color: (theme) => theme.palette.primary.main,
-								fontSize: "1rem",
-							}}
-						>
-							Email
-						</Typography>
-						<Typography
-							variant="p"
-							mb={1}
-							sx={{
-								fontSize: "1rem",
-							}}
-						>
-							{selectedCandidate.email}
-						</Typography>
-						<Typography
-							variant="p"
-							sx={{
-								color: (theme) => theme.palette.primary.main,
-								fontSize: "1rem",
-							}}
-						>
-							Major
-						</Typography>
-						<Typography
-							variant="p"
-							mb={1}
-							sx={{
-								fontSize: "1rem",
-							}}
-						>
-							{selectedCandidate.major}
-						</Typography>
-						<Typography
-							variant="p"
-							sx={{
-								color: (theme) => theme.palette.primary.main,
-								fontSize: "1rem",
-							}}
-						>
-							Graduation Year
-						</Typography>
-						<Typography
-							variant="p"
-							mb={1}
-							sx={{
-								fontSize: "1rem",
-							}}
-						>
-							{selectedCandidate.graduationYear}
-						</Typography>
-						<Typography
-							variant="p"
-							sx={{
-								color: (theme) => theme.palette.primary.main,
-								fontSize: "1rem",
-							}}
-						>
-							Initiation Quarter
-						</Typography>
-						<Typography
-							variant="p"
-							mb={1}
-							sx={{
-								fontSize: "1rem",
-							}}
-						>
-							{selectedCandidate.initiationQuarter?.year}{" "}
-							{selectedCandidate.initiationQuarter?.quarter}
-						</Typography>
-						{selectedCandidate.position === positions.officer ? (
-							<div>
-								<Typography
-									variant="p"
-									sx={{
-										color: (theme) => theme.palette.primary.main,
-										fontSize: "1rem",
-									}}
-								>
-									Committees
-								</Typography>
-								<CommitteeList committees={selectedCandidate.committees} />
-							</div>
-						) : null}
-						<Typography variant="h4" color="secondary" mt={3}>
-							Manage Candidate
-						</Typography>
+                        <UserInfo
+                            selectedUser={selectedUser}
+                        />
 
 						<Typography variant="h4" color="secondary" mt={3}>
 							Upload Headshot
 						</Typography>
 
 						<UploadHeadshot
-							candidate={selectedCandidate}
-							setCandidate={setSelectedCandidate}
+							candidate={selectedUser}
+							setCandidate={setSelectedUser}
 						/>
 
 						<Grid
@@ -467,7 +283,7 @@ const ManageUsers = () => {
 									onClick={handleDelete}
 									sx={{ width: "100%" }}
 								>
-									Delete Candidate
+									Delete User
 								</Button>
 							</Grid>
 						</Grid>

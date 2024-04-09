@@ -254,6 +254,18 @@ userRouter.get("/get-all-users", (req, res) => {
 		});
 });
 
+userRouter.get("/get-non-candidates", (req, res) => {
+    User.find({ position: { $ne: "candidate" } })
+        .sort("name.last")
+		.then((users) => {
+			res.send(users);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).send("Could not retrieve users");
+		});  
+});
+
 userRouter.get("/get-officers-by-committee/:committee", (req, res) => {
 	const committee = req.params.committee;
 	const query = "committees." + committee;
