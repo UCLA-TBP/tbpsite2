@@ -20,6 +20,7 @@ import TestBank from './member-services/TestBank';
 // import Corporate from './member-services/Corporate';
 import InductionProgress from './candidates/InductionProgress';
 import CandidateTracker from './admin/CandidateTracker';
+import ManageUsers from './admin/ManageUsers';
 import TutoringPhrase from './admin/TutoringPhrase';
 import SignupForm from './signup/SignupForm';
 import CandidateSpreadsheet from './admin/CandidateSpreadsheet';
@@ -253,13 +254,28 @@ function App() {
                 />
               </Route>
             </Route>
+
             <Route path='admin'>
+              <Route
+                path='manage_users'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.admin]}
+                  />
+                }
+              >
+                <Route path='' element={<ManageUsers />} />
+              </Route>
+            </Route>
+
+            <Route path='officer'>
               <Route
                 path='candidate_tracker'
                 element={
                   <RouteProtection
                     authenticatedUser={authenticatedUser}
-                    allowedPositions={[positions.officer]}
+                    allowedPositions={[positions.officer, positions.admin]}
                   />
                 }
               >
@@ -270,7 +286,7 @@ function App() {
                 element={
                   <RouteProtection
                     authenticatedUser={authenticatedUser}
-                    allowedPositions={[positions.officer]}
+                    allowedPositions={[positions.officer, positions.admin]}
                   />
                 }
               >
@@ -281,20 +297,21 @@ function App() {
                 element={
                   <RouteProtection
                     authenticatedUser={authenticatedUser}
-                    allowedPositions={[positions.officer]}
+                    allowedPositions={[positions.officer, positions.admin]}
                   />
                 }
               >
                 <Route path='' element={<CandidateSpreadsheet />} />
               </Route>
             </Route>
+
             <Route path='members'>
               <Route
                 path='testbank'
                 element={
                   <RouteProtection
                     authenticatedUser={authenticatedUser}
-                    allowedPositions={[positions.member, positions.officer]}
+                    allowedPositions={[positions.member, positions.officer, positions.admin]}
                   />
                 }
               >

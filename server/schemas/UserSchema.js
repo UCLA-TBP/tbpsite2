@@ -35,7 +35,7 @@ const UserSchema = new mongoose.Schema({
   },
   position: {
     type: String,
-    enum: ['candidate', 'member', 'officer'],
+    enum: ['candidate', 'member', 'officer', 'admin'],
     required: true,
     default: 'candidate',
   },

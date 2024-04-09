@@ -80,11 +80,16 @@ const MoreDropDownEntries = [
 ];
 
 // TODO: change available links based on user position
+const AdminDropDownEntries = [
+  new DropDownItemData('ADMIN'),
+  new DropDownItemData('Manage Users', 'admin/manage_users'),
+];
+
 const OfficerDropDownEntries = [
   new DropDownItemData('OFFICER'),
-  new DropDownItemData('Candidate Tracker', 'admin/candidate_tracker'),
-  new DropDownItemData('Set Tutoring Phrase', 'admin/tutoring_phrase'),
-  new DropDownItemData('Candidate Spreadsheet', 'admin/candidate_spreadsheet'),
+  new DropDownItemData('Candidate Tracker', 'officer/candidate_tracker'),
+  new DropDownItemData('Set Tutoring Phrase', 'officer/tutoring_phrase'),
+  new DropDownItemData('Candidate Spreadsheet', 'officer/candidate_spreadsheet'),
   // new DropDownItemData('Admin Panel', '#!'),
   // new DropDownItemData('Candidates', '#!'),
   // new DropDownItemData('Active members', '#!'),
@@ -134,6 +139,14 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   useEffect(() => {
     const userPosition = authenticatedUser?.position;
     switch (userPosition) {
+      case 'admin':
+        setUserDropDownEntries([
+            ...AdminDropDownEntries,
+            ...OfficerDropDownEntries,
+            ...MemberDropDownEntries,
+            ...UniversalDropDownEntries,
+        ])
+        break;
       case 'officer':
         setUserDropDownEntries([
           ...OfficerDropDownEntries,
