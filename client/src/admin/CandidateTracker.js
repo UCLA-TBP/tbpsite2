@@ -209,9 +209,11 @@ const CandidateTracker = () => {
 							}}
 						>
 							{Object.values(positions).map((position) => (
-								<option key={position} value={position}>
-									{position}
-								</option>
+								position !== "admin" && (
+                                    <option key={position} value={position}>
+									    {position}
+								    </option>
+                                )
 							))}
 						</select>
 
