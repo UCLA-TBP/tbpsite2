@@ -16,7 +16,6 @@ import { positions } from "../permissions/PermissionsUtils";
 import UploadHeadshot from "../components/UploadHeadshot.js";
 import UserInfo from "../components/UserInfo.js";
 import axios from "axios";
-import _ from "lodash";
 import TBPBackground from "../components/TBPBackground";
 import DistinguishedActiveMemberReqs from "../components/DistinguishedActiveMemberReqs";
 import {

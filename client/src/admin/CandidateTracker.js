@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import SubmittedTests from "../components/SubmittedTests";
 import { positions } from "../permissions/PermissionsUtils";
-import UploadHeadshot from "../components/UploadHeadshot.js";
 import axios from "axios";
 import _ from "lodash";
 import TBPBackground from "../components/TBPBackground";
@@ -21,7 +20,6 @@ import DistinguishedActiveMemberReqs from "../components/DistinguishedActiveMemb
 import UserInfo from "../components/UserInfo";
 import {
 	OfficerCommitteeSelector,
-	CommitteeList,
 } from "../components/OfficerCommitteeHelpers";
 
 const filterOptions = createFilterOptions({
