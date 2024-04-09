@@ -35,7 +35,7 @@ const CandidateTracker = () => {
 
 	useEffect(() => {
 		axios
-			.get("/api/user/get-all-users")
+			.get("/api/user/get-candidates")
 			.then((res) => {
 				setCandidates(res.data);
 			})
@@ -49,7 +49,7 @@ const CandidateTracker = () => {
 			.put("/api/user/update-user/" + selectedCandidate._id, selectedCandidate)
 			.then((res) => {
 				axios
-					.get("/api/user/get-all-users")
+					.get("/api/user/get-candidates")
 					.then((res) => {
 						setCandidates(res.data);
 						setSnackbarMessage("Save successful!");
@@ -69,7 +69,7 @@ const CandidateTracker = () => {
 			.put("/api/user/delete-user/" + selectedCandidate._id, selectedCandidate)
 			.then((res) => {
 				axios
-					.get("/api/user/get-all-users")
+					.get("/api/user/get-candidates")
 					.then((res) => {
 						setCandidates(res.data);
 						setSelectedCandidate(null);
