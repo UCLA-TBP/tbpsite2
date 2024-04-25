@@ -170,7 +170,8 @@ const CandidateTracker = () => {
 																width: "15rem",
 															}}
 														>
-															{_.startCase(requirement)}
+                                                            
+															{ _.startCase(requirement) }
 														</Typography>
 													</Grid>
 													<Grid item xs={2}>

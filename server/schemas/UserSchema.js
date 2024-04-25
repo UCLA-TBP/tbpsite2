@@ -100,10 +100,6 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
-    interview: {
-      type: Boolean,
-      default: false,
-    },
     candidateQuiz: {
       type: Boolean,
       default: false,
@@ -145,6 +141,10 @@ const UserSchema = new mongoose.Schema({
       default: false,
     },
     chalking: {
+      type: Boolean,
+      default: false,
+    },
+    ethicsChat: {
       type: Boolean,
       default: false,
     },

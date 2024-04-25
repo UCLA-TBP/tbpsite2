@@ -33,7 +33,6 @@ function CandidateSpreadsheet() {
     'tutoring',
     'testBank',
     'corporate',
-    // 'interview',
     'candidateQuiz',
     'bentPolishing',
     'initiation',
@@ -43,6 +42,7 @@ function CandidateSpreadsheet() {
     'academicOutreach',
     'socialMediaPost',
     'chalking',
+    'ethicsChat',
   ];
 
   const disableHighlight = (e) => {
