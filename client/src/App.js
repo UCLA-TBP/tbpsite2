@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Home from './home/Home';
 import ProfileRequirements from './profile/ProfileRequirements';
 import Profile from './profile/Profile';
+import ProfilePage from './member-services/ProfilePage'
 import TutoringProfile from './profile/TutoringProfile';
 import UploadTest from './profile/UploadTest';
 import Events from './events/Events';
@@ -315,14 +316,33 @@ function App() {
                   />
                 }
               >
-                <Route 
-                  path='' 
+                <Route
+                  path=''
                   element={
-                    <TestBank 
-                        user={authenticatedUser}
-                        setUser={setAuthenticatedUser}
+                    <TestBank
+                      user={authenticatedUser}
+                      setUser={setAuthenticatedUser}
                     />
-                  } 
+                  }
+                />
+              </Route>
+              <Route
+                path='profile'
+                element={
+                  <RouteProtection
+                    authenticatedUser={authenticatedUser}
+                    allowedPositions={[positions.member, positions.officer, positions.admin]}
+                  />
+                }
+              >
+                <Route
+                  path=''
+                  element={
+                    <ProfilePage
+                      user={authenticatedUser}
+                      setUser={setAuthenticatedUser}
+                    />
+                  }
                 />
               </Route>
             </Route>
