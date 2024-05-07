@@ -16,6 +16,7 @@ import { positions } from '../permissions/PermissionsUtils';
 import axios from 'axios';
 import _ from 'lodash';
 import TBPBackground from '../components/TBPBackground';
+import UploadHeadshot from "../components/UploadHeadshot.js";
 
 const filterOptions = createFilterOptions({
     ignorecase: true,
@@ -26,7 +27,7 @@ function ProfilePage({
     setUser,
 }) {
     const [candidates, setCandidates] = useState([]);
-    const [selectedCandidate, setSelectedCandidate] = useState(null);
+    let [selectedCandidate, setSelectedCandidate] = useState(null);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
 
@@ -64,53 +65,11 @@ function ProfilePage({
     const handleSnackbarClose = (event, reason) => {
         setShowSnackbar(false);
     };
-
+    selectedCandidate = user;
     return (
         <>
             <TBPBackground />
             <Container sx={{ paddingTop: '85px !important' }}>
-                <Box
-                    sx={{
-                        backgroundColor: (theme) => alpha(theme.palette.custom.main, 0.95),
-                        borderRadius: '12px',
-                    }}
-                    p={5}
-                >
-                    <Typography
-                        variant='h2'
-                        mb={3}
-                        color='primary'
-                        sx={{
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        Profile Page
-                    </Typography>
-                    <Typography variant='h3' color='primary' mt={3} mb={1}>
-                        Name
-                    </Typography>
-                    <Autocomplete
-                        disablePortal
-                        options={candidates}
-                        getOptionLabel={(candidate) =>
-                            `${candidate.name?.first} ${candidate.name?.last}`
-                        }
-                        onChange={(e, val) => {
-                            setSelectedCandidate(val);
-                        }}
-                        sx={{
-                            backgroundColor: (theme) => theme.palette.primary.main,
-                            borderRadius: '0.2rem',
-                        }}
-                        filterOptions={filterOptions}
-                        isOptionEqualToValue={(option, value) =>
-                            option.email === value.email
-                        }
-                        renderInput={(params) => {
-                            return <TextField {...params} />;
-                        }}
-                    />
-                </Box>
                 {selectedCandidate && (
                     <Box
                         mt={4}
@@ -167,39 +126,19 @@ function ProfilePage({
                             </>
                         )}
                         <Typography variant='h4' color='secondary' mt={3} mb={1}>
-                            Membership Status
+                            Membership Status:
                         </Typography>
-                        <select
-                            value={selectedCandidate.position}
-                            onChange={(e) => {
-                                setSelectedCandidate({
-                                    ...selectedCandidate,
-                                    position: e.target.value,
-                                });
+                        <Typography
+                            variant='p'
+                            mt={1}
+                            sx={{
+                                color: (theme) => theme.palette.primary.main,
+                                fontSize: '1rem',
                             }}
                         >
-                            {Object.values(positions).map((position) => (
-                                <option key={position} value={position}>
-                                    {position}
-                                </option>
-                            ))}
-                        </select>
-                        <Grid
-                            container
-                            pt={3}
-                            sx={{ display: 'flex', justifyContent: 'left' }}
-                        >
-                            <Grid item xs={12} sm={3} lg={2}>
-                                <Button
-                                    color='secondary'
-                                    variant='contained'
-                                    onClick={handleSave}
-                                    sx={{ width: '100%' }}
-                                >
-                                    Save Changes
-                                </Button>
-                            </Grid>
-                        </Grid>
+                            {selectedCandidate.position}
+                        </Typography>
+
                         <Typography variant='h4' color='secondary' mt={3} mb={1}>
                             Tutoring Logs
                         </Typography>
@@ -334,6 +273,15 @@ function ProfilePage({
                             {selectedCandidate.initiationQuarter?.year}{' '}
                             {selectedCandidate.initiationQuarter?.quarter}
                         </Typography>
+
+                        <Typography variant="h4" color="secondary" mt={3}>
+                            Upload Headshot
+                        </Typography>
+
+                        <UploadHeadshot
+                            candidate={selectedCandidate}
+                            setCandidate={selectedCandidate}
+                        />
                     </Box>
                 )}
 
