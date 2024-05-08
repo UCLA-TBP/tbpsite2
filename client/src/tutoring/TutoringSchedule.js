@@ -10,8 +10,7 @@ function TutoringSchedule() {
       </Typography>
       <Typography variant='p' mt={3}>
         <span style={{ fontWeight: 'bold', color: 'white' }}>IMPORTANT: </span>
-        On Monday, February 5th, tutoring will be online due to the weather.
-        Please join us at Zoom link below!
+        While classes are online (currently Week 6 Wednesday through Friday), tutoring will be held on Zoom!
       </Typography>
       <Box
         sx={{
@@ -24,15 +23,12 @@ function TutoringSchedule() {
       >
         <Typography variant='p' color='white'>
           Zoom:{' '}
-          <a href='https://ucla.zoom.us/j/92528113754?pwd=SXpTUmUrbjBYOFQ3em9odjNjOTRBQT09'>
-            https://ucla.zoom.us/j/92528113754?pwd=SXpTUmUrbjBYOFQ3em9odjNjOTRBQT09
+          <a href='https://ucla.zoom.us/j/92285065964'>
+            https://ucla.zoom.us/j/92285065964
           </a>
         </Typography>
         <Typography variant='p' color='white'>
-          Meeting ID: 925 2811 3754
-        </Typography>
-        <Typography variant='p' color='white'>
-          Passcode: tbp2024
+          Meeting ID: 922 8506 5964
         </Typography>
       </Box>
       <Typography variant='p' mt={2}>
