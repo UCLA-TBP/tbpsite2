@@ -285,13 +285,13 @@ function Home() {
           <Typography variant='p' mb={'20px'}>
             Hours: Mon-Fri, 10 am - 4 pm, Weeks 3 - 9
           </Typography>
-          <Typography variant='p' mb={'20px'}>
+          {/*<Typography variant='p' mb={'20px'}>
             Tutoring will be on Zoom at the following link while classes are online:
             <br></br>
             <a href='https://ucla.zoom.us/j/92285065964'>
               https://ucla.zoom.us/j/92285065964
             </a>
-          </Typography>
+        </Typography>*/}
 
 
           <Grid

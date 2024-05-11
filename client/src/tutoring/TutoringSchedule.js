@@ -8,7 +8,7 @@ function TutoringSchedule() {
       <Typography variant='h2' mt={10}>
         Tutoring Schedule
       </Typography>
-      <Typography variant='p' mt={3}>
+      {/*<Typography variant='p' mt={3}>
         <span style={{ fontWeight: 'bold', color: 'white' }}>IMPORTANT: </span>
         While classes are online (currently Week 6 Wednesday through Friday), tutoring will be held on Zoom!
       </Typography>
@@ -31,6 +31,7 @@ function TutoringSchedule() {
           Meeting ID: 922 8506 5964
         </Typography>
       </Box>
+      */}
       <Typography variant='p' mt={2}>
         Direct any questions or concerns to TBP's tutoring chairs at{' '}
         <a href='mailto:uclatbp.tutoring@gmail.com'>
