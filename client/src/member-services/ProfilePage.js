@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
-    alpha,
-    Autocomplete,
     Box,
-    Button,
     Container,
     Grid,
     Snackbar,
-    TextField,
     Typography,
-    createFilterOptions,
 } from '@mui/material';
 import SubmittedTests from '../components/SubmittedTests';
 import { positions } from '../permissions/PermissionsUtils';
@@ -18,49 +13,13 @@ import _ from 'lodash';
 import TBPBackground from '../components/TBPBackground';
 import UploadHeadshot from "../components/UploadHeadshot.js";
 
-const filterOptions = createFilterOptions({
-    ignorecase: true,
-});
-
 function ProfilePage({
     user,
     setUser,
 }) {
-    const [candidates, setCandidates] = useState([]);
     let [selectedCandidate, setSelectedCandidate] = useState(null);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
-
-    useEffect(() => {
-        axios
-            .get('/api/user/get-all-users')
-            .then((res) => {
-                setCandidates(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
-
-    const handleSave = (e) => {
-        axios
-            .put('/api/user/update-user/' + selectedCandidate._id, selectedCandidate)
-            .then((res) => {
-                axios
-                    .get('/api/user/get-all-users')
-                    .then((res) => {
-                        setCandidates(res.data);
-                        setSnackbarMessage('Save successful!');
-                        setShowSnackbar(true);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        setSnackbarMessage('Save error!');
-                        setShowSnackbar(true);
-                    });
-            })
-            .catch((err) => console.log(err));
-    };
 
     const handleSnackbarClose = (event, reason) => {
         setShowSnackbar(false);
