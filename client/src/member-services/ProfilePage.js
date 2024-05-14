@@ -3,27 +3,19 @@ import {
     Box,
     Container,
     Grid,
-    Snackbar,
     Typography,
 } from '@mui/material';
 import SubmittedTests from '../components/SubmittedTests';
 import { positions } from '../permissions/PermissionsUtils';
-import axios from 'axios';
 import _ from 'lodash';
 import TBPBackground from '../components/TBPBackground';
 import UploadHeadshot from "../components/UploadHeadshot.js";
 
 function ProfilePage({
-    user,
-    setUser,
+    user
 }) {
     let [selectedCandidate, setSelectedCandidate] = useState(null);
-    const [showSnackbar, setShowSnackbar] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
 
-    const handleSnackbarClose = (event, reason) => {
-        setShowSnackbar(false);
-    };
     selectedCandidate = user;
     return (
         <>
@@ -243,20 +235,6 @@ function ProfilePage({
                         />
                     </Box>
                 )}
-
-                <Snackbar
-                    open={showSnackbar}
-                    autoHideDuration={4000}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                    onClose={handleSnackbarClose}
-                    message={snackbarMessage}
-                    sx={{
-                        '& .MuiSnackbarContent-root': {
-                            color: 'black', //your custom color here
-                            backgroundColor: (theme) => theme.palette.secondary.main, //your custom color here
-                        },
-                    }}
-                />
             </Container>
         </>
     );

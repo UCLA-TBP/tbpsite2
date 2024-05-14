@@ -340,7 +340,6 @@ function App() {
                   element={
                     <ProfilePage
                       user={authenticatedUser}
-                      setUser={setAuthenticatedUser}
                     />
                   }
                 />
