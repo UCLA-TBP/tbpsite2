@@ -342,7 +342,7 @@ const InductionProgress = ({ candidate, setCandidate }) => {
           />
           <RequirementDescription
             description={
-              'Discuss ethically-challenging global phenomena and trends.'
+              'Meet other candidates and discuss a humanities topic in a small group, then explore its intersection with STEM.'
             }
           />
         </Box>
