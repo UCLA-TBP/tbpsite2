@@ -107,6 +107,7 @@ const OfficerDropDownEntries = [
 const MemberDropDownEntries = [
   new DropDownItemData('MEMBER SERVICES'),
   new DropDownItemData('Testbank', 'members/testbank'),
+  new DropDownItemData('Profile', 'members/Profile'),
 ];
 
 const CandidateDropDownEntries = [
@@ -141,10 +142,10 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
     switch (userPosition) {
       case 'admin':
         setUserDropDownEntries([
-            ...AdminDropDownEntries,
-            ...OfficerDropDownEntries,
-            ...MemberDropDownEntries,
-            ...UniversalDropDownEntries,
+          ...AdminDropDownEntries,
+          ...OfficerDropDownEntries,
+          ...MemberDropDownEntries,
+          ...UniversalDropDownEntries,
         ])
         break;
       case 'officer':
@@ -234,9 +235,9 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         backgroundColor: (theme) =>
           doScrollFade
             ? alpha(
-                theme.palette.primary.main,
-                0.8 * Math.min(1, scrollPos / 500)
-              )
+              theme.palette.primary.main,
+              0.8 * Math.min(1, scrollPos / 500)
+            )
             : theme.palette.primary.main,
         boxShadow: 0,
       }}
@@ -253,9 +254,9 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
           sx={
             isMobileView
               ? {
-                  position: 'absolute',
-                  left: '12px',
-                }
+                position: 'absolute',
+                left: '12px',
+              }
               : {}
           }
         >
@@ -287,8 +288,8 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
               dropDownParent === 'more'
                 ? handleDropDownClose
                 : (e) => {
-                    handleDropDown(e, MoreDropDownEntries, 'more');
-                  }
+                  handleDropDown(e, MoreDropDownEntries, 'more');
+                }
             }
             onMouseEnter={(e) => {
               handleDropDown(e, MoreDropDownEntries, 'more');
@@ -306,8 +307,8 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
                 dropDownParent === 'user'
                   ? handleDropDownClose
                   : (e) => {
-                      handleDropDown(e, userDropDownEntries, 'user');
-                    }
+                    handleDropDown(e, userDropDownEntries, 'user');
+                  }
               }
               onMouseEnter={(e) => {
                 handleDropDown(e, userDropDownEntries, 'user');
@@ -325,12 +326,12 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
                 dropDownParent === 'user'
                   ? handleDropDownClose
                   : (e) => {
-                      handleDropDown(
-                        e,
-                        [new DropDownItemData('login')],
-                        'user'
-                      );
-                    }
+                    handleDropDown(
+                      e,
+                      [new DropDownItemData('login')],
+                      'user'
+                    );
+                  }
               }
               onMouseEnter={(e) => {
                 handleDropDown(e, [new DropDownItemData('login')], 'user');
