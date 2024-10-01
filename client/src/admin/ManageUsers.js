@@ -178,8 +178,8 @@ const ManageUsers = () => {
 
 								<OfficerCommitteeSelector
 									committeeOptions={selectedUser.committees}
-									selectedUser={selectedUser}
-									setSelectedUser={setSelectedUser}
+									selectedCandidate={selectedUser}
+									setSelectedCandidate={setSelectedUser}
 								/>
 							</div>
 						) : null}
@@ -205,8 +205,8 @@ const ManageUsers = () => {
 										selectedUser.distinguishedActiveMember
 											.quarterOneRequirements
 									}
-									selectedUser={selectedUser}
-									setSelectedUser={setSelectedUser}
+									selectedCandidate={selectedUser}
+									setSelectedCandidate={setSelectedUser}
 								/>
 
 								<br />
@@ -226,8 +226,8 @@ const ManageUsers = () => {
 										selectedUser.distinguishedActiveMember
 											.quarterTwoRequirements
 									}
-									selectedUser={selectedUser}
-									setSelectedUser={setSelectedUser}
+									selectedCandidate={selectedUser}
+									setSelectedCandidate={setSelectedUser}
 								/>
 							</div>
 						) : null}
