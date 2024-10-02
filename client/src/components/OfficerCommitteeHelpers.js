@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import _ from 'lodash';
@@ -32,10 +32,6 @@ export const CommitteeList = ({ committees }) => {
 };
 
 export const OfficerCommitteeSelector = ({ committeeOptions, selectedCandidate, setSelectedCandidate }) => {
-
-  useEffect(() => {
-  console.log(selectedCandidate);
-  }, []);
   
   return (
     <div>
