@@ -38,6 +38,7 @@ const COMMITTEE_NAMES = {
 	Treasurer: "Treasurer",
 	Tutoring: "Tutoring",
 	Webmaster: "Webmaster",
+	Ethics: "Ethics",
 };
 
 const COMMITTEE_EMAILS = {
@@ -54,6 +55,7 @@ const COMMITTEE_EMAILS = {
 	Treasurer: "uclatbp.treasurer@gmail.com",
 	Tutoring: "uclatbp.tutoring@gmail.com",
 	Webmaster: "uclatbp.webmaster@gmail.com",
+	Ethics: "uclatbp.ethics@gmail.com",
 };
 
 function Officers() {
