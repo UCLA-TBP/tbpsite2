@@ -259,6 +259,10 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
+    Ethics: {
+      type: Boolean,
+      default: false
+    }
   },
   headshot: {
     url: {
