@@ -21,6 +21,7 @@ const COMMITTEES = [
 	"Treasurer",
 	"Tutoring",
 	"Webmaster",
+	"Ethics",
 ];
 
 const COMMITTEE_NAMES = {
