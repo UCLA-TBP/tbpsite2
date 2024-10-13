@@ -92,6 +92,9 @@ const LoginForm = ({ loginCallback }) => {
         type={'password'}
         onKeyDown={(e) => {
           e.stopPropagation();
+          if (e.key === "Enter") {
+            handleLogin();
+          }
         }}
         onChange={(e) => {
           setPassword(e.target.value);
