@@ -425,33 +425,6 @@ function UploadTest({ candidate, setCandidate }) {
 				style={{ overflowY: "scroll", overflowX: "auto" }}
 			>
 				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
-				<SubmittedTests candidate={candidate}></SubmittedTests>
 			</Grid>
 
 			<Snackbar
