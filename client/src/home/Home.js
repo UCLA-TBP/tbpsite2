@@ -195,6 +195,21 @@ function Home() {
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
 
         <FloatingContainer
+          id='awards'
+          className='section-container'
+          sx={{
+            opacity: `${sectionOpacities['awards']}`,
+          }}
+        >
+          <Typography variant='h2' mb={'20px'}>
+            Awards
+          </Typography>
+          <Typography variant='p' mb={'20px'}>
+            Lorem ipsum dolor sit amet consecutor.
+          </Typography>
+        </FloatingContainer>
+
+        <FloatingContainer
           className='section-container'
           id='becoming-a-member'
           sx={{

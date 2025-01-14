@@ -61,6 +61,7 @@ class DropDownItemData {
 const MoreDropDownEntries = [
   new DropDownItemData('HOME'),
   new DropDownItemData('Who We Are', '#who-we-are'),
+  new DropDownItemData('Awards', '#awards'),
   new DropDownItemData('Becoming a Member', '#becoming-a-member'),
   new DropDownItemData('Tutoring', '#tutoring'),
   new DropDownItemData('Event Calendar', '#event-calendar'),
