@@ -205,7 +205,10 @@ function Home() {
             Awards
           </Typography>
           <Typography variant='p' mb={'20px'}>
-            Lorem ipsum dolor sit amet consecutor.
+          <ul>
+            <li>Outstanding Project Award 2024 from TBP Nationals</li>
+            <li>Outstanding Project Award 2023 from TBP Nationals</li>
+            </ul>
           </Typography>
         </FloatingContainer>
 
