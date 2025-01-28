@@ -202,7 +202,7 @@ function Home() {
           }}
         >
           <Typography variant='h2' mb={'20px'}>
-            Awards
+            Chapter Awards
           </Typography>
           <Typography variant='p' mb={'20px'}>
           <ul>
