@@ -195,6 +195,24 @@ function Home() {
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
 
         <FloatingContainer
+          id='awards'
+          className='section-container'
+          sx={{
+            opacity: `${sectionOpacities['awards']}`,
+          }}
+        >
+          <Typography variant='h2' mb={'20px'}>
+            Awards
+          </Typography>
+          <Typography variant='p' mb={'20px'}>
+          <ul>
+            <li>Outstanding Project Award 2024 from TBP Nationals</li>
+            <li>Outstanding Project Award 2023 from TBP Nationals</li>
+            </ul>
+          </Typography>
+        </FloatingContainer>
+
+        <FloatingContainer
           className='section-container'
           id='becoming-a-member'
           sx={{
