@@ -148,6 +148,10 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
+    ethicsIntroChat: {
+      type: Boolean,
+      default: false,
+    },
   },
   tutoringLog: {
     type: [

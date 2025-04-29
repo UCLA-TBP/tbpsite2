@@ -346,6 +346,20 @@ const InductionProgress = ({ candidate, setCandidate }) => {
             }
           />
         </Box>
+
+        <Box mt={5}>
+          <Typography variant='h3' color='primary'>
+            Ethics Intro Chat
+          </Typography>
+          <ProgressIndicator
+            requirementMet={candidate.requirements?.ethicsIntroChat}
+          />
+        <RequirementDescription
+            description={
+              'Attend an introductory ethics chat.'
+            }
+          />
+        </Box>
         <Snackbar
           open={showSnackbar}
           autoHideDuration={4000}
