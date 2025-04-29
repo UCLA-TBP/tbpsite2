@@ -43,6 +43,7 @@ function CandidateSpreadsheet() {
     'socialMediaPost',
     'chalking',
     'ethicsChat',
+    'ethicsIntroChat',
   ];
 
   const disableHighlight = (e) => {
