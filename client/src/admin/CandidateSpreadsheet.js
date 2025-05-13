@@ -356,7 +356,7 @@ function CandidateSpreadsheet() {
                   </Cell>
                   {requirements.map(
                     (requirement, idx) =>
-                      idx < 15 && (
+                      idx < requirements.length && (
                         <Cell
                           key={candidate._id + requirement}
                           onMouseDown={() => {
