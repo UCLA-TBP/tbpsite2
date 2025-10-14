@@ -188,7 +188,20 @@ function Home() {
             engineering profession, and the California Epsilon chapter has
             served the UCLA community since 1952. By recognizing professional
             achievement, as well as service, Tau Beta Pi strives to uphold its
-            creed of “Integrity and Excellence in Engineering.”
+            creed of "Integrity and Excellence in Engineering."
+          </Typography>
+          <Typography variant="p" mb={"20px"} id="inclusion-statement">
+            <em>
+              Consistent with the mission of{" "}
+              <a
+                href="https://www.tbp.org/home.cfm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tau Beta Pi
+              </a>
+              , the UCLA chapter of TBP is open to all students.
+            </em>
           </Typography>
         </FloatingContainer>
 
