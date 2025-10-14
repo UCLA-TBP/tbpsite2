@@ -1,33 +1,33 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './Home.css';
-import { Grid, Button, Container } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
-import EventsCalendar from '../components/EventsCalendar';
-import styled from '@emotion/styled';
+import React, { useState, useEffect, useRef } from "react";
+import "./Home.css";
+import { Grid, Button, Container } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { CardActionArea } from "@mui/material";
+import EventsCalendar from "../components/EventsCalendar";
+import styled from "@emotion/styled";
 
 const FloatingContainer = styled(Container)(({ theme }) => ({
   backgroundColor: theme.palette.custom.main,
-  [theme.breakpoints.up('xs')]: {
-    marginBottom: '20px',
-    borderRadius: '0',
+  [theme.breakpoints.up("xs")]: {
+    marginBottom: "20px",
+    borderRadius: "0",
   },
-  [theme.breakpoints.up('sm')]: {
-    marginBottom: '100px',
-    borderRadius: '12px',
+  [theme.breakpoints.up("sm")]: {
+    marginBottom: "100px",
+    borderRadius: "12px",
   },
 }));
 
 const sectionIds = [
-  'who-we-are',
-  'becoming-a-member',
-  'tutoring',
-  'event-calendar',
-  'activities',
-  'contact',
+  "who-we-are",
+  "becoming-a-member",
+  "tutoring",
+  "event-calendar",
+  "activities",
+  "contact",
 ];
 
 const maxOpacity = 1;
@@ -73,19 +73,19 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
     <>
       <div
-        className='background'
+        className="background"
         onClick={() => {
-          console.log('bg click');
+          console.log("bg click");
         }}
       >
         {/* <Grid
@@ -108,143 +108,156 @@ function Home() {
 
         <Container
           disableGutters
-          maxWidth='100%'
+          maxWidth="100%"
           sx={{
-            position: 'sticky',
+            position: "sticky",
             top: {
               xs: `${37 - scrollPos / 100}%`,
               md: `${40 - scrollPos / 100}%`,
             },
-            textAlign: 'right',
-            paddingRight: { sm: '10vw', xl: '20vw' },
+            textAlign: "right",
+            paddingRight: { sm: "10vw", xl: "20vw" },
             opacity: Math.max(0, 1.4 - scrollPos / 400),
           }}
         >
           <Typography
-            variant='h1'
+            variant="h1"
             sx={{
-              fontSize: { xs: '200%', sm: '250%', md: '350%' },
-              textAlign: { xs: 'center', md: 'right' },
-              lineHeight: { xs: '2', md: '1.2' },
+              fontSize: { xs: "200%", sm: "250%", md: "350%" },
+              textAlign: { xs: "center", md: "right" },
+              lineHeight: { xs: "2", md: "1.2" },
             }}
           >
             The Honor Society for
             <br></br>
-            <Typography variant='highlight'>All Engineers </Typography>
+            <Typography variant="highlight">All Engineers </Typography>
             at UCLA
           </Typography>
         </Container>
         <section
-          className='scroll-down'
+          className="scroll-down"
           style={{
-            position: 'sticky',
+            position: "sticky",
             top: `${90 - scrollPos / 25}%`,
             opacity: Math.max(0, 1.4 - scrollPos / 100),
           }}
           onClick={() => {
-            console.log('clicked');
+            console.log("clicked");
           }}
         >
           {/* <a href='/#who-we-are'>
             <KeyboardArrowDownIcon />
           </a>
            */}
-          <div className='arrow arrow-first' />
-          <div className='arrow arrow-second' />
+          <div className="arrow arrow-first" />
+          <div className="arrow arrow-second" />
         </section>
       </div>
       <div
         style={{
-          position: 'absolute',
-          top: '20vh',
-          height: '80vh',
-          width: '100%',
-          cursor: 'pointer',
+          position: "absolute",
+          top: "20vh",
+          height: "80vh",
+          width: "100%",
+          cursor: "pointer",
         }}
         onClick={() => {
-          const whoWeAreEle = document.getElementById('who-we-are');
+          const whoWeAreEle = document.getElementById("who-we-are");
           whoWeAreEle.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center',
+            behavior: "smooth",
+            block: "center",
+            inline: "center",
           });
         }}
       ></div>
 
-      <div className='section-secondary'>
+      <div className="section-secondary">
         <FloatingContainer
-          id='who-we-are'
-          className='section-container'
+          id="who-we-are"
+          className="section-container"
           sx={{
             // transform: `scale(${sectionScales['who-we-are']})`,
-            opacity: `${sectionOpacities['who-we-are']}`,
+            opacity: `${sectionOpacities["who-we-are"]}`,
           }}
         >
-          <Typography variant='h2' mb={'20px'}>
+          <Typography variant="h2" mb={"20px"}>
             Who We Are
           </Typography>
-          <Typography variant='p' mb={'20px'} id='who-we-are-text'>
+          <Typography variant="p" mb={"20px"} id="who-we-are-text">
             Tau Beta Pi is the national honor society representing the entire
             engineering profession, and the California Epsilon chapter has
             served the UCLA community since 1952. By recognizing professional
             achievement, as well as service, Tau Beta Pi strives to uphold its
-            creed of “Integrity and Excellence in Engineering.”
+            creed of "Integrity and Excellence in Engineering."
+          </Typography>
+          <Typography variant="p" mb={"20px"} id="inclusion-statement">
+            <em>
+              Consistent with the mission of{" "}
+              <a
+                href="https://www.tbp.org/home.cfm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Tau Beta Pi
+              </a>
+              , the UCLA chapter of TBP is open to all students.
+            </em>
           </Typography>
         </FloatingContainer>
 
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
 
         <FloatingContainer
-          id='awards'
-          className='section-container'
+          id="awards"
+          className="section-container"
           sx={{
-            opacity: `${sectionOpacities['awards']}`,
+            opacity: `${sectionOpacities["awards"]}`,
           }}
         >
-          <Typography variant='h2' mb={'20px'}>
+          <Typography variant="h2" mb={"20px"}>
             Chapter Awards
           </Typography>
-          <Typography variant='p' mb={'20px'}>
-          <ul>
-            <li>Outstanding Project Award 2024 from TBP Nationals</li>
-            <li>Outstanding Project Award 2023 from TBP Nationals</li>
+          <Typography variant="p" mb={"20px"}>
+            <ul>
+              <li>Outstanding Project Award 2024 from TBP Nationals</li>
+              <li>Outstanding Project Award 2023 from TBP Nationals</li>
             </ul>
           </Typography>
         </FloatingContainer>
 
         <FloatingContainer
-          className='section-container'
-          id='becoming-a-member'
+          className="section-container"
+          id="becoming-a-member"
           sx={{
             // transform: `scale(${sectionScales['becoming-a-member']})`,
-            opacity: `${sectionOpacities['becoming-a-member']}`,
+            opacity: `${sectionOpacities["becoming-a-member"]}`,
           }}
         >
-          <Typography variant='h2' mb={'20px'}>
+          <Typography variant="h2" mb={"20px"}>
             Becoming a Member
           </Typography>
-          <Typography variant='p' mb={'20px'}>
+          <Typography variant="p" mb={"20px"}>
             Invitations for membership may be extended to undergraduate
             engineering majors who are in the top 1/5 of Senior Class or 1/8 of
             Junior Class.
           </Typography>
-          <Typography variant='p' mb={'20px'}>
+          <Typography variant="p" mb={"20px"}>
             Candidates must also have completed at least 28 units from UCLA to
             be invited in the Fall or Spring. Junior and senior class
             designation are based on units completed per the&nbsp;
-            <a href='https://registrar.ucla.edu/registration-classes/enrollment-policies/class-levels'>
+            <a href="https://registrar.ucla.edu/registration-classes/enrollment-policies/class-levels">
               UCLA Registrar's Office
             </a>
             . For Fall invitations, grades and units obtained up until the end
             of Summer Session A - 6 Weeks will be considered.
           </Typography>
-          <Typography variant='p' mb={'20px'}>
+          <Typography variant="p" mb={"20px"}>
             Once eligible and candidacy is confirmed, initiates must demonstrate
             their commitment to TBP’s values. This is done through weekly
             volunteering, service, and several TBP traditions like polishing the
             Bent outside Boelter Hall.
           </Typography>
-          <Typography variant='p' mb={'20px'}>
+          <Typography variant="p" mb={"20px"}>
             After officially initiating, members have the option to continue
             their involvement by either joining the officer board or becoming a
             distinguished active member. Both receive discounts on TBP
@@ -256,16 +269,16 @@ function Home() {
             container
             spacing={5}
             pt={4}
-            direction='row'
-            alignItems='center'
-            justifyContent='center'
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
           >
             <Grid item>
               <Button
-                color='secondary'
-                variant='outlined'
-                href='https://docs.google.com/document/d/1t1796RIZrXh7yJmIeSQ4lMdsVNo1kbZGjuxT5Xcwlrk/edit?usp=sharing'
-                size='large'
+                color="secondary"
+                variant="outlined"
+                href="https://docs.google.com/document/d/15Dnq8KTx9NvJ_hhIim2_DkbRt0phX1PiR-6FYqdqp9s/edit?tab=t.0#heading=h.brhg8xnyukgs"
+                size="large"
               >
                 Candidate Packet
               </Button>
@@ -284,23 +297,23 @@ function Home() {
         </FloatingContainer>
 
         <FloatingContainer
-          className='section-container'
-          id='tutoring'
+          className="section-container"
+          id="tutoring"
           sx={{
             // transform: `scale(${sectionScales['tutoring']})`,
-            opacity: `${sectionOpacities['tutoring']}`,
+            opacity: `${sectionOpacities["tutoring"]}`,
           }}
         >
           {/* <h1 className='header'>Tutoring</h1> */}
-          <Typography variant='h2' mb={'20px'}>
+          <Typography variant="h2" mb={"20px"}>
             Tutoring
           </Typography>
-          <Typography variant='p' mb={'20px'}>
+          <Typography variant="p" mb={"20px"}>
             We offer free drop-in tutoring in all STEM courses at our office
             (Boelter 6266). Feel free to stop by for homework help or pre-exam
             practice. Please check the schedule below for course availability.
           </Typography>
-          <Typography variant='p' mb={'20px'}>
+          <Typography variant="p" mb={"20px"}>
             Hours: Mon-Fri, 10 am - 4 pm, Weeks 3 - 9
           </Typography>
           {/*<Typography variant='p' mb={'20px'}>
@@ -311,21 +324,20 @@ function Home() {
             </a>
         </Typography>*/}
 
-
           <Grid
             container
             spacing={5}
             pt={4}
-            direction='row'
-            alignItems='center'
-            justifyContent='center'
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
           >
             <Grid item>
               <Button
-                size='large'
-                href='tutoring/schedule/'
-                color='secondary'
-                variant='outlined'
+                size="large"
+                href="tutoring/schedule/"
+                color="secondary"
+                variant="outlined"
               >
                 SCHEDULE
               </Button>
@@ -344,10 +356,10 @@ function Home() {
 
             <Grid item>
               <Button
-                href='https://forms.gle/sburNuSv83ekaTTf8'
-                color='secondary'
-                variant='outlined'
-                size='large'
+                href="https://forms.gle/sburNuSv83ekaTTf8"
+                color="secondary"
+                variant="outlined"
+                size="large"
               >
                 FEEDBACK
               </Button>
@@ -369,15 +381,15 @@ function Home() {
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
 
         <FloatingContainer
-          className='section-container'
-          id='event-calendar'
+          className="section-container"
+          id="event-calendar"
           sx={{
             // transform: `scale(${sectionScales['event-calendar']})`,
-            opacity: `${sectionOpacities['event-calendar']}`,
+            opacity: `${sectionOpacities["event-calendar"]}`,
           }}
         >
           {/* <h1 className='header'>Activities</h1> */}
-          <Typography variant='h2' mb={'20px'}>
+          <Typography variant="h2" mb={"20px"}>
             Event Calendar
           </Typography>
 
@@ -385,35 +397,35 @@ function Home() {
         </FloatingContainer>
 
         <FloatingContainer
-          className='section-container'
-          id='activities'
+          className="section-container"
+          id="activities"
           sx={{
             // transform: `scale(${sectionScales['activities']})`,
-            opacity: `${sectionOpacities['activities']}`,
+            opacity: `${sectionOpacities["activities"]}`,
           }}
         >
-          <Typography variant='h2' mb={'20px'}>
+          <Typography variant="h2" mb={"20px"}>
             Activities
           </Typography>
           <Grid
             container
             spacing={5}
             pt={4}
-            direction='row'
-            alignItems='center'
-            justifyContent='center'
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
           >
             <Grid item>
               <Card sx={{ maxWidth: 500 }}>
                 <CardActionArea>
                   <CardMedia
-                    component='img'
-                    height='200'
+                    component="img"
+                    height="200"
                     image={`${process.env.PUBLIC_URL}/home/careerguidance.png`}
                   />
-                  <CardContent className='card-background'>
-                    <h2 className='card-title'>Career Guidance</h2>
-                    <p className='card-text'>
+                  <CardContent className="card-background">
+                    <h2 className="card-title">Career Guidance</h2>
+                    <p className="card-text">
                       With so many accomplished members, TBP is dedicated to
                       assisting the next generation of engineers reach their
                       professional goals. We host career fairs and offer
@@ -431,14 +443,14 @@ function Home() {
               <Card sx={{ maxWidth: 500 }}>
                 <CardActionArea>
                   <CardMedia
-                    component='img'
-                    height='200'
+                    component="img"
+                    height="200"
                     image={`${process.env.PUBLIC_URL}/home/ao.jpeg`}
                   />
-                  <CardContent className='card-background'>
-                    <h2 className='card-title'>Academic Outreach</h2>
+                  <CardContent className="card-background">
+                    <h2 className="card-title">Academic Outreach</h2>
                     {/* I know these line breaks are so ugly, but it was an easy way to make all cards the same size :/ */}
-                    <p className='card-text'>
+                    <p className="card-text">
                       In addition to TBP’s drop-in tutoring program, we also
                       host larger review sessions for Math and Physics courses
                       in preparation for midterms and finals.
@@ -453,13 +465,13 @@ function Home() {
               <Card sx={{ maxWidth: 500 }}>
                 <CardActionArea>
                   <CardMedia
-                    component='img'
-                    height='200'
+                    component="img"
+                    height="200"
                     image={`${process.env.PUBLIC_URL}/home/emcc.png`}
                   />
-                  <CardContent className='card-background'>
-                    <h2 className='card-title'>EMCC</h2>
-                    <p className='card-text'>
+                  <CardContent className="card-background">
+                    <h2 className="card-title">EMCC</h2>
+                    <p className="card-text">
                       In EMCC, we aim to inspire younger students to follow a
                       career path in STEM. We do this by putting together
                       hands-on science experiments to promote STEM engagement.
@@ -477,13 +489,13 @@ function Home() {
               <Card sx={{ maxWidth: 500 }}>
                 <CardActionArea>
                   <CardMedia
-                    component='img'
-                    height='200'
+                    component="img"
+                    height="200"
                     image={`${process.env.PUBLIC_URL}/home/competition.png`}
                   />
-                  <CardContent className='card-background'>
-                    <h2 className='card-title'>Competitions</h2>
-                    <p className='card-text'>
+                  <CardContent className="card-background">
+                    <h2 className="card-title">Competitions</h2>
+                    <p className="card-text">
                       Every year, TBP hosts competitions that exercise
                       on-the-fly thinking and creativity. Our biggest event is
                       our annual Rube Goldberg Competition in the winter, which
@@ -502,28 +514,28 @@ function Home() {
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
 
         <FloatingContainer
-          id='contact'
-          className='section-container last-section'
+          id="contact"
+          className="section-container last-section"
           sx={{
             // transform: `scale(${sectionScales['contact']})`,
-            opacity: `${sectionOpacities['contact']}`,
+            opacity: `${sectionOpacities["contact"]}`,
           }}
         >
           {/* <h1 className='header'>Contacts and Other Links</h1> */}
-          <Typography variant='h2' mb={'20px'}>
+          <Typography variant="h2" mb={"20px"}>
             Contacts and Other Links
           </Typography>
 
-          <Typography variant='p' mb={'20px'}>
+          <Typography variant="p" mb={"20px"}>
             Location: 6266 Boelter Hall
           </Typography>
 
-          <Typography variant='p' mb={'20px'}>
+          <Typography variant="p" mb={"20px"}>
             Email:&nbsp;
             <a
-              id='email-link'
-              className='no-underline'
-              href='mailto:ucla.tbp@gmail.com'
+              id="email-link"
+              className="no-underline"
+              href="mailto:ucla.tbp@gmail.com"
             >
               ucla.tbp@gmail.com
             </a>
@@ -533,18 +545,18 @@ function Home() {
             container
             spacing={5}
             pt={4}
-            direction='row'
-            alignItems='center'
-            justifyContent='center'
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
           >
             <Grid item>
-              <Button href='/officers/' color='secondary' variant='outlined'>
+              <Button href="/officers/" color="secondary" variant="outlined">
                 OFFICERS
               </Button>
             </Grid>
 
             <Grid item>
-              <Button href='/faculty/' color='secondary' variant='outlined'>
+              <Button href="/faculty/" color="secondary" variant="outlined">
                 FACULTY
               </Button>
             </Grid>
@@ -557,9 +569,9 @@ function Home() {
 
             <Grid item>
               <Button
-                href='https://www.facebook.com/tbp.ucla'
-                color='secondary'
-                variant='outlined'
+                href="https://www.facebook.com/tbp.ucla"
+                color="secondary"
+                variant="outlined"
               >
                 FACEBOOK
               </Button>
@@ -567,9 +579,9 @@ function Home() {
 
             <Grid item>
               <Button
-                href='https://www.instagram.com/uclatbp'
-                color='secondary'
-                variant='outlined'
+                href="https://www.instagram.com/uclatbp"
+                color="secondary"
+                variant="outlined"
               >
                 INSTAGRAM
               </Button>
@@ -577,9 +589,9 @@ function Home() {
 
             <Grid item>
               <Button
-                href='https://www.tbp.org/home.cfm'
-                color='secondary'
-                variant='outlined'
+                href="https://www.tbp.org/home.cfm"
+                color="secondary"
+                variant="outlined"
               >
                 TBP NATIONAL
               </Button>
@@ -587,9 +599,9 @@ function Home() {
 
             <Grid item>
               <Button
-                href='https://samueli.ucla.edu/'
-                color='secondary'
-                variant='outlined'
+                href="https://samueli.ucla.edu/"
+                color="secondary"
+                variant="outlined"
               >
                 UCLA HSSEAS
               </Button>
@@ -597,9 +609,9 @@ function Home() {
 
             <Grid item>
               <Button
-                href='https://forms.gle/AQau2zmN1wug2GKa7'
-                color='secondary'
-                variant='outlined'
+                href="https://forms.gle/y5bZUNxvtAY4Y6Ws6"
+                color="secondary"
+                variant="outlined"
               >
                 WEBSITE FEEDBACK
               </Button>
