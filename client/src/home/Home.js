@@ -7,6 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import EventsCalendar from "../components/EventsCalendar";
+import FacultyList from "../components/FacultyList";
 import styled from "@emotion/styled";
 
 const FloatingContainer = styled(Container)(({ theme }) => ({
@@ -27,6 +28,7 @@ const sectionIds = [
   "tutoring",
   "event-calendar",
   "activities",
+  "faculty-members",
   "contact",
 ];
 
@@ -512,6 +514,8 @@ function Home() {
         </FloatingContainer>
 
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
+
+        <FacultyList opacity={sectionOpacities["faculty"]} />
 
         <FloatingContainer
           id="contact"
