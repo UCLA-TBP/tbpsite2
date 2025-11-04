@@ -7,6 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import EventsCalendar from "../components/EventsCalendar";
+import FacultyList from "../components/FacultyList";
 import styled from "@emotion/styled";
 
 const FloatingContainer = styled(Container)(({ theme }) => ({
@@ -27,6 +28,7 @@ const sectionIds = [
   "tutoring",
   "event-calendar",
   "activities",
+  "faculty-list",
   "contact",
 ];
 
@@ -206,24 +208,6 @@ function Home() {
         </FloatingContainer>
 
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
-
-        <FloatingContainer
-          id="awards"
-          className="section-container"
-          sx={{
-            opacity: `${sectionOpacities["awards"]}`,
-          }}
-        >
-          <Typography variant="h2" mb={"20px"}>
-            Chapter Awards
-          </Typography>
-          <Typography variant="p" mb={"20px"}>
-            <ul>
-              <li>Outstanding Project Award 2024 from TBP Nationals</li>
-              <li>Outstanding Project Award 2023 from TBP Nationals</li>
-            </ul>
-          </Typography>
-        </FloatingContainer>
 
         <FloatingContainer
           className="section-container"
@@ -512,6 +496,29 @@ function Home() {
         </FloatingContainer>
 
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
+
+        <FloatingContainer
+          id="awards"
+          className="section-container"
+          sx={{
+            opacity: `${sectionOpacities["awards"]}`,
+          }}
+        >
+          <Typography variant="h2" mb={"20px"}>
+            Chapter Awards
+          </Typography>
+          <Typography variant="p" mb={"20px"}>
+            <ul>
+              <li>Outstanding Project Award 2024 from TBP Nationals</li>
+              <li>Outstanding Project Award 2023 from TBP Nationals</li>
+            </ul>
+          </Typography>
+        </FloatingContainer>
+
+        <FacultyList
+          id="faculty-list"
+          opacity={sectionOpacities["faculty-list"]}
+        />
 
         <FloatingContainer
           id="contact"
