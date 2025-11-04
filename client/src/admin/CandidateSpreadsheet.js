@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   alpha,
   Box,
@@ -13,11 +13,11 @@ import {
   Paper,
   styled,
   Button,
-} from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-import { Container, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import TBPBackground from '../components/TBPBackground';
-import _ from 'lodash';
+} from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import { Container, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import TBPBackground from "../components/TBPBackground";
+import _ from "lodash";
 
 function CandidateSpreadsheet() {
   const [candidates, setCandidates] = useState([]);
@@ -25,25 +25,26 @@ function CandidateSpreadsheet() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedCells, setSelectedCells] = useState(new Set());
   const [startCellId, setStartCellId] = useState(null);
-  const [mode, setMode] = useState('add');
+  const [mode, setMode] = useState("add");
 
   const requirements = [
-    'generalSocial1',
-    'generalSocial2',
-    'tutoring',
-    'testBank',
-    'corporate',
-    'candidateQuiz',
-    'bentPolishing',
-    'initiation',
-    'membershipFee',
-    'newMemberForm',
-    'coffeeChat',
-    'academicOutreach',
-    'socialMediaPost',
-    'chalking',
-    'ethicsChat',
-    'ethicsIntroChat',
+    "generalSocial1",
+    "generalSocial2",
+    "tutoring",
+    "testBank",
+    "corporate",
+    "candidateQuiz",
+    "bentPolishing",
+    "initiation",
+    "membershipFee",
+    "newMemberForm",
+    "coffeeChat",
+    "academicOutreach1",
+    "academicOutreach2",
+    "socialMediaPost",
+    "chalking",
+    "ethicsChat",
+    "ethicsIntroChat",
   ];
 
   const disableHighlight = (e) => {
@@ -52,7 +53,7 @@ function CandidateSpreadsheet() {
 
   const handleMouseDown = (candidateIdx, idx) => {
     setStartCellId(JSON.stringify([candidateIdx, idx]));
-    document.addEventListener('selectstart', disableHighlight);
+    document.addEventListener("selectstart", disableHighlight);
   };
 
   const handleMouseUp = (candidateIdx, idx) => {
@@ -98,11 +99,11 @@ function CandidateSpreadsheet() {
       const candidate = displayedCandidates[candidateIdx];
       const newRequirements = candidate.requirements;
       reqPayload.forEach((req) => {
-        newRequirements[req] = mode === 'add';
+        newRequirements[req] = mode === "add";
       });
       console.log(candidate, newRequirements);
       updates.push(
-        axios.put('/api/user/update-user/' + candidate._id, candidate)
+        axios.put("/api/user/update-user/" + candidate._id, candidate)
       );
     }
     Promise.all(updates)
@@ -114,7 +115,7 @@ function CandidateSpreadsheet() {
             }
             const reqPayload = candidateIdxToReqPayload[candidateIdx];
             reqPayload.forEach((req) => {
-              candidate[req] = mode === 'add';
+              candidate[req] = mode === "add";
             });
             return candidate;
           }
@@ -122,28 +123,28 @@ function CandidateSpreadsheet() {
         setDisplayedCandidates(updatedDisplayedCandidates);
       })
       .catch((err) => {
-        window.alert('Could not commit changes.');
+        window.alert("Could not commit changes.");
       });
   };
 
   const HeaderCell = styled(TableCell)(({ theme }) => ({
-    padding: '10px',
-    align: 'right',
-    textAlign: 'center',
+    padding: "10px",
+    align: "right",
+    textAlign: "center",
     backgroundColor: theme.palette.custom.main,
     color: theme.palette.primary.main,
-    borderRight: '1px dashed ' + alpha(theme.palette.custom2.main, 0.5),
+    borderRight: "1px dashed " + alpha(theme.palette.custom2.main, 0.5),
   }));
 
   const Cell = styled(TableCell)(({ theme }) => ({
-    padding: '0',
-    align: 'right',
-    borderRight: '1px dashed ' + alpha(theme.palette.custom2.main, 0.5),
+    padding: "0",
+    align: "right",
+    borderRight: "1px dashed " + alpha(theme.palette.custom2.main, 0.5),
   }));
 
   useEffect(() => {
     async function fetchCandidates() {
-      const response = await axios.get('/api/user/get-candidates');
+      const response = await axios.get("/api/user/get-candidates");
       setDisplayedCandidates(response.data);
       setCandidates(response.data);
       setIsLoaded(true);
@@ -160,68 +161,68 @@ function CandidateSpreadsheet() {
       <TBPBackground />
       <Container
         sx={{
-          padding: { xs: '80px 0 24px' },
-          height: '100vh',
-          minWidth: '95vw',
-          display: 'flex',
-          flexFlow: 'column',
+          padding: { xs: "80px 0 24px" },
+          height: "100vh",
+          minWidth: "95vw",
+          display: "flex",
+          flexFlow: "column",
         }}
       >
         <Box
           sx={{
             backgroundColor: (theme) => alpha(theme.palette.custom.main, 0.95),
-            borderRadius: '12px',
-            padding: '12px 24px 12px',
+            borderRadius: "12px",
+            padding: "12px 24px 12px",
           }}
           mb={2}
         >
           <Typography
-            variant='h3'
-            color='primary'
+            variant="h3"
+            color="primary"
             sx={{
-              fontWeight: 'bold',
+              fontWeight: "bold",
             }}
             mb={1.5}
           >
             Candidate Spreadsheet
           </Typography>
           <Typography
-            variant='p'
-            color='custom2'
+            variant="p"
+            color="custom2"
             mb={1}
-            sx={{ fontSize: '1rem' }}
+            sx={{ fontSize: "1rem" }}
           >
             Filter by email, name, major, or initiation quarter (e.g. "spring
             2023"). Click or drag along requirements to make changes.
           </Typography>
           <input
-            type='text'
-            id='query-input'
+            type="text"
+            id="query-input"
             style={{
-              fontSize: '1.2rem',
-              marginRight: '12px',
+              fontSize: "1.2rem",
+              marginRight: "12px",
               // maxWidth: { xs: '160px', sm: 'auto' },
-              maxWidth: '54%',
+              maxWidth: "54%",
             }}
           />
           <Button
-            color='secondary'
-            variant='contained'
+            color="secondary"
+            variant="contained"
             sx={{
-              width: '100px',
-              height: '30px',
-              marginBottom: '4px',
-              marginRight: '12px',
+              width: "100px",
+              height: "30px",
+              marginBottom: "4px",
+              marginRight: "12px",
             }}
             onClick={() => {
               setSelectedCells(new Set());
               const query = document
-                .getElementById('query-input')
+                .getElementById("query-input")
                 .value.toLowerCase();
               setDisplayedCandidates(
                 candidates?.filter((candidate) => {
                   if (
-                    (candidate.name?.first + ' ' + candidate.name?.last)
+                    (candidate.name?.first + " " + candidate.name?.last)
                       .toLowerCase()
                       .includes(query)
                   ) {
@@ -259,37 +260,37 @@ function CandidateSpreadsheet() {
         </Box>
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'right',
-            paddingBottom: '0.2rem',
-            gap: '0.6rem',
+            display: "flex",
+            justifyContent: "right",
+            paddingBottom: "0.2rem",
+            gap: "0.6rem",
           }}
         >
           <ToggleButtonGroup
-            color='secondary'
-            size={'small'}
+            color="secondary"
+            size={"small"}
             onChange={(e, newMode) => {
               setMode(newMode);
             }}
             value={mode}
             exclusive
             sx={{
-              height: '30px',
+              height: "30px",
               backgroundColor: (theme) =>
                 alpha(theme.palette.custom.main, 0.65),
             }}
           >
-            <ToggleButton value='add'>Add</ToggleButton>
-            <ToggleButton value='del'>Del</ToggleButton>
+            <ToggleButton value="add">Add</ToggleButton>
+            <ToggleButton value="del">Del</ToggleButton>
           </ToggleButtonGroup>
           <Button
-            color='secondary'
-            variant='contained'
+            color="secondary"
+            variant="contained"
             sx={{
-              width: '200px',
-              height: '30px',
-              marginBottom: '4px',
-              marginRight: '12px',
+              width: "200px",
+              height: "30px",
+              marginBottom: "4px",
+              marginRight: "12px",
             }}
             onClick={handleUpdatePayload}
           >
@@ -298,12 +299,12 @@ function CandidateSpreadsheet() {
           </Button>
         </Box>
         <TableContainer
-          aria-label='sticky table'
+          aria-label="sticky table"
           component={Paper}
           sx={{
-            flex: '1 1 auto',
+            flex: "1 1 auto",
           }}
-          size='small'
+          size="small"
         >
           <Table stickyHeader>
             <TableHead>
@@ -311,10 +312,10 @@ function CandidateSpreadsheet() {
                 <HeaderCell
                   sx={{
                     left: 0,
-                    position: 'sticky',
-                    zIndex: '4',
+                    position: "sticky",
+                    zIndex: "4",
                     borderRight: (theme) =>
-                      '1px solid ' + theme.palette.custom2.main,
+                      "1px solid " + theme.palette.custom2.main,
                   }}
                 >
                   Name
@@ -331,27 +332,27 @@ function CandidateSpreadsheet() {
               {displayedCandidates.map((candidate, candidateIdx) => (
                 <TableRow
                   key={candidate._id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <Cell
-                    component='th'
-                    scope='row'
+                    component="th"
+                    scope="row"
                     sx={{
                       left: 0,
-                      position: 'sticky',
-                      zIndex: '3',
-                      backgroundColor: 'white',
+                      position: "sticky",
+                      zIndex: "3",
+                      backgroundColor: "white",
                       borderRight: (theme) =>
-                        '1px solid ' + theme.palette.custom2.main,
+                        "1px solid " + theme.palette.custom2.main,
                     }}
                   >
-                    {candidate.name.first + ' ' + candidate.name.last}
+                    {candidate.name.first + " " + candidate.name.last}
                   </Cell>
                   <Cell>{candidate.email}</Cell>
                   <Cell>{candidate.major}</Cell>
                   <Cell>
                     {candidate.initiationQuarter?.quarter +
-                      ' ' +
+                      " " +
                       candidate.initiationQuarter?.year}
                   </Cell>
                   {requirements.map(
@@ -369,17 +370,17 @@ function CandidateSpreadsheet() {
                             backgroundColor: selectedCells.has(
                               JSON.stringify([candidateIdx, idx])
                             )
-                              ? mode === 'add'
-                                ? 'lightgreen'
-                                : 'pink'
-                              : 'white',
-                            cursor: 'pointer',
+                              ? mode === "add"
+                                ? "lightgreen"
+                                : "pink"
+                              : "white",
+                            cursor: "pointer",
                           }}
                         >
                           {candidate.requirements[requirement] ? (
-                            <CheckIcon color='secondary' />
+                            <CheckIcon color="secondary" />
                           ) : (
-                            ''
+                            ""
                           )}
                         </Cell>
                       )
