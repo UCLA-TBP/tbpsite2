@@ -509,6 +509,7 @@ function Home() {
           </Typography>
           <Typography variant="p" mb={"20px"}>
             <ul>
+              <li>Outstanding Project Award 2025 from TBP Nationals</li>
               <li>Outstanding Project Award 2024 from TBP Nationals</li>
               <li>Outstanding Project Award 2023 from TBP Nationals</li>
             </ul>
