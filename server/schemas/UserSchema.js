@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-require('mongoose-type-url');
-const bcrypt = require('bcrypt');
-const findOrCreate = require('mongoose-findorcreate');
-const PDFSchema = require('./PDFSchema');
+const mongoose = require("mongoose");
+require("mongoose-type-url");
+const bcrypt = require("bcrypt");
+const findOrCreate = require("mongoose-findorcreate");
+const PDFSchema = require("./PDFSchema");
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
     index: { unique: true },
     validate: [
       hasLoginOrGoogleId,
-      'Login credentials or Google ID is required',
+      "Login credentials or Google ID is required",
     ],
   },
   password: {
@@ -19,25 +19,25 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     validate: [
       hasLoginOrGoogleId,
-      'Login credentials or Google ID is required',
+      "Login credentials or Google ID is required",
     ],
   },
   googleId: {
     type: String,
     index: {
       unique: true,
-      partialFilterExpression: { googleId: { $type: 'string' } },
+      partialFilterExpression: { googleId: { $type: "string" } },
     },
     validate: [
       hasLoginOrGoogleId,
-      'Login credentials or Google ID is required',
+      "Login credentials or Google ID is required",
     ],
   },
   position: {
     type: String,
-    enum: ['candidate', 'member', 'officer', 'admin'],
+    enum: ["candidate", "member", "officer", "admin"],
     required: true,
-    default: 'candidate',
+    default: "candidate",
   },
   name: {
     first: {
@@ -54,17 +54,17 @@ const UserSchema = new mongoose.Schema({
   major: {
     type: String,
     enum: [
-      'Aerospace Engineering',
-      'Bioengineering',
-      'Chemical Engineering',
-      'Civil Engineering',
-      'Computer Engineering',
-      'Computer Science',
-      'Computer Science and Engineering',
-      'Electrical Engineering',
-      'Materials Engineering',
-      'Mechanical Engineering',
-      'Undeclared Engineering',
+      "Aerospace Engineering",
+      "Bioengineering",
+      "Chemical Engineering",
+      "Civil Engineering",
+      "Computer Engineering",
+      "Computer Science",
+      "Computer Science and Engineering",
+      "Electrical Engineering",
+      "Materials Engineering",
+      "Mechanical Engineering",
+      "Undeclared Engineering",
     ],
     trim: true,
     required: true,
@@ -77,7 +77,7 @@ const UserSchema = new mongoose.Schema({
   initiationQuarter: {
     quarter: {
       type: String,
-      enum: ['Fall', 'Spring'],
+      enum: ["Fall", "Spring"],
       trim: true,
       required: true,
     },
@@ -132,7 +132,11 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
-    academicOutreach: {
+    academicOutreach1: {
+      type: Boolean,
+      default: false,
+    },
+    academicOutreach2: {
       type: Boolean,
       default: false,
     },
@@ -165,7 +169,7 @@ const UserSchema = new mongoose.Schema({
     default: [],
   },
   submittedTests: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PDF' }],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "PDF" }],
 
     default: [],
   },
@@ -174,41 +178,41 @@ const UserSchema = new mongoose.Schema({
   },
   distinguishedActiveMember: {
     quarterOneRequirements: {
-        AO: {
-            type: Boolean,
-            default: false,
-        },
-        Tutoring: {
-            type: Boolean,
-            default: false,
-        },
-        EMCC: {
-            type: Boolean,
-            default: false,
-        },
-        social: {
-            type: Boolean,
-            default: false,
-        },
+      AO: {
+        type: Boolean,
+        default: false,
+      },
+      Tutoring: {
+        type: Boolean,
+        default: false,
+      },
+      EMCC: {
+        type: Boolean,
+        default: false,
+      },
+      social: {
+        type: Boolean,
+        default: false,
+      },
     },
     quarterTwoRequirements: {
-        AO: {
-            type: Boolean,
-            default: false,
-        },
-        Tutoring: {
-            type: Boolean,
-            default: false,
-        },
-        EMCC: {
-            type: Boolean,
-            default: false,
-        },
-        social: {
-            type: Boolean,
-            default: false,
-        },
-    }
+      AO: {
+        type: Boolean,
+        default: false,
+      },
+      Tutoring: {
+        type: Boolean,
+        default: false,
+      },
+      EMCC: {
+        type: Boolean,
+        default: false,
+      },
+      social: {
+        type: Boolean,
+        default: false,
+      },
+    },
   },
   committees: {
     President: {
@@ -265,8 +269,8 @@ const UserSchema = new mongoose.Schema({
     },
     Ethics: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   headshot: {
     url: {
@@ -278,7 +282,7 @@ const UserSchema = new mongoose.Schema({
       type: String,
       required: false,
     },
-  }
+  },
   // add resume, submitted tests field, other profile information (name, etc.)
 });
 
@@ -288,8 +292,8 @@ function hasLoginOrGoogleId() {
 
 UserSchema.plugin(findOrCreate);
 
-UserSchema.pre('save', function (next) {
-  if (!this.isModified('password')) return next();
+UserSchema.pre("save", function (next) {
+  if (!this.isModified("password")) return next();
   bcrypt.hash(this.password, 10, (err, hashedPassword) => {
     if (err) return next(err);
     this.password = hashedPassword;
@@ -297,8 +301,8 @@ UserSchema.pre('save', function (next) {
   });
 });
 
-UserSchema.pre('remove', function (next) {
-  this.model('PDF').remove({ user: this._id }, next);
+UserSchema.pre("remove", function (next) {
+  this.model("PDF").remove({ user: this._id }, next);
 });
 
 UserSchema.methods.comparePassword = function (password, callback) {
@@ -313,4 +317,4 @@ UserSchema.methods.comparePassword = function (password, callback) {
   });
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);
