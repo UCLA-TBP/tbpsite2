@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import {
   alpha,
   AppBar,
@@ -9,16 +9,16 @@ import {
   Menu,
   MenuItem,
   useMediaQuery,
-} from '@mui/material';
-import styled from '@emotion/styled';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import LoginForm from './LoginForm';
-import LogoutButton from './LogoutButton';
+} from "@mui/material";
+import styled from "@emotion/styled";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import LoginForm from "./LoginForm";
+import LogoutButton from "./LogoutButton";
 
 const NavButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.secondary,
-  '&:hover': {
+  "&:hover": {
     color: alpha(theme.palette.text.secondary, 0.6),
   },
 }));
@@ -30,14 +30,14 @@ const DropDownItemLink = ({
   centerOnElement,
 }) => {
   return (
-    <Link href={`/${destination}`} underline='none'>
+    <Link href={`/${destination}`} underline="none">
       <MenuItem
         sx={{
           color: (theme) => theme.palette.text.secondary,
-          '&:hover': {
+          "&:hover": {
             color: (theme) => alpha(theme.palette.text.secondary, 0.6),
           },
-          fontSize: '.9rem',
+          fontSize: ".9rem",
           mt: { xs: -2.5, sm: 0 },
         }}
         onClick={() => {
@@ -59,38 +59,42 @@ class DropDownItemData {
 }
 
 const MoreDropDownEntries = [
-  new DropDownItemData('HOME'),
-  new DropDownItemData('Who We Are', '#who-we-are'),
-  new DropDownItemData('Awards', '#awards'),
-  new DropDownItemData('Becoming a Member', '#becoming-a-member'),
-  new DropDownItemData('Tutoring', '#tutoring'),
-  new DropDownItemData('Event Calendar', '#event-calendar'),
-  new DropDownItemData('Activities', '#activities'),
-  new DropDownItemData('Contact', '#contact'),
-  new DropDownItemData('EVENTS'),
-  new DropDownItemData('Events', 'events'),
-  new DropDownItemData('TUTORING QUICKLINKS'),
-  new DropDownItemData('Schedule', 'tutoring/schedule'),
+  new DropDownItemData("HOME"),
+  new DropDownItemData("Who We Are", "#who-we-are"),
+  new DropDownItemData("Becoming a Member", "#becoming-a-member"),
+  new DropDownItemData("Tutoring", "#tutoring"),
+  new DropDownItemData("Event Calendar", "#event-calendar"),
+  new DropDownItemData("Activities", "#activities"),
+  new DropDownItemData("Awards", "#awards"),
+  new DropDownItemData("Engineering Faculty", "#faculty-list"),
+  new DropDownItemData("Contact", "#contact"),
+  new DropDownItemData("EVENTS"),
+  new DropDownItemData("Events", "events"),
+  new DropDownItemData("TUTORING QUICKLINKS"),
+  new DropDownItemData("Schedule", "tutoring/schedule"),
   // new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
   // new DropDownItemData('Feedback', 'tutoring/feedback'),
   // new DropDownItemData('Log Hours', 'log_hours'),
-  new DropDownItemData('CONTACT QUICKLINKS'),
-  new DropDownItemData('Officers', 'officers'),
-  new DropDownItemData('Faculty', 'faculty'),
-  new DropDownItemData('Website Feedback', '#contact'),
+  new DropDownItemData("CONTACT QUICKLINKS"),
+  new DropDownItemData("Officers", "officers"),
+  new DropDownItemData("Faculty", "faculty"),
+  new DropDownItemData("Website Feedback", "#contact"),
 ];
 
 // TODO: change available links based on user position
 const AdminDropDownEntries = [
-  new DropDownItemData('ADMIN'),
-  new DropDownItemData('Manage Users', 'admin/manage_users'),
+  new DropDownItemData("ADMIN"),
+  new DropDownItemData("Manage Users", "admin/manage_users"),
 ];
 
 const OfficerDropDownEntries = [
-  new DropDownItemData('OFFICER'),
-  new DropDownItemData('Candidate Tracker', 'officer/candidate_tracker'),
-  new DropDownItemData('Set Tutoring Phrase', 'officer/tutoring_phrase'),
-  new DropDownItemData('Candidate Spreadsheet', 'officer/candidate_spreadsheet'),
+  new DropDownItemData("OFFICER"),
+  new DropDownItemData("Candidate Tracker", "officer/candidate_tracker"),
+  new DropDownItemData("Set Tutoring Phrase", "officer/tutoring_phrase"),
+  new DropDownItemData(
+    "Candidate Spreadsheet",
+    "officer/candidate_spreadsheet"
+  ),
   // new DropDownItemData('Admin Panel', '#!'),
   // new DropDownItemData('Candidates', '#!'),
   // new DropDownItemData('Active members', '#!'),
@@ -106,17 +110,17 @@ const OfficerDropDownEntries = [
 ];
 
 const MemberDropDownEntries = [
-  new DropDownItemData('MEMBER SERVICES'),
-  new DropDownItemData('Testbank', 'members/testbank'),
-  new DropDownItemData('Profile', 'members/Profile'),
+  new DropDownItemData("MEMBER SERVICES"),
+  new DropDownItemData("Testbank", "members/testbank"),
+  new DropDownItemData("Profile", "members/Profile"),
 ];
 
 const CandidateDropDownEntries = [
-  new DropDownItemData('CANDIDATE SERVICES'),
-  new DropDownItemData('Induction Progress', 'candidates/induction-progress'),
+  new DropDownItemData("CANDIDATE SERVICES"),
+  new DropDownItemData("Induction Progress", "candidates/induction-progress"),
 ];
 
-const UniversalDropDownEntries = [new DropDownItemData('logout')];
+const UniversalDropDownEntries = [new DropDownItemData("logout")];
 
 function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   const [scrollPos, setScrollPos] = useState(0);
@@ -127,29 +131,29 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   const [userDropDownEntries, setUserDropDownEntries] = useState([]);
 
   const [doScrollFade, setDoScrollFade] = useState(false);
-  const isMobileView = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const isMobileView = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const dropDownRef = useRef(null);
   const navbarRef = useRef(null);
 
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
     centerOnElement(targetId);
-    setDoScrollFade(window.location.pathname === '/');
+    setDoScrollFade(window.location.pathname === "/");
     // eslint-disable-next-line
   }, [window.location.href]);
 
   useEffect(() => {
     const userPosition = authenticatedUser?.position;
     switch (userPosition) {
-      case 'admin':
+      case "admin":
         setUserDropDownEntries([
           ...AdminDropDownEntries,
           ...OfficerDropDownEntries,
           ...MemberDropDownEntries,
           ...UniversalDropDownEntries,
-        ])
+        ]);
         break;
-      case 'officer':
+      case "officer":
         setUserDropDownEntries([
           ...OfficerDropDownEntries,
           ...MemberDropDownEntries,
@@ -157,14 +161,14 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
           ...UniversalDropDownEntries,
         ]);
         break;
-      case 'member':
+      case "member":
         setUserDropDownEntries([
           ...MemberDropDownEntries,
           // ...CandidateDropDownEntries,
           ...UniversalDropDownEntries,
         ]);
         break;
-      case 'candidate':
+      case "candidate":
         setUserDropDownEntries([
           ...CandidateDropDownEntries,
           ...UniversalDropDownEntries,
@@ -183,24 +187,24 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
       setScrollPos(winScroll);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   useEffect(() => {
     const handleClickAway = (e) => {
-      if (!e.target.closest('.MuiContainer-root')) {
+      if (!e.target.closest(".MuiContainer-root")) {
         if (Boolean(anchorEl)) {
           handleDropDownClose(false);
         }
       }
     };
-    window.addEventListener('mousedown', handleClickAway);
+    window.addEventListener("mousedown", handleClickAway);
     return () => {
-      window.removeEventListener('mousedown', handleClickAway);
+      window.removeEventListener("mousedown", handleClickAway);
     };
   }, [anchorEl]);
 
@@ -209,9 +213,9 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
       const target = document.getElementById(targetId);
       if (target)
         target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-          inline: 'center',
+          behavior: "smooth",
+          block: "center",
+          inline: "center",
         });
     }
   };
@@ -231,22 +235,22 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   return (
     <AppBar
       ref={navbarRef}
-      position='fixed'
+      position="fixed"
       sx={{
         backgroundColor: (theme) =>
           doScrollFade
             ? alpha(
-              theme.palette.primary.main,
-              0.8 * Math.min(1, scrollPos / 500)
-            )
+                theme.palette.primary.main,
+                0.8 * Math.min(1, scrollPos / 500)
+              )
             : theme.palette.primary.main,
         boxShadow: 0,
       }}
     >
       <Grid
         container
-        direction='row'
-        justifyContent='flex-end'
+        direction="row"
+        justifyContent="flex-end"
         spacing={isMobileView ? 0 : 1.5}
         sx={{ px: { xs: 0.5, md: 3 }, py: 1.5 }}
       >
@@ -255,45 +259,45 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
           sx={
             isMobileView
               ? {
-                position: 'absolute',
-                left: '12px',
-              }
+                  position: "absolute",
+                  left: "12px",
+                }
               : {}
           }
         >
           <Button
-            color='inherit'
-            variant='text'
-            size='large'
-            sx={{ '&:hover': { bgcolor: 'transparent' } }}
+            color="inherit"
+            variant="text"
+            size="large"
+            sx={{ "&:hover": { bgcolor: "transparent" } }}
             onClick={() => {
-              window.location = '/#intro';
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              window.location = "/#intro";
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
             <img
-              className='navbar-logo'
-              src='/tbp-logo.png'
-              alt='tbp-logo'
-              height='25'
+              className="navbar-logo"
+              src="/tbp-logo.png"
+              alt="tbp-logo"
+              height="25"
             />
             &nbsp;
-            {isMobileView ? 'TBP | UCLA' : ' Tau Beta Pi | UCLA'}
+            {isMobileView ? "TBP | UCLA" : " Tau Beta Pi | UCLA"}
           </Button>
         </Grid>
         <Grid item>
           <NavButton
-            variant='text'
-            size='large'
+            variant="text"
+            size="large"
             onClick={
-              dropDownParent === 'more'
+              dropDownParent === "more"
                 ? handleDropDownClose
                 : (e) => {
-                  handleDropDown(e, MoreDropDownEntries, 'more');
-                }
+                    handleDropDown(e, MoreDropDownEntries, "more");
+                  }
             }
             onMouseEnter={(e) => {
-              handleDropDown(e, MoreDropDownEntries, 'more');
+              handleDropDown(e, MoreDropDownEntries, "more");
             }}
           >
             More <MoreVertIcon />
@@ -302,17 +306,17 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         {authenticatedUser ? (
           <Grid item>
             <NavButton
-              variant='text'
-              size='large'
+              variant="text"
+              size="large"
               onClick={
-                dropDownParent === 'user'
+                dropDownParent === "user"
                   ? handleDropDownClose
                   : (e) => {
-                    handleDropDown(e, userDropDownEntries, 'user');
-                  }
+                      handleDropDown(e, userDropDownEntries, "user");
+                    }
               }
               onMouseEnter={(e) => {
-                handleDropDown(e, userDropDownEntries, 'user');
+                handleDropDown(e, userDropDownEntries, "user");
               }}
             >
               {authenticatedUser.name.first} <PersonOutlineIcon />
@@ -321,21 +325,21 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         ) : (
           <Grid item>
             <NavButton
-              variant='text'
-              size='large'
+              variant="text"
+              size="large"
               onClick={
-                dropDownParent === 'user'
+                dropDownParent === "user"
                   ? handleDropDownClose
                   : (e) => {
-                    handleDropDown(
-                      e,
-                      [new DropDownItemData('login')],
-                      'user'
-                    );
-                  }
+                      handleDropDown(
+                        e,
+                        [new DropDownItemData("login")],
+                        "user"
+                      );
+                    }
               }
               onMouseEnter={(e) => {
-                handleDropDown(e, [new DropDownItemData('login')], 'user');
+                handleDropDown(e, [new DropDownItemData("login")], "user");
               }}
             >
               log in <PersonOutlineIcon />
@@ -345,15 +349,15 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
       </Grid>
       <Menu
         ref={dropDownRef}
-        sx={{ mt: '54px' }}
+        sx={{ mt: "54px" }}
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
         open={Boolean(anchorEl)}
         onClose={handleDropDownClose}
@@ -377,7 +381,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
                   centerOnElement={centerOnElement}
                 />
               );
-            if (item.name === 'login')
+            if (item.name === "login")
               return (
                 <LoginForm
                   key={item.name}
@@ -387,7 +391,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
                   }}
                 />
               );
-            if (item.name === 'logout')
+            if (item.name === "logout")
               return (
                 <LogoutButton
                   key={item.name}
@@ -402,12 +406,12 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
                 key={item.name}
                 disabled
                 sx={{
-                  '&.Mui-disabled': {
+                  "&.Mui-disabled": {
                     color: (theme) => theme.palette.text.primary,
                     opacity: 1,
                   },
                   mt: { xs: -0.5, sm: idx > 0 ? 2 : 0 },
-                  fontSize: '.9rem',
+                  fontSize: ".9rem",
                 }}
               >
                 {item.name}

@@ -91,7 +91,7 @@ const facultyData = [
   },
 ];
 
-function FacultyList({ opacity = 1 }) {
+function FacultyList({ id, opacity = 1 }) {
   const scrollContainerRef = useRef(null);
   const animationFrameRef = useRef(null);
   const scrollSpeed = 0.75; // pixels per frame
@@ -184,7 +184,7 @@ function FacultyList({ opacity = 1 }) {
   return (
     <FloatingContainer
       className="section-container"
-      id="faculty"
+      id={id || "faculty"}
       sx={{
         opacity: opacity,
       }}
