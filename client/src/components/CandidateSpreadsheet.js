@@ -40,7 +40,8 @@ function CandidateSpreadsheet() {
                     <Cell>Email</Cell>
                     <Cell>Major</Cell>
                     <Cell>Graduation Year</Cell>
-                    <Cell>Academic Outreach</Cell>
+                    <Cell>Academic Outreach 1</Cell>
+                    <Cell>Academic Outreach 2</Cell>
                     <Cell>Bent Polishing</Cell>
                     <Cell>Candidate Quiz</Cell>
                     <Cell>Chalking</Cell>
