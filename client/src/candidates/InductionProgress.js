@@ -248,7 +248,10 @@ const InductionProgress = ({ candidate, setCandidate }) => {
             Academic Outreach
           </Typography>
           <ProgressIndicator
-            requirementMet={candidate.requirements?.academicOutreach}
+            requirementMet={candidate.requirements?.academicOutreach1}
+          />
+          <ProgressIndicator
+            requirementMet={candidate.requirements?.academicOutreach2}
           />
           <RequirementDescription
             description={
