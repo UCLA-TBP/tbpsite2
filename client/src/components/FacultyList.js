@@ -205,54 +205,8 @@ const facultyData = [
   },
 ];
 
+
 function FacultyList({ id, opacity = 1 }) {
-  const scrollContainerRef = useRef(null);
-  const animationFrameRef = useRef(null);
-  const scrollSpeed = 0.75; // pixels per frame
-
-  const duplicatedData = [...facultyData, ...facultyData];
-
-  useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (!scrollContainer) return;
-
-    let scrollPosition = 0;
-
-    const animate = () => {
-      if (scrollContainer) {
-        const totalWidth = scrollContainer.scrollWidth;
-        const singleSetWidth = totalWidth / 2;
-
-        scrollPosition += scrollSpeed;
-
-        if (scrollPosition >= singleSetWidth) {
-          scrollPosition = scrollPosition - singleSetWidth;
-        }
-
-        scrollContainer.scrollLeft = scrollPosition;
-      }
-
-      animationFrameRef.current = requestAnimationFrame(animate);
-    };
-
-    const timeoutId = setTimeout(() => {
-      if (scrollContainer) {
-        const totalWidth = scrollContainer.scrollWidth;
-        const singleSetWidth = totalWidth / 2;
-        scrollPosition = Math.random() * singleSetWidth;
-        scrollContainer.scrollLeft = scrollPosition;
-        animationFrameRef.current = requestAnimationFrame(animate);
-      }
-    }, 100);
-
-    return () => {
-      clearTimeout(timeoutId);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, []);
-
   const DepartmentTile = ({ dept, index }) => (
     <Box
       key={index}
@@ -267,7 +221,7 @@ function FacultyList({ id, opacity = 1 }) {
     >
       <Typography
         variant="h3"
-        mb={"16px"}
+        mb="16px"
         sx={{
           fontSize: "1.4rem",
           fontWeight: 600,
@@ -281,19 +235,28 @@ function FacultyList({ id, opacity = 1 }) {
         {dept.members.map((member, memberIndex) => (
           <Typography
             key={memberIndex}
-            component="div"
+            component="a"
+            href={member.website}
+            target="_blank"
+            rel="noopener noreferrer"
             sx={{
               fontSize: "1.1rem",
               lineHeight: 1.6,
               color: "rgba(255, 255, 255, 0.85)",
+              textDecoration: "none",
+              "&:hover": {
+                textDecoration: "underline",
+                color: "white",
+              },
             }}
           >
-            {member}
+            {member.name}
           </Typography>
         ))}
       </Box>
     </Box>
   );
+  
 
   return (
     <FloatingContainer
@@ -307,24 +270,16 @@ function FacultyList({ id, opacity = 1 }) {
         UCLA Engineering Faculty Members
       </Typography>
       <Box
-        ref={scrollContainerRef}
         sx={{
           display: "flex",
-          gap: 2,
-          overflowX: "hidden",
-          overflowY: "hidden",
+          gap: 4,
+          overflowX: "auto",
           pb: 2,
-          mt: 2,
-          scrollBehavior: "auto",
-          "&::-webkit-scrollbar": {
-            display: "none",
-          },
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
+          scrollBehavior: "smooth",
         }}
       >
-        {duplicatedData.map((dept, index) => (
-          <DepartmentTile key={index} dept={dept} index={index} />
+        {facultyData.map((dept, index) => (
+          <DepartmentTile key={index} dept={dept}/>
         ))}
       </Box>
     </FloatingContainer>
