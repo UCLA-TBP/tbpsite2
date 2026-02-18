@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Typography, Box } from "@mui/material";
 import { Container } from "@mui/material";
 import styled from "@emotion/styled";
