@@ -19,74 +19,188 @@ const facultyData = [
   {
     department: "Bioengineering",
     members: [
-      "Dino Di Carlo, CA Epsilon '06",
-      "Daniel Kamei, CA Epsilon '95",
-      "Aaron Meyer, CA Epsilon '09",
-      "Jaimie Stewart, IL Zeta '13",
-      "Jennifer Wilson, VA Alpha '10",
+      {
+        name: "Dino Di Carlo, CA Epsilon '06",
+        website: "https://samueli.ucla.edu/people/dino-di-carlo/",
+      },
+      {
+        name: "Daniel Kamei, CA Epsilon '95",
+        website: "https://samueli.ucla.edu/people/daniel-kamei/",
+      },
+      {
+        name: "Aaron Meyer, CA Epsilon '09",
+        website: "https://samueli.ucla.edu/people/aaron-meyer/",
+      },
+      {
+        name: "Jaimie Stewart, IL Zeta '13",
+        website: "https://samueli.ucla.edu/people/jaimie-stewart/",
+      },
+      {
+        name: "Jennifer Wilson, VA Alpha '10",
+        website: "https://samueli.ucla.edu/people/jennifer-wilson/",
+      },
     ],
   },
   {
     department: "Chemical and Biomolecular Engineering",
     members: [
-      "Carissa Eisler, CA Epsilon '10",
-      "Yuzhang Li, CA Alpha '13",
-      "Harold Monbouquette, CA Epsilon '82",
-      "Aditya Nandy, CA Alpha '17",
-      "Alissa Park, CA Epsilon '05",
-      "Dante Simonetti, IN Gamma '03",
+      {
+        name: "Carissa Eisler, CA Epsilon '10",
+        website: "https://samueli.ucla.edu/people/carissa-eisler/",
+      },
+      {
+        name: "Yuzhang Li, CA Alpha '13",
+        website: "https://samueli.ucla.edu/people/yuzhang-li/",
+      },
+      {
+        name: "Harold Monbouquette, CA Epsilon '82",
+        website: "https://samueli.ucla.edu/people/harold-monbouquette/",
+      },
+      {
+        name: "Aditya Nandy, CA Alpha '17",
+        website: "https://samueli.ucla.edu/people/aditya-nandy/",
+      },
+      {
+        name: "Alissa Park, CA Epsilon '05",
+        website: "https://samueli.ucla.edu/people/ah-hyung-alissa-park/",
+      },
+      {
+        name: "Dante Simonetti, IN Gamma '03",
+        website: "https://samueli.ucla.edu/people/dante-simonetti/",
+      },
     ],
   },
   {
     department: "Civil and Environmental Engineering",
     members: [
-      "Steven Margulis, CA Delta '95",
-      "Regan Patterson, CA Epsilon '12",
-      "Michael Stenstrom, SC Alpha '71",
-      "Jonathan Stewart, CA Alpha '90",
-      "John Wallace, VT Alpha '83",
+      {
+        name: "Steven Margulis, CA Delta '95",
+        website: "https://samueli.ucla.edu/people/steven-margulis/",
+      },
+      {
+        name: "Regan Patterson, CA Epsilon '12",
+        website: "https://samueli.ucla.edu/people/regan-patterson/",
+      },
+      {
+        name: "Michael Stenstrom, SC Alpha '71",
+        website: "https://samueli.ucla.edu/people/michael-stenstrom/",
+      },
+      {
+        name: "Jonathan Stewart, CA Alpha '90",
+        website: "https://samueli.ucla.edu/people/jonathan-stewart/",
+      },
+      {
+        name: "John Wallace, VT Alpha '83",
+        website: "https://samueli.ucla.edu/people/john-wallace/",
+      },
     ],
   },
   {
     department: "Computer Science",
     members: [
-      "Paul Eggert, TX Gamma '75",
-      "Blaise Pascal-Tine, NY Theta '01",
-      "J.D. Zamfirescu-Pereira, MA Beta '05",
+      {
+        name: "Paul Eggert, TX Gamma '75",
+        website: "https://samueli.ucla.edu/people/paul-eggert/",
+      },
+      {
+        name: "Blaise Pascal-Tine, NY Theta '01",
+        website: "https://samueli.ucla.edu/people/blaise-pascal-tine/",
+      },
+      {
+        name: "J.D. Zamfirescu-Pereira, MA Beta '05",
+        website: "https://samueli.ucla.edu/people/j-d-zamfirescu-pereira/",
+      },
     ],
   },
   {
     department: "Electrical and Computer Engineering",
     members: [
-      "Abeer Alwan, MA Epsilon '83",
-      "Robert Candler, AL Alpha '00",
-      "Lara Dolecek, CA Alpha '99",
-      "Warren Mori, CA Alpha '81",
-      "Henry Samueli, CA Epsilon '75",
-      "John Villasenor, VA Alpha '96",
-      "Richard Wesel, MA Beta '89",
-      "Chee-Wei Wong, CA Alpha '99",
-      "CK Ken Yang, CA Gamma '92",
+      {
+        name: "Abeer Alwan, MA Epsilon '83",
+        website: "https://samueli.ucla.edu/people/abeer-alwan/",
+      },
+      {
+        name: "Robert Candler, AL Alpha '00",
+        website: "https://samueli.ucla.edu/people/robert-candler/",
+      },
+      {
+        name: "Lara Dolecek, CA Alpha '99",
+        website: "https://samueli.ucla.edu/people/lara-dolecek/",
+      },
+      {
+        name: "Warren Mori, CA Alpha '81",
+        website: "https://samueli.ucla.edu/people/warren-mori/",
+      },
+      {
+        name: "Henry Samueli, CA Epsilon '75",
+        website: "https://samueli.ucla.edu/people/henry-samueli/",
+      },
+      {
+        name: "John Villasenor, VA Alpha '96",
+        website: "https://samueli.ucla.edu/people/john-villasenor/",
+      },
+      {
+        name: "Richard Wesel, MA Beta '89",
+        website: "https://samueli.ucla.edu/people/richard-wesel/",
+      },
+      {
+        name: "Chee-Wei Wong, CA Alpha '99",
+        website: "https://samueli.ucla.edu/people/chee-wei-wong/",
+      },
+      {
+        name: "CK Ken Yang, CA Gamma '92",
+        website: "https://samueli.ucla.edu/people/chih-kong-yang/",
+      },
     ],
   },
   {
     department: "Materials Science and Engineering",
     members: [
-      "Bruce Dunn, NJ Beta '70",
-      "Mark Goorsky, IL Gamma '84",
-      "Aaron Moment, NY Gamma '94",
+      {
+        name: "Bruce Dunn, NJ Beta '70",
+        website: "https://samueli.ucla.edu/people/bruce-dunn/",
+      },
+      {
+        name: "Mark Goorsky, IL Gamma '84",
+        website: "https://samueli.ucla.edu/people/mark-goorsky/",
+      },
+      {
+        name: "Aaron Moment, NY Gamma '94",
+        website: "https://samueli.ucla.edu/people/aaron-moment/",
+      }
     ],
   },
   {
     department: "Mechanical and Aerospace Engineering",
     members: [
-      "Gregory Carman, VA Beta '81",
-      "Vijay Gupta, MA Beta '90",
-      "Dennis Hong, WI Alpha '94",
-      "Anya Jones, NY Gamma '04",
-      "Ann Karagozian, CA Epsilon '78",
-      "Chang-Jin Kim, CA Epsilon '81",
-      "Veronica Santos, CA Alpha '99",
+      {
+        name: "Gregory Carman, VA Beta '81",
+        website: "https://samueli.ucla.edu/people/gregory-carman/",
+      },
+      {
+        name: "Vijay Gupta, MA Beta '90",
+        website: "https://samueli.ucla.edu/people/vijay-gupta/",
+      },
+      {
+        name: "Dennis Hong, WI Alpha '94",
+        website: "https://samueli.ucla.edu/people/dennis-hong/",
+      },
+      {
+        name: "Anya Jones, NY Gamma '04",
+        website: "https://samueli.ucla.edu/people/anya-jones/",
+      },
+      {
+        name: "Ann Karagozian, CA Epsilon '78",
+        website: "https://samueli.ucla.edu/people/ann-karagozian/",
+      },
+      {
+        name: "Chang-Jin Kim, CA Epsilon '81",
+        website: "https://samueli.ucla.edu/people/chang-jin-kim/",
+      },
+      {
+        name: "Veronica Santos, CA Alpha '99",
+        website: "https://samueli.ucla.edu/people/veronica-santos/",
+      },
     ],
   },
 ];
