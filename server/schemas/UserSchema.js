@@ -96,7 +96,7 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
-    corporate: {
+    educationProfessionalSocial3: {
       type: Boolean,
       default: false,
     },
@@ -120,11 +120,11 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
-    generalSocial1: {
+    educationProfessionalSocial1: {
       type: Boolean,
       default: false,
     },
-    generalSocial2: {
+    educationProfessionalSocial2: {
       type: Boolean,
       default: false,
     },

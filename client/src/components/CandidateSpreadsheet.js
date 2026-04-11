@@ -46,10 +46,10 @@ function CandidateSpreadsheet() {
                     <Cell>Candidate Quiz</Cell>
                     <Cell>Chalking</Cell>
                     <Cell>Coffee Chat</Cell>
-                    <Cell>Corporate</Cell>
                     <Cell>General Social</Cell>
-                    <Cell>General Social 1</Cell>
-                    <Cell>General Social 2</Cell>
+                    <Cell>Education Professional Social 1</Cell>
+                    <Cell>Education Professional Social 2</Cell>
+                    <Cell>Education Professional Social 3</Cell>
                     <Cell>Initiation</Cell>
                     <Cell>Interview</Cell>
                     <Cell>Membership Fee</Cell>

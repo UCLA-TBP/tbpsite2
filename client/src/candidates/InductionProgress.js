@@ -184,20 +184,6 @@ const InductionProgress = ({ candidate, setCandidate }) => {
           <RequirementDescription description={'Confirm your candidacy!'} />
         </Box>
 
-        <Box mt={5}>
-          <Typography variant='h3' color='primary'>
-            Corporate
-          </Typography>
-          <ProgressIndicator
-            requirementMet={candidate.requirements?.corporate}
-          />
-          <RequirementDescription
-            description={
-              'Attend a corporate or professional development event!'
-            }
-          />
-        </Box>
-
         {/* <Box mt={5}>
           <Typography variant='h3' color='primary'>
             Interview
@@ -214,17 +200,20 @@ const InductionProgress = ({ candidate, setCandidate }) => {
 
         <Box mt={5}>
           <Typography variant='h3' color='primary'>
-            General Socials
+            Education Professional Social 
           </Typography>
           <ProgressIndicator
-            requirementMet={candidate.requirements?.generalSocial1}
+            requirementMet={candidate.requirements?.educationProfessionalSocial1}
           />
           <ProgressIndicator
-            requirementMet={candidate.requirements?.generalSocial2}
+            requirementMet={candidate.requirements?.educationProfessionalSocial2}
+          />
+          <ProgressIndicator
+            requirementMet={candidate.requirements?.educationProfessionalSocial3}
           />
           <RequirementDescription
             description={
-              'Come out to at least two socials fulfill requirements and meet other candidates and officers!'
+              'Pick THREE events from either Education Outreach (COUNTS AS 2 EVENTS), Professional Development, and/or Social.'
             }
           />
         </Box>
