@@ -170,11 +170,11 @@ const CandidateTracker = () => {
                                 </Typography>
                                 {selectedCandidate.requirements &&
                                     [
-                                        "generalSocial1",
-                                        "generalSocial2",
+                                        "educationProfessionalSocial1",
+                                        "educationProfessionalSocial2",
+                                        "educationProfessionalSocial3",
                                         "tutoring",
                                         "testBank",
-                                        "corporate",
                                         "candidateQuiz",
                                         "bentPolishing",
                                         "initiation",
@@ -193,8 +193,8 @@ const CandidateTracker = () => {
                                                 requirement
                                             ] || false;
                                         return (
-                                            <Grid container key={requirement}>
-                                                <Grid item xs={9} md={2}>
+                                            <Grid container key={requirement} alignItems="center">
+                                                <Grid item xs={9} md={3}>
                                                     <Typography
                                                         variant="p"
                                                         color="primary"

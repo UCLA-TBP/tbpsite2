@@ -28,11 +28,11 @@ function CandidateSpreadsheet() {
   const [mode, setMode] = useState("add");
 
   const requirements = [
-    "generalSocial1",
-    "generalSocial2",
+    "educationProfessionalSocial1",
+    "educationProfessionalSocial2",
+    "educationProfessionalSocial3",
     "tutoring",
     "testBank",
-    "corporate",
     "candidateQuiz",
     "bentPolishing",
     "initiation",
