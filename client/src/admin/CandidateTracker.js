@@ -186,7 +186,6 @@ const CandidateTracker = () => {
                                         "socialMediaPost",
                                         "chalking",
                                         "ethicsChat",
-                                        "ethicsIntroChat",
                                     ].map((requirement) => {
                                         const status =
                                             selectedCandidate.requirements[
