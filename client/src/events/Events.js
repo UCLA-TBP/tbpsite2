@@ -15,7 +15,7 @@ function Events() {
       <Typography variant='h2' mt={10}>
         Events
       </Typography>
-      <a href='https://calendar.google.com/calendar/u/0/embed?src=lv5b95c37926e08bbs8jj20n38@group.calendar.google.com&ctz=America/Los_Angeles'>
+      <a href='https://calendar.google.com/calendar/embed?src=a603aec3817a70f7c66d8de37574d752cf4900e114784725dc3ef4ca6820528c%40group.calendar.google.com&ctz=America%2FLos_Angeles'>
         Calendar Link
       </a>
       <EventsCalendar />
