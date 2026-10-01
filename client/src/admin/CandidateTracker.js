@@ -343,6 +343,38 @@ const CandidateTracker = () => {
                             </div>
                         ) : null}
 
+                        <Typography
+                            variant="h4"
+                            color="secondary"
+                            mt={3}
+                            mb={1}
+                        >
+                            Candidate Notes
+                        </Typography>
+                        <TextField
+                            variant="outlined"
+                            fullWidth
+                            sx={{
+                                fontSize: "1rem",
+                                input: { color: '#bdbdbd' },
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                        borderColor: 'gray', 
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: 'white',
+                                    },
+                                },
+                            }}
+                            value={selectedCandidate.notes}
+                            onChange={(e) => {
+                                setSelectedCandidate({
+                                    ...selectedCandidate,
+                                    notes: e.target.value,
+                                });
+                            }}
+                        />
+
                         <Grid
                             container
                             pt={3}
