@@ -325,6 +325,7 @@ function CandidateSpreadsheet() {
                 {requirements.map((requirement) => (
                   <HeaderCell>{_.startCase(requirement)}</HeaderCell>
                 ))}
+                <HeaderCell>Candidate Notes</HeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -384,6 +385,7 @@ function CandidateSpreadsheet() {
                         </Cell>
                       )
                   )}
+                  <Cell>{candidate.notes}</Cell>
                 </TableRow>
               ))}
               <TableRow />

@@ -279,6 +279,9 @@ const UserSchema = new mongoose.Schema({
       required: false,
     },
   },
+  notes: {
+    type: String,
+  }
   // add resume, submitted tests field, other profile information (name, etc.)
 });
 
