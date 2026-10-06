@@ -81,7 +81,6 @@ const MoreDropDownEntries = [
   new DropDownItemData("Website Feedback", "#contact"),
 ];
 
-// TODO: change available links based on user position
 const AdminDropDownEntries = [
   new DropDownItemData("ADMIN"),
   new DropDownItemData("Manage Users", "admin/manage_users"),
