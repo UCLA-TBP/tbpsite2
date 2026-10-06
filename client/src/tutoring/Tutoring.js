@@ -1,13 +1,12 @@
 import React from "react";
 import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
+import { Button } from '@mui/material';
 
-function TutoringSchedule() {
+
+function Tutoring() {
   return (
     <Container>
-      <Typography variant="h2" mt={10}>
-        Tutoring Schedule
-      </Typography>
       {/*<Typography variant='p' mt={3}>
         <span style={{ fontWeight: 'bold', color: 'white' }}>IMPORTANT: </span>
         While classes are online (currently Week 6 Wednesday through Friday), tutoring will be held on Zoom!
@@ -32,6 +31,19 @@ function TutoringSchedule() {
         </Typography>
       </Box>
       */}
+
+      <Typography variant="h2" mt = {10}>
+            Tutoring
+      </Typography>
+      <Typography variant="p" mb={"20px"}>
+            We offer free drop-in tutoring in all STEM courses at our office
+            (Boelter 6266). Feel free to stop by for homework help or pre-exam
+            practice. Please check the schedule below for course availability.
+      </Typography>
+      <Typography variant="p" mb={"20px"}>
+            Hours: Mon-Fri, 10 am - 4 pm, Weeks 3 - 9
+      </Typography>
+
       <Typography variant="p" mt={2}>
         Direct any questions or concerns to TBP's tutoring chairs at{" "}
         <a href="mailto:uclatbp.tutoring@gmail.com">
@@ -56,7 +68,7 @@ function TutoringSchedule() {
         <br />
         Weeks 3 through 9<br />
       </Typography>
-
+      
       {/*<Typography variant='p' mt={5}>
         Our tutoring starts <Typography variant='highlight'> Week 3</Typography>
         . Check back later for this quarter's schedule!
@@ -69,8 +81,56 @@ function TutoringSchedule() {
         height="900"
         frameBorder="0"
       ></iframe>
+          {/* <h1 className='header'>Tutoring</h1> */}
+          {/*<Typography variant='p' mb={'20px'}>
+            Tutoring will be on Zoom at the following link while classes are online:
+            <br></br>
+            <a href='https://ucla.zoom.us/j/92285065964'>
+              https://ucla.zoom.us/j/92285065964
+            </a>
+        </Typography>*/}
+
+
+
+            {/* <Grid item>
+              <Button
+                href='tutoring/reviewsheets/'
+                color='secondary'
+                variant='outlined'
+                size='large'
+              >
+                REVIEW SHEETS
+              </Button>
+            </Grid> */}
+
+
+              <center><Button
+                href="https://forms.gle/sburNuSv83ekaTTf8"
+                color="secondary"
+                variant="outlined"
+                size="large"
+              >
+                TUTORING FEEDBACK
+              </Button>
+              </center>
+              <br></br>
+              <br></br>
+              <br></br>
+
+            {/* <Grid item>
+              <Button
+                href='/tutoring/log_hours/'
+                color='secondary'
+                variant='outlined'
+                size='large'
+              >
+                LOG HOURS
+              </Button>
+            </Grid> */}
+
     </Container>
+    
   );
 }
 
-export default TutoringSchedule;
+export default Tutoring;

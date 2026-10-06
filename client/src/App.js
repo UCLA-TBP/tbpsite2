@@ -11,7 +11,7 @@ import ProfilePage from './member-services/ProfilePage'
 import TutoringProfile from './profile/TutoringProfile';
 import UploadTest from './profile/UploadTest';
 import Events from './events/Events';
-import TutoringSchedule from './tutoring/TutoringSchedule';
+import Tutoring from './tutoring/Tutoring';
 // import ReviewSheets from './tutoring/ReviewSheets';
 // import TutoringFeedback from './tutoring/TutoringFeedback';
 // import LogHours from './tutoring/LogHours';
@@ -213,7 +213,7 @@ function App() {
             <Route path='events' element={<Events />} />
             <Route path='tutoring'>
               {/* <Route path='' element={<Navigate to='schedule' replace />} /> */}
-              <Route path='schedule' element={<TutoringSchedule />} />
+              <Route path='' element={<Tutoring />} />
               {/* <Route path='review_sheets' element={<ReviewSheets />} /> */}
               {/* <Route path='feedback' element={<TutoringFeedback />} /> */}
               {/* <Route path='log_hours' eleemnt={<LogHours />} /> */}
