@@ -12,6 +12,7 @@ import TutoringProfile from './profile/TutoringProfile';
 import UploadTest from './profile/UploadTest';
 import Events from './events/Events';
 import Tutoring from './tutoring/Tutoring';
+import Contact from './contact/Contact'
 // import ReviewSheets from './tutoring/ReviewSheets';
 // import TutoringFeedback from './tutoring/TutoringFeedback';
 // import LogHours from './tutoring/LogHours';
@@ -217,6 +218,8 @@ function App() {
               {/* <Route path='review_sheets' element={<ReviewSheets />} /> */}
               {/* <Route path='feedback' element={<TutoringFeedback />} /> */}
               {/* <Route path='log_hours' eleemnt={<LogHours />} /> */}
+            </Route>
+            <Route path='contact' element={<Contact />}>
             </Route>
             <Route path='officers'>
               <Route path='' element={<Officers />} />
