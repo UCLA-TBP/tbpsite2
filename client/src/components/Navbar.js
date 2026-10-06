@@ -58,6 +58,14 @@ class DropDownItemData {
   }
 }
 
+class DropDownHeader {
+  constructor(id, title, entries){
+    this.id = id;
+    this.title = title;
+    this.entries = entries;
+  }
+}
+
 const MoreDropDownEntries = [
   new DropDownItemData("HOME"),
   new DropDownItemData("Who We Are", "#who-we-are"),
@@ -80,6 +88,37 @@ const MoreDropDownEntries = [
   new DropDownItemData("Faculty", "faculty"),
   new DropDownItemData("Website Feedback", "#contact"),
 ];
+
+const DefaultHeaders = [
+  new DropDownHeader("home", "Home",
+    [ new DropDownItemData("Who We Are", "#who-we-are"),
+      new DropDownItemData("Becoming a Member", "#becoming-a-member"),
+      new DropDownItemData("Tutoring", "#tutoring"),
+      new DropDownItemData("Event Calendar", "#event-calendar"),
+      new DropDownItemData("Activities", "#activities"),
+      new DropDownItemData("Awards", "#awards"),
+      new DropDownItemData("Engineering Faculty", "#faculty-list"),
+      new DropDownItemData("Contact", "#contact")
+    ]
+  ),
+  new DropDownHeader("events", "Events",
+      [ new DropDownItemData("Events", "events"),
+      ]
+  ),
+  new DropDownHeader("tutoring", "Tutoring",
+      [ new DropDownItemData("Schedule", "tutoring/schedule"),
+        // new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
+        // new DropDownItemData('Feedback', 'tutoring/feedback'),
+        // new DropDownItemData('Log Hours', 'log_hours'),wnItemData('Log Hours', 'log_hours'),
+      ]
+  ),
+  new DropDownHeader("contact", "Contact",
+      [ new DropDownItemData("Officers", "officers"),
+        new DropDownItemData("Faculty", "faculty"),
+        new DropDownItemData("Website Feedback", "#contact"),
+      ]
+  ),    
+]
 
 const AdminDropDownEntries = [
   new DropDownItemData("ADMIN"),
@@ -284,24 +323,26 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             {isMobileView ? "TBP | UCLA" : " Tau Beta Pi | UCLA"}
           </Button>
         </Grid>
-        <Grid item>
-          <NavButton
+          { DefaultHeaders.map( (header) =>  (
+            <Grid item key={header.id}>
+            <NavButton
             variant="text"
             size="large"
             onClick={
-              dropDownParent === "more"
+              dropDownParent === header.id
                 ? handleDropDownClose
                 : (e) => {
-                    handleDropDown(e, MoreDropDownEntries, "more");
+                    handleDropDown(e, header.entries, header.id);
                   }
             }
             onMouseEnter={(e) => {
-              handleDropDown(e, MoreDropDownEntries, "more");
+              handleDropDown(e, header.entries, header.id);
             }}
           >
-            More <MoreVertIcon />
+            {header.title} 
           </NavButton>
-        </Grid>
+          </Grid>)
+        )}
         {authenticatedUser ? (
           <Grid item>
             <NavButton
