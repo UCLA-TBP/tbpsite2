@@ -59,10 +59,11 @@ class DropDownItemData {
 }
 
 class DropDownHeader {
-  constructor(id, title, entries){
+  constructor(id, title, destination, entries = []){
     this.id = id;
     this.title = title;
     this.entries = entries;
+    this.destination = destination;
   }
 }
 
@@ -90,29 +91,18 @@ const MoreDropDownEntries = [
 ];
 
 const DefaultHeaders = [
-  new DropDownHeader("home", "Home",
+  new DropDownHeader("about", "About", "/",
     [ new DropDownItemData("Who We Are", "#who-we-are"),
       new DropDownItemData("Becoming a Member", "#becoming-a-member"),
-      //new DropDownItemData("Tutoring", "#tutoring"),
-      //new DropDownItemData("Event Calendar", "#event-calendar"),
       new DropDownItemData("Activities", "#activities"),
       new DropDownItemData("Awards", "#awards"),
       new DropDownItemData("Engineering Faculty", "#faculty-list"),
       new DropDownItemData("Contact", "#contact")
     ]
   ),
-  new DropDownHeader("events", "Events",
-      [ new DropDownItemData("Events", "events"),
-      ]
-  ),
-  new DropDownHeader("tutoring", "Tutoring",
-      [ new DropDownItemData("Tutoring", "tutoring"),
-        // new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
-        // new DropDownItemData('Feedback', 'tutoring/feedback'),
-        // new DropDownItemData('Log Hours', 'log_hours'),wnItemData('Log Hours', 'log_hours'),
-      ]
-  ),
-  new DropDownHeader("contact", "Contact",
+  new DropDownHeader("events", "Events", "/events"),
+  new DropDownHeader("tutoring", "Tutoring", "/tutoring"),
+  new DropDownHeader("contact", "Contact", "",
       [ new DropDownItemData("Officers", "officers"),
         new DropDownItemData("Faculty", "faculty"),
         new DropDownItemData("Website Feedback", "#contact"),
@@ -259,6 +249,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   };
 
   const handleDropDown = (e, items, dropDownParent) => {
+    if (!items.length) return;
     setAnchorEl(e.currentTarget);
     setDropDownItems(items);
     setDropDownParent(dropDownParent);
@@ -328,7 +319,8 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             <NavButton
             variant="text"
             size="large"
-            onClick={
+            href={header.destination || undefined}
+             onClick={
               dropDownParent === header.id
                 ? handleDropDownClose
                 : (e) => {
@@ -337,7 +329,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             }
             onMouseEnter={(e) => {
               handleDropDown(e, header.entries, header.id);
-            }}
+             }}
           >
             {header.title} 
           </NavButton>
