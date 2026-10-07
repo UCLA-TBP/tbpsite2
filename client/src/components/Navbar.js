@@ -320,6 +320,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             <NavButton
               variant="text"
               size="large"
+              sx={{ color: "white !important" }}
               onClick={
                 dropDownParent === "user"
                   ? handleDropDownClose
