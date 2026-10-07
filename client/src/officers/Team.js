@@ -112,7 +112,6 @@ function AdvisorsSection() {
 			<Typography variant="h2" mt={3} mb={2}>
 				Faculty Advisors
 			</Typography>
-			{/* lg={2.4}: 12 / 5, so all five advisors share one row on desktop */}
 			<Grid container spacing={2}>
 				{ADVISORS.map((advisor) => (
 					<Grid item xs={12} sm={6} md={4} lg={2.4} key={advisor.name}>

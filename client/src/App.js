@@ -219,7 +219,6 @@ function App() {
               {/* <Route path='log_hours' eleemnt={<LogHours />} /> */}
             </Route>
             <Route path='team' element={<Team />} />
-            {/* old URLs, still linked from the deployed site */}
             <Route path='officers' element={<Navigate to='/team' replace />} />
             <Route path='faculty' element={<Navigate to='/team' replace />} />
             <Route path='candidates'>
