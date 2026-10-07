@@ -11,7 +11,7 @@ const FooterLinks = [
 
 function Footer() {
   return (
-    <Box component="footer" id="footer" sx={{ backgroundColor: "#000", py: 4 }}>
+    <Box component="footer" id="footer" sx={{ backgroundColor: "#000", py: 4, mt: "auto" }}>
       <Container sx={{ textAlign: "center" }}>
         <Grid container spacing={2} justifyContent="center">
           {FooterLinks.map((link) => (

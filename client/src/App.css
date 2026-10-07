@@ -7,6 +7,12 @@ body {
   background-color: #222;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .MuiBackdrop-root {
   pointer-events: none !important;
 }
