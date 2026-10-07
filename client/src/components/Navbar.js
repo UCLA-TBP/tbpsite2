@@ -11,7 +11,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import styled from "@emotion/styled";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LoginForm from "./LoginForm";
@@ -67,29 +66,6 @@ class DropDownHeader {
     this.destination = destination;
   }
 }
-
-const MoreDropDownEntries = [
-  new DropDownItemData("HOME"),
-  new DropDownItemData("Who We Are", "#who-we-are"),
-  new DropDownItemData("Becoming a Member", "#becoming-a-member"),
-  new DropDownItemData("Tutoring", "#tutoring"),
-  new DropDownItemData("Event Calendar", "#event-calendar"),
-  new DropDownItemData("Activities", "#activities"),
-  new DropDownItemData("Awards", "#awards"),
-  new DropDownItemData("Engineering Faculty", "#faculty-list"),
-  new DropDownItemData("Contact", "#contact"),
-  new DropDownItemData("EVENTS"),
-  new DropDownItemData("Events", "events"),
-  new DropDownItemData("TUTORING QUICKLINKS"),
-  new DropDownItemData("Schedule", "tutoring"),
-  // new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
-  // new DropDownItemData('Feedback', 'tutoring/feedback'),
-  // new DropDownItemData('Log Hours', 'log_hours'),
-  new DropDownItemData("CONTACT QUICKLINKS"),
-  new DropDownItemData("Officers", "officers"),
-  new DropDownItemData("Faculty", "faculty"),
-  new DropDownItemData("Website Feedback", "#contact"),
-];
 
 const DefaultHeaders = [
   new DropDownHeader("about", "About", "/",
