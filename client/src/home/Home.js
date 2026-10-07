@@ -422,9 +422,10 @@ function Home() {
 
         <FacultyList
           id="faculty-list"
-          className="last-section"
           opacity={sectionOpacities["faculty-list"]}
         />
+
+        
       </div>
     </>
   );
