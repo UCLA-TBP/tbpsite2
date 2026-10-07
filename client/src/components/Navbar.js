@@ -18,9 +18,9 @@ import LoginForm from "./LoginForm";
 import LogoutButton from "./LogoutButton";
 
 const NavButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.text.secondary,
+  color: `${theme.palette.text.secondary} !important`,
   "&:hover": {
-    color: alpha(theme.palette.text.secondary, 0.6),
+    color: "white !important",
   },
 }));
 
@@ -324,7 +324,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             <NavButton
               variant="text"
               size="large"
-              sx={{ color: "white !important" }}
               onClick={
                 dropDownParent === "user"
                   ? handleDropDownClose
@@ -344,10 +343,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             <NavButton
               variant="text"
               size="large"
-              sx={{
-                // !important: NavButton's own color would otherwise win over sx
-                color: "white !important",
-              }}
               onClick={
                 dropDownParent === "user"
                   ? handleDropDownClose
