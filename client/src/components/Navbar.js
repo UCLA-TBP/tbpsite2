@@ -102,7 +102,6 @@ const DefaultHeaders = [
   ),
   new DropDownHeader("events", "Events", "/events"),
   new DropDownHeader("tutoring", "Tutoring", "/tutoring"),
-  new DropDownHeader("contact", "Contact", "/contact"),
 ]
 
 const AdminDropDownEntries = [
