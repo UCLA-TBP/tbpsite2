@@ -75,6 +75,7 @@ const DefaultHeaders = [
       new DropDownItemData("Activities", "#activities"),
       new DropDownItemData("Awards", "#awards"),
       new DropDownItemData("Engineering Faculty", "#faculty-list"),
+      new DropDownItemData("Contact", "#footer"),
     ]
   ),
   new DropDownHeader("events", "Events", "/events"),
