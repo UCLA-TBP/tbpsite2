@@ -217,7 +217,10 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   };
 
   const handleDropDown = (e, items, dropDownParent) => {
-    if (!items.length) return;
+    if (!items.length) {
+      handleDropDownClose();
+      return;
+    }
     setAnchorEl(e.currentTarget);
     setDropDownItems(items);
     setDropDownParent(dropDownParent);
