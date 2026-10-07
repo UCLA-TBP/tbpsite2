@@ -13,6 +13,7 @@ import {
 import styled from "@emotion/styled";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LoginForm from "./LoginForm";
 import LogoutButton from "./LogoutButton";
 
@@ -97,17 +98,11 @@ const DefaultHeaders = [
       new DropDownItemData("Activities", "#activities"),
       new DropDownItemData("Awards", "#awards"),
       new DropDownItemData("Engineering Faculty", "#faculty-list"),
-      new DropDownItemData("Contact", "#contact")
     ]
   ),
   new DropDownHeader("events", "Events", "/events"),
   new DropDownHeader("tutoring", "Tutoring", "/tutoring"),
-  new DropDownHeader("contact", "Contact", "",
-      [ new DropDownItemData("Officers", "officers"),
-        new DropDownItemData("Faculty", "faculty"),
-        new DropDownItemData("Website Feedback", "#contact"),
-      ]
-  ),    
+  new DropDownHeader("contact", "Contact", "/contact"),
 ]
 
 const AdminDropDownEntries = [
@@ -151,14 +146,12 @@ const CandidateDropDownEntries = [
 const UniversalDropDownEntries = [new DropDownItemData("logout")];
 
 function Navbar({ authenticatedUser, setAuthenticatedUser }) {
-  const [scrollPos, setScrollPos] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [dropDownItems, setDropDownItems] = useState([]);
   const dropDownEntered = useRef(false);
   const [dropDownParent, setDropDownParent] = useState(null);
   const [userDropDownEntries, setUserDropDownEntries] = useState([]);
 
-  const [doScrollFade, setDoScrollFade] = useState(false);
   const isMobileView = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const dropDownRef = useRef(null);
   const navbarRef = useRef(null);
@@ -166,7 +159,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
     centerOnElement(targetId);
-    setDoScrollFade(window.location.pathname === "/");
     // eslint-disable-next-line
   }, [window.location.href]);
 
@@ -207,20 +199,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
         break;
     }
   }, [authenticatedUser]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const winScroll =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      setScrollPos(winScroll);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   useEffect(() => {
     const handleClickAway = (e) => {
@@ -266,13 +244,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
       ref={navbarRef}
       position="fixed"
       sx={{
-        backgroundColor: (theme) =>
-          doScrollFade
-            ? alpha(
-                theme.palette.primary.main,
-                0.8 * Math.min(1, scrollPos / 500)
-              )
-            : theme.palette.primary.main,
+        backgroundColor: (theme) => theme.palette.primary.main,
         boxShadow: 0,
       }}
     >
@@ -291,7 +263,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
                   position: "absolute",
                   left: "12px",
                 }
-              : {}
+              : { mr: "auto" }
           }
         >
           <Button
@@ -331,7 +303,8 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
               handleDropDown(e, header.entries, header.id);
              }}
           >
-            {header.title} 
+            {header.title}
+            {header.entries.length > 0 && <KeyboardArrowDownIcon />}
           </NavButton>
           </Grid>)
         )}
@@ -359,6 +332,10 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             <NavButton
               variant="text"
               size="large"
+              sx={{
+                // !important: NavButton's own color would otherwise win over sx
+                color: "white !important",
+              }}
               onClick={
                 dropDownParent === "user"
                   ? handleDropDownClose
