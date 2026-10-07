@@ -32,7 +32,7 @@ function Tutoring() {
       </Box>
       */}
 
-      <Typography variant="h2" mt = {10}>
+      <Typography variant="h1" mt={10} mb={"20px"}>
             Tutoring
       </Typography>
       <Typography variant="p" mb={"20px"}>
