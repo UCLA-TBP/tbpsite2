@@ -13,6 +13,7 @@ import {
 import styled from "@emotion/styled";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import MenuIcon from "@mui/icons-material/Menu";
 import LoginForm from "./LoginForm";
 import LogoutButton from "./LogoutButton";
 
@@ -80,6 +81,19 @@ const DefaultHeaders = [
   new DropDownHeader("tutoring", "Tutoring", "/tutoring"),
   new DropDownHeader("team", "Our Team", "/team"),
 ]
+
+
+const MobileMenuEntries = [];
+DefaultHeaders.forEach((header) => {
+  if (header.entries.length === 0) {
+    MobileMenuEntries.push(
+      new DropDownItemData(header.title, header.destination.slice(1))
+    );
+  }
+});
+DefaultHeaders.forEach((header) => {
+  header.entries.forEach((entry) => MobileMenuEntries.push(entry));
+});
 
 const AdminDropDownEntries = [
   new DropDownItemData("ADMIN"),
@@ -262,7 +276,24 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             {isMobileView ? "TBP | UCLA" : " Tau Beta Pi | UCLA"}
           </Button>
         </Grid>
-          { DefaultHeaders.map( (header) =>  (
+        {isMobileView ? (
+          <Grid item>
+            <NavButton
+              variant="text"
+              size="large"
+              onClick={
+                dropDownParent === "mobile"
+                  ? handleDropDownClose
+                  : (e) => {
+                      handleDropDown(e, MobileMenuEntries, "mobile");
+                    }
+              }
+            >
+              Menu <MenuIcon />
+            </NavButton>
+          </Grid>
+        ) : (
+          DefaultHeaders.map( (header) =>  (
             <Grid item key={header.id}>
             <NavButton
             variant="text"
@@ -283,7 +314,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             {header.entries.length > 0 && <KeyboardArrowDownIcon />}
           </NavButton>
           </Grid>)
-        )}
+        ))}
         {authenticatedUser ? (
           <Grid item>
             <NavButton
