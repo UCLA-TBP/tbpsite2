@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material';
 import axios from 'axios';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './home/Home';
 import ProfileRequirements from './profile/ProfileRequirements';
 import Profile from './profile/Profile';
@@ -351,6 +352,7 @@ function App() {
             <Route path='in-progress' element={<FeatureInProgress />} />
           </Routes>
         </Router>
+        <Footer />
       </ThemeProvider>
     </>
   );
