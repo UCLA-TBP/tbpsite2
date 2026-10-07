@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material';
 import axios from 'axios';
@@ -16,8 +16,7 @@ import Tutoring from './tutoring/Tutoring';
 // import ReviewSheets from './tutoring/ReviewSheets';
 // import TutoringFeedback from './tutoring/TutoringFeedback';
 // import LogHours from './tutoring/LogHours';
-import Officers from './officers/Officers';
-import Faculty from './officers/Faculty';
+import Team from './officers/Team';
 import TestBank from './member-services/TestBank';
 // import Corporate from './member-services/Corporate';
 import InductionProgress from './candidates/InductionProgress';
@@ -219,10 +218,10 @@ function App() {
               {/* <Route path='feedback' element={<TutoringFeedback />} /> */}
               {/* <Route path='log_hours' eleemnt={<LogHours />} /> */}
             </Route>
-            <Route path='officers'>
-              <Route path='' element={<Officers />} />
-            </Route>
-            <Route path='faculty' element={<Faculty />} />
+            <Route path='team' element={<Team />} />
+            {/* old URLs, still linked from the deployed site */}
+            <Route path='officers' element={<Navigate to='/team' replace />} />
+            <Route path='faculty' element={<Navigate to='/team' replace />} />
             <Route path='candidates'>
               <Route
                 path='requirements'

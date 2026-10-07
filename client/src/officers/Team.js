@@ -7,6 +7,14 @@ const HEADSHOT_LINK =
 // "https://www.seas.ucla.edu/bmesociety/photos/UCLA%20Photos/images/Tau%20Beta%20Pi%20Bent%20(1)_JPG.jpg";
 // "https://media.licdn.com/dms/image/D5603AQH4oejoODZa1g/profile-displayphoto-shrink_800_800/0/1671194852878?e=2147483647&v=beta&t=akMT2ttozjF3arWJXFQCBZDnNa989eRIgnlu2mJE7f4";
 
+const ADVISORS = [
+	{ name: "William Goodin", email: "wgoodin@g.ucla.edu" },
+	{ name: "Ann Karagozian", email: "ark@seas.ucla.edu" },
+	{ name: "Aaron Meyer", email: "ameyer@ucla.edu" },
+	{ name: "Carissa Eisler", email: "ceisler@ucla.edu" },
+	{ name: "Jennifer Wilson", email: "jenniferwilson@g.ucla.edu" },
+];
+
 const COMMITTEES = [
 	"President",
 	"VP",
@@ -58,7 +66,7 @@ const COMMITTEE_EMAILS = {
 	Ethics: "uclatbp.ethics@gmail.com",
 };
 
-function Officers() {
+function Team() {
 	const [officers, setOfficers] = useState([]);
 
 	useEffect(() => {
@@ -75,26 +83,15 @@ function Officers() {
 	return (
 		<Container sx={{ paddingBottom: "100px" }}>
 			<Typography variant="h1" mt={10} mb={0}>
-				Officers
+				Our Team
 			</Typography>
 
-			<div>
-				<Typography variant="p" mt={2}>
-					For any questions or comments, feel free to email us at{" "}
-					<a href="mailto:ucla.tbp@gmail.com">ucla.tbp@gmail.com</a>.
-				</Typography>
-				<Typography variant="p">
-					Having issues with the site? Send an email to the webmasters at{" "}
-					<a href="mailto:uclatbp.webmaster@gmail.com">
-						uclatbp.webmaster@gmail.com
-					</a>
-					.
-				</Typography>
-				<Typography variant="p">
-					You can also stop by the Tau Beta Pi tutoring room on the 6th floor of
-					Boelter (Room 6266) if you want to say hi!
-				</Typography>
-			</div>
+			<Typography variant="p" mt={2}>
+				You can stop by the Tau Beta Pi tutoring room on the 6th floor of Boelter
+				(Room 6266) if you want to say hi!
+			</Typography>
+
+			<AdvisorsSection />
 
 			{COMMITTEES.map((committee) => {
 				return (
@@ -106,6 +103,47 @@ function Officers() {
 				);
 			})}
 		</Container>
+	);
+}
+
+function AdvisorsSection() {
+	return (
+		<>
+			<Typography variant="h2" mt={3} mb={2}>
+				Faculty Advisors
+			</Typography>
+			{/* lg={2.4}: 12 / 5, so all five advisors share one row on desktop */}
+			<Grid container spacing={2}>
+				{ADVISORS.map((advisor) => (
+					<Grid item xs={12} sm={6} md={4} lg={2.4} key={advisor.name}>
+						<Box
+							sx={{
+								borderRadius: "20px",
+								backgroundColor: "black",
+								marginTop: "10px",
+							}}
+							p={2}
+						>
+							<Typography
+								variant="h3"
+								mt={0}
+								mb={0.5}
+								color="primary"
+								sx={{
+									fontWeight: "bold",
+									fontSize: "1.25rem",
+								}}
+							>
+								{advisor.name}
+							</Typography>
+							<Typography variant="body2" sx={{ overflowWrap: "anywhere" }}>
+								<a href={"mailto:" + advisor.email}>{advisor.email}</a>
+							</Typography>
+						</Box>
+					</Grid>
+				))}
+			</Grid>
+		</>
 	);
 }
 
@@ -206,4 +244,4 @@ function CommitteeMembersSection({ officers, committee }) {
 	);
 }
 
-export default Officers;
+export default Team;
