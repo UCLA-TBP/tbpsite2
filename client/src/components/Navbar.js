@@ -11,15 +11,16 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import styled from "@emotion/styled";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import MenuIcon from "@mui/icons-material/Menu";
 import LoginForm from "./LoginForm";
 import LogoutButton from "./LogoutButton";
 
 const NavButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.text.secondary,
+  color: `${theme.palette.text.secondary} !important`,
   "&:hover": {
-    color: alpha(theme.palette.text.secondary, 0.6),
+    color: "white !important",
   },
 }));
 
@@ -58,30 +59,43 @@ class DropDownItemData {
   }
 }
 
-const MoreDropDownEntries = [
-  new DropDownItemData("HOME"),
-  new DropDownItemData("Who We Are", "#who-we-are"),
-  new DropDownItemData("Becoming a Member", "#becoming-a-member"),
-  new DropDownItemData("Tutoring", "#tutoring"),
-  new DropDownItemData("Event Calendar", "#event-calendar"),
-  new DropDownItemData("Activities", "#activities"),
-  new DropDownItemData("Awards", "#awards"),
-  new DropDownItemData("Engineering Faculty", "#faculty-list"),
-  new DropDownItemData("Contact", "#contact"),
-  new DropDownItemData("EVENTS"),
-  new DropDownItemData("Events", "events"),
-  new DropDownItemData("TUTORING QUICKLINKS"),
-  new DropDownItemData("Schedule", "tutoring/schedule"),
-  // new DropDownItemData('Review Sheets', 'tutoring/review_sheets'),
-  // new DropDownItemData('Feedback', 'tutoring/feedback'),
-  // new DropDownItemData('Log Hours', 'log_hours'),
-  new DropDownItemData("CONTACT QUICKLINKS"),
-  new DropDownItemData("Officers", "officers"),
-  new DropDownItemData("Faculty", "faculty"),
-  new DropDownItemData("Website Feedback", "#contact"),
-];
+class DropDownHeader {
+  constructor(id, title, destination, entries = []){
+    this.id = id;
+    this.title = title;
+    this.entries = entries;
+    this.destination = destination;
+  }
+}
 
-// TODO: change available links based on user position
+const DefaultHeaders = [
+  new DropDownHeader("about", "About", "/",
+    [ new DropDownItemData("Who We Are", "#who-we-are"),
+      new DropDownItemData("Becoming a Member", "#becoming-a-member"),
+      new DropDownItemData("Activities", "#activities"),
+      new DropDownItemData("Awards", "#awards"),
+      new DropDownItemData("Engineering Faculty", "#faculty-list"),
+      new DropDownItemData("Contact", "#footer"),
+    ]
+  ),
+  new DropDownHeader("events", "Events", "/events"),
+  new DropDownHeader("tutoring", "Tutoring", "/tutoring"),
+  new DropDownHeader("team", "Our Team", "/team"),
+]
+
+
+const MobileMenuEntries = [];
+DefaultHeaders.forEach((header) => {
+  if (header.entries.length === 0) {
+    MobileMenuEntries.push(
+      new DropDownItemData(header.title, header.destination.slice(1))
+    );
+  }
+});
+DefaultHeaders.forEach((header) => {
+  header.entries.forEach((entry) => MobileMenuEntries.push(entry));
+});
+
 const AdminDropDownEntries = [
   new DropDownItemData("ADMIN"),
   new DropDownItemData("Manage Users", "admin/manage_users"),
@@ -123,14 +137,12 @@ const CandidateDropDownEntries = [
 const UniversalDropDownEntries = [new DropDownItemData("logout")];
 
 function Navbar({ authenticatedUser, setAuthenticatedUser }) {
-  const [scrollPos, setScrollPos] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [dropDownItems, setDropDownItems] = useState([]);
   const dropDownEntered = useRef(false);
   const [dropDownParent, setDropDownParent] = useState(null);
   const [userDropDownEntries, setUserDropDownEntries] = useState([]);
 
-  const [doScrollFade, setDoScrollFade] = useState(false);
   const isMobileView = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const dropDownRef = useRef(null);
   const navbarRef = useRef(null);
@@ -138,7 +150,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   useEffect(() => {
     const targetId = window.location.href.match(/#.*$/)?.at(0).slice(1);
     centerOnElement(targetId);
-    setDoScrollFade(window.location.pathname === "/");
     // eslint-disable-next-line
   }, [window.location.href]);
 
@@ -181,20 +192,6 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   }, [authenticatedUser]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const winScroll =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      setScrollPos(winScroll);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
     const handleClickAway = (e) => {
       if (!e.target.closest(".MuiContainer-root")) {
         if (Boolean(anchorEl)) {
@@ -221,6 +218,10 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
   };
 
   const handleDropDown = (e, items, dropDownParent) => {
+    if (!items.length) {
+      handleDropDownClose();
+      return;
+    }
     setAnchorEl(e.currentTarget);
     setDropDownItems(items);
     setDropDownParent(dropDownParent);
@@ -237,13 +238,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
       ref={navbarRef}
       position="fixed"
       sx={{
-        backgroundColor: (theme) =>
-          doScrollFade
-            ? alpha(
-                theme.palette.primary.main,
-                0.8 * Math.min(1, scrollPos / 500)
-              )
-            : theme.palette.primary.main,
+        backgroundColor: (theme) => theme.palette.primary.main,
         boxShadow: 0,
       }}
     >
@@ -262,7 +257,7 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
                   position: "absolute",
                   left: "12px",
                 }
-              : {}
+              : { mr: "auto" }
           }
         >
           <Button
@@ -285,24 +280,45 @@ function Navbar({ authenticatedUser, setAuthenticatedUser }) {
             {isMobileView ? "TBP | UCLA" : " Tau Beta Pi | UCLA"}
           </Button>
         </Grid>
-        <Grid item>
-          <NavButton
+        {isMobileView ? (
+          <Grid item>
+            <NavButton
+              variant="text"
+              size="large"
+              onClick={
+                dropDownParent === "mobile"
+                  ? handleDropDownClose
+                  : (e) => {
+                      handleDropDown(e, MobileMenuEntries, "mobile");
+                    }
+              }
+            >
+              Menu <MenuIcon />
+            </NavButton>
+          </Grid>
+        ) : (
+          DefaultHeaders.map( (header) =>  (
+            <Grid item key={header.id}>
+            <NavButton
             variant="text"
             size="large"
-            onClick={
-              dropDownParent === "more"
+            href={header.destination || undefined}
+             onClick={
+              dropDownParent === header.id
                 ? handleDropDownClose
                 : (e) => {
-                    handleDropDown(e, MoreDropDownEntries, "more");
+                    handleDropDown(e, header.entries, header.id);
                   }
             }
             onMouseEnter={(e) => {
-              handleDropDown(e, MoreDropDownEntries, "more");
-            }}
+              handleDropDown(e, header.entries, header.id);
+             }}
           >
-            More <MoreVertIcon />
+            {header.title}
+            {header.entries.length > 0 && <KeyboardArrowDownIcon />}
           </NavButton>
-        </Grid>
+          </Grid>)
+        ))}
         {authenticatedUser ? (
           <Grid item>
             <NavButton

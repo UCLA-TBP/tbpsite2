@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import EventsCalendar from "../components/EventsCalendar";
+//import EventsCalendar from "../components/EventsCalendar";
 import FacultyList from "../components/FacultyList";
 import styled from "@emotion/styled";
 
@@ -25,11 +25,10 @@ const FloatingContainer = styled(Container)(({ theme }) => ({
 const sectionIds = [
   "who-we-are",
   "becoming-a-member",
-  "tutoring",
-  "event-calendar",
+  //"tutoring",
+  //"event-calendar",
   "activities",
   "faculty-list",
-  "contact",
 ];
 
 const maxOpacity = 1;
@@ -280,105 +279,10 @@ function Home() {
           </Grid>
         </FloatingContainer>
 
-        <FloatingContainer
-          className="section-container"
-          id="tutoring"
-          sx={{
-            // transform: `scale(${sectionScales['tutoring']})`,
-            opacity: `${sectionOpacities["tutoring"]}`,
-          }}
-        >
-          {/* <h1 className='header'>Tutoring</h1> */}
-          <Typography variant="h2" mb={"20px"}>
-            Tutoring
-          </Typography>
-          <Typography variant="p" mb={"20px"}>
-            We offer free drop-in tutoring in all STEM courses at our office
-            (Boelter 6266). Feel free to stop by for homework help or pre-exam
-            practice. Please check the schedule below for course availability.
-          </Typography>
-          <Typography variant="p" mb={"20px"}>
-            Hours: Mon-Fri, 10 am - 4 pm, Weeks 3 - 9
-          </Typography>
-          {/*<Typography variant='p' mb={'20px'}>
-            Tutoring will be on Zoom at the following link while classes are online:
-            <br></br>
-            <a href='https://ucla.zoom.us/j/92285065964'>
-              https://ucla.zoom.us/j/92285065964
-            </a>
-        </Typography>*/}
-
-          <Grid
-            container
-            spacing={5}
-            pt={4}
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Grid item>
-              <Button
-                size="large"
-                href="tutoring/schedule/"
-                color="secondary"
-                variant="outlined"
-              >
-                SCHEDULE
-              </Button>
-            </Grid>
-
-            {/* <Grid item>
-              <Button
-                href='tutoring/reviewsheets/'
-                color='secondary'
-                variant='outlined'
-                size='large'
-              >
-                REVIEW SHEETS
-              </Button>
-            </Grid> */}
-
-            <Grid item>
-              <Button
-                href="https://forms.gle/sburNuSv83ekaTTf8"
-                color="secondary"
-                variant="outlined"
-                size="large"
-              >
-                FEEDBACK
-              </Button>
-            </Grid>
-
-            {/* <Grid item>
-              <Button
-                href='/tutoring/log_hours/'
-                color='secondary'
-                variant='outlined'
-                size='large'
-              >
-                LOG HOURS
-              </Button>
-            </Grid> */}
-          </Grid>
-        </FloatingContainer>
+      
 
         {/* <Divider><Chip variant='outlined' label='' /></Divider> */}
 
-        <FloatingContainer
-          className="section-container"
-          id="event-calendar"
-          sx={{
-            // transform: `scale(${sectionScales['event-calendar']})`,
-            opacity: `${sectionOpacities["event-calendar"]}`,
-          }}
-        >
-          {/* <h1 className='header'>Activities</h1> */}
-          <Typography variant="h2" mb={"20px"}>
-            Event Calendar
-          </Typography>
-
-          <EventsCalendar />
-        </FloatingContainer>
 
         <FloatingContainer
           className="section-container"
@@ -521,111 +425,7 @@ function Home() {
           opacity={sectionOpacities["faculty-list"]}
         />
 
-        <FloatingContainer
-          id="contact"
-          className="section-container last-section"
-          sx={{
-            // transform: `scale(${sectionScales['contact']})`,
-            opacity: `${sectionOpacities["contact"]}`,
-          }}
-        >
-          {/* <h1 className='header'>Contacts and Other Links</h1> */}
-          <Typography variant="h2" mb={"20px"}>
-            Contacts and Other Links
-          </Typography>
-
-          <Typography variant="p" mb={"20px"}>
-            Location: 6266 Boelter Hall
-          </Typography>
-
-          <Typography variant="p" mb={"20px"}>
-            Email:&nbsp;
-            <a
-              id="email-link"
-              className="no-underline"
-              href="mailto:ucla.tbp@gmail.com"
-            >
-              ucla.tbp@gmail.com
-            </a>
-          </Typography>
-
-          <Grid
-            container
-            spacing={5}
-            pt={4}
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Grid item>
-              <Button href="/officers/" color="secondary" variant="outlined">
-                OFFICERS
-              </Button>
-            </Grid>
-
-            <Grid item>
-              <Button href="/faculty/" color="secondary" variant="outlined">
-                FACULTY
-              </Button>
-            </Grid>
-
-            {/* <Grid item>
-              <Button href='/donate/' color='secondary' variant='outlined'>
-                DONATE
-              </Button>
-            </Grid> */}
-
-            <Grid item>
-              <Button
-                href="https://www.facebook.com/tbp.ucla"
-                color="secondary"
-                variant="outlined"
-              >
-                FACEBOOK
-              </Button>
-            </Grid>
-
-            <Grid item>
-              <Button
-                href="https://www.instagram.com/uclatbp"
-                color="secondary"
-                variant="outlined"
-              >
-                INSTAGRAM
-              </Button>
-            </Grid>
-
-            <Grid item>
-              <Button
-                href="https://www.tbp.org/home.cfm"
-                color="secondary"
-                variant="outlined"
-              >
-                TBP NATIONAL
-              </Button>
-            </Grid>
-
-            <Grid item>
-              <Button
-                href="https://samueli.ucla.edu/"
-                color="secondary"
-                variant="outlined"
-              >
-                UCLA HSSEAS
-              </Button>
-            </Grid>
-
-            <Grid item>
-              <Button
-                href="https://forms.gle/y5bZUNxvtAY4Y6Ws6"
-                color="secondary"
-                variant="outlined"
-              >
-                WEBSITE FEEDBACK
-              </Button>
-            </Grid>
-          </Grid>
-        </FloatingContainer>
+        
       </div>
     </>
   );
