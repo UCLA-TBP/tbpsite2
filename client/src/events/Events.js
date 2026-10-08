@@ -11,13 +11,15 @@ function Events() {
   }, []);
 
   return (
-    <Container>
-      <Typography variant='h2' mt={10}>
+    <Container sx={{ paddingBottom: '100px' }}>
+      <Typography variant='h1' mt={10} mb={0}>
         Events
       </Typography>
-      <a href='https://calendar.google.com/calendar/embed?src=a603aec3817a70f7c66d8de37574d752cf4900e114784725dc3ef4ca6820528c%40group.calendar.google.com&ctz=America%2FLos_Angeles'>
-        Calendar Link
-      </a>
+      <Typography variant='p' mt={2} mb={3}>
+        <a href='https://calendar.google.com/calendar/embed?src=a603aec3817a70f7c66d8de37574d752cf4900e114784725dc3ef4ca6820528c%40group.calendar.google.com&ctz=America%2FLos_Angeles'>
+          Calendar Link
+        </a>
+      </Typography>
       <EventsCalendar />
     </Container>
   );
