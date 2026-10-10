@@ -51,7 +51,7 @@ const COMMITTEE_EMAILS = {
 	President: "uclatbp.president@gmail.com",
 	VP: "uclatbp.vp@gmail.com",
 	AO: "uclatbp.ao@gmail.com",
-	Corporate: "uclatbp.corporate@gmail.com, uclatbp.publicity@gmail.com",
+	PR: "uclatbp.pr@gmail.com",
 	EMCC: "uclatbp.educoutreach@gmail.com",
 	MC: "uclatbp.mc@gmail.com",
 	Projects: null,
