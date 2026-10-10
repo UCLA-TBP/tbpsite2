@@ -223,7 +223,7 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
-    Corporate: {
+    PR: {
       type: Boolean,
       default: false,
     },
@@ -236,10 +236,6 @@ const UserSchema = new mongoose.Schema({
       default: false,
     },
     Projects: {
-      type: Boolean,
-      default: false,
-    },
-    Publicity: {
       type: Boolean,
       default: false,
     },
