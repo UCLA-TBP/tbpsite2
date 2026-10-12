@@ -76,8 +76,8 @@ function Tutoring() {
       <br></br>
       <iframe
         title="tutoringSchedule"
-        src="https://docs.google.com/spreadsheets/u/3/d/e/2PACX-1vRqbadMFrgkHtA98kWsuYf29Lifddf2eb3dYMBLV6V83qJZzOdJilu7x6oFRtj0zyGWXOh-aLXZg5Yo/pubhtml#gid=961529905&amp;single=true&amp;widget=true&amp;headers=false"
-        width="100%"
+        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRtsWc9kdurxcpQMTt7WlQmoaAqLEhCxLDDWODWRCo3tLkFVmAwcWvac1G6F0NmVUdP_WvHA8Gix2pN/pubhtml#gid=961529905&amp;single=true&amp;widget=true&amp;headers=false"
+        width="105%"
         height="900"
         frameBorder="0"
       ></iframe>
