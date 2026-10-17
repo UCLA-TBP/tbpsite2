@@ -132,11 +132,7 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
-    academicOutreach1: {
-      type: Boolean,
-      default: false,
-    },
-    academicOutreach2: {
+    academicOutreach: {
       type: Boolean,
       default: false,
     },
