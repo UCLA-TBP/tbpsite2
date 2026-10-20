@@ -260,7 +260,7 @@ function Home() {
               <Button
                 color="secondary"
                 variant="outlined"
-                href="https://docs.google.com/document/d/1oaQkX8d4A2jNF7m4Dm8oqmr8GGP3fdhGp3NtQsiy5ew/edit?tab=t.0#heading=h.brhg8xnyukgs"
+                href="https://docs.google.com/document/d/1fKvRlGJqWxZcYGg_3ZmxafcZccFzzORaeledQUpDLpM/edit?tab=t.0#heading=h.brhg8xnyukgs"
                 size="large"
               >
                 Candidate Packet
